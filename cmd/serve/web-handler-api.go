@@ -12,8 +12,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/RadhiFadlillah/shiori/model"
-	"github.com/RadhiFadlillah/shiori/readability"
+	"code.techknowlogick.com/techknowlogick/shiori/model"
+	"github.com/go-shiori/go-readability"
 	valid "github.com/asaskevich/govalidator"
 	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/julienschmidt/httprouter"

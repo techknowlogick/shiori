@@ -13,9 +13,9 @@ import (
 	"time"
 
 	"github.com/PuerkitoBio/goquery"
-	dt "github.com/RadhiFadlillah/shiori/database"
-	"github.com/RadhiFadlillah/shiori/model"
-	"github.com/RadhiFadlillah/shiori/readability"
+	dt "code.techknowlogick.com/techknowlogick/shiori/database"
+	"code.techknowlogick.com/techknowlogick/shiori/model"
+	"github.com/go-shiori/go-readability"
 	valid "github.com/asaskevich/govalidator"
 	"github.com/gosuri/uiprogress"
 	"github.com/spf13/cobra"

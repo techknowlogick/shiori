@@ -1,9 +1,5 @@
 # Shiori
 
-[![Travis CI](https://travis-ci.org/RadhiFadlillah/shiori.svg?branch=master)](https://travis-ci.org/RadhiFadlillah/shiori)
-[![Go Report Card](https://goreportcard.com/badge/github.com/radhifadlillah/shiori)](https://goreportcard.com/report/github.com/radhifadlillah/shiori)
-[![Docker Build Status](https://img.shields.io/docker/build/radhifadlillah/shiori.svg)](https://hub.docker.com/r/radhifadlillah/shiori/)
-
 Shiori is a simple bookmarks manager written in Go language. Intended as a simple clone of [Pocket](https://getpocket.com//). You can use it as command line application or as web application. This application is distributed as a single binary, which means it can be installed and used easily.
 
 ![Screenshot](https://raw.githubusercontent.com/RadhiFadlillah/shiori/master/screenshot/pc-grid.png)
@@ -20,7 +16,7 @@ Shiori is a simple bookmarks manager written in Go language. Intended as a simpl
 
 ## Documentation
 
-All documentation is available in [wiki](https://github.com/RadhiFadlillah/shiori/wiki). If you think there are incomplete or incorrect information, feels free to edit it.
+All documentation is available in [wiki](https://code.techknowlogick.com/techknowlogick/shiori/wiki). If you think there are incomplete or incorrect information, feels free to edit it.
 
 ## License
 

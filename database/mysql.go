@@ -7,20 +7,24 @@ import (
 	"time"
 
 	"code.techknowlogick.com/techknowlogick/shiori/model"
+	_ "github.com/go-sql-driver/mysql" // db driver
 	"github.com/jmoiron/sqlx"
 	"golang.org/x/crypto/bcrypt"
 )
 
-// SQLiteDatabase is implementation of Database interface for connecting to SQLite3 database.
-type SQLiteDatabase struct {
+// MySQLDatabase implements the database interface for connection to a MySQL database
+type MySQLDatabase struct {
 	sqlx.DB
 }
 
-// OpenSQLiteDatabase creates and open connection to new SQLite3 database.
-func OpenSQLiteDatabase(databasePath string) (*SQLiteDatabase, error) {
-	// Open database and start transaction
+// OpenMySQLDatabase creates and opens a connection the MySQL Database
+func OpenMySQLDatabase(host, username, password, dbname string) (*MySQLDatabase, error) {
 	var err error
-	db := sqlx.MustConnect("sqlite3", databasePath)
+	connString := fmt.Sprintf("%s:%s@/%s", username, password, dbname)
+	db := sqlx.MustConnect("mysql", connString)
+	db.SetMaxOpenConns(100)
+	db.SetConnMaxLifetime(time.Second) // in case mysql client has longer timeout (driver issue #674)
+
 	tx := db.MustBegin()
 
 	// Make sure to rollback if panic ever happened
@@ -35,49 +39,60 @@ func OpenSQLiteDatabase(databasePath string) (*SQLiteDatabase, error) {
 		}
 	}()
 
-	tx.MustExec(`CREATE TABLE IF NOT EXISTS account(
-		id INTEGER NOT NULL,
-		username TEXT NOT NULL,
-		password TEXT NOT NULL,
-		CONSTRAINT account_PK PRIMARY KEY(id),
-		CONSTRAINT account_username_UNIQUE UNIQUE(username))`)
-
-	tx.MustExec(`CREATE TABLE IF NOT EXISTS bookmark(
-		id INTEGER NOT NULL,
-		url TEXT NOT NULL,
+	tables := []string{`
+	CREATE TABLE IF NOT EXISTS account(
+		id INTEGER PRIMARY KEY AUTO_INCREMENT,
+		username VARCHAR(250) UNIQUE NOT NULL,
+		password VARCHAR(100) NOT NULL
+	)
+	`, `
+	CREATE TABLE IF NOT EXISTS bookmark( 
+		id INTEGER PRIMARY KEY AUTO_INCREMENT,
+		url VARCHAR(512) UNIQUE NOT NULL,
 		title TEXT NOT NULL,
-		image_url TEXT NOT NULL DEFAULT "",
-		excerpt TEXT NOT NULL DEFAULT "",
-		author TEXT NOT NULL DEFAULT "",
-		min_read_time INTEGER NOT NULL DEFAULT 0,
-		max_read_time INTEGER NOT NULL DEFAULT 0,
-		modified TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
-		CONSTRAINT bookmark_PK PRIMARY KEY(id),
-		CONSTRAINT bookmark_url_UNIQUE UNIQUE(url))`)
-
-	tx.MustExec(`CREATE TABLE IF NOT EXISTS tag(
-		id INTEGER NOT NULL,
-		name TEXT NOT NULL,
-		CONSTRAINT tag_PK PRIMARY KEY(id),
-		CONSTRAINT tag_name_UNIQUE UNIQUE(name))`)
-
-	tx.MustExec(`CREATE TABLE IF NOT EXISTS bookmark_tag(
+		image_url TEXT NOT NULL, 
+		excerpt TEXT NOT NULL, 
+		author TEXT NOT NULL,
+		min_read_time INTEGER NOT NULL DEFAULT 0, 
+		max_read_time INTEGER NOT NULL DEFAULT 0, 
+		modified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+	)
+	`, `
+	CREATE TABLE IF NOT EXISTS tag( 
+		id INTEGER PRIMARY KEY AUTO_INCREMENT, 
+		name VARCHAR(512) UNIQUE NOT NULL
+	)
+	`, `
+	CREATE TABLE IF NOT EXISTS bookmark_tag(
 		bookmark_id INTEGER NOT NULL,
-		tag_id INTEGER NOT NULL,
-		CONSTRAINT bookmark_tag_PK PRIMARY KEY(bookmark_id, tag_id),
-		CONSTRAINT bookmark_id_FK FOREIGN KEY(bookmark_id) REFERENCES bookmark(id),
-		CONSTRAINT tag_id_FK FOREIGN KEY(tag_id) REFERENCES tag(id))`)
+		tag_id INTEGER NOT NULL, 
+		PRIMARY KEY(bookmark_id,tag_id),
+		FOREIGN KEY (tag_id) REFERENCES tag(id),
+		FOREIGN KEY(bookmark_id) REFERENCES bookmark(id)
+	)
+	`, `
+	CREATE TABLE IF NOT EXISTS bookmark_content (
+		docid INTEGER NOT NULL,
+		title TEXT,
+		content TEXT,
+		html TEXT,
+		FULLTEXT(title,content),
+		FOREIGN KEY(docid) REFERENCES bookmark(id)
+	)
+	`,
+	}
 
-	tx.MustExec(`CREATE VIRTUAL TABLE IF NOT EXISTS bookmark_content USING fts4(title, content, html)`)
-
+	for _, table := range tables {
+		tx.MustExec(table)
+	}
 	err = tx.Commit()
 	checkError(err)
 
-	return &SQLiteDatabase{*db}, err
+	return &MySQLDatabase{*db}, nil
 }
 
-// InsertBookmark inserts new bookmark to database. Returns new ID and error if any happened.
-func (db *SQLiteDatabase) InsertBookmark(bookmark model.Bookmark) (bookmarkID int, err error) {
+// CreateBookmark saves new bookmark to database. Returns new ID and error if any happened.
+func (db *MySQLDatabase) InsertBookmark(bookmark model.Bookmark) (bookmarkID int, err error) {
 	// Check URL and title
 	if bookmark.URL == "" {
 		return -1, fmt.Errorf("URL must not be empty")
@@ -87,19 +102,11 @@ func (db *SQLiteDatabase) InsertBookmark(bookmark model.Bookmark) (bookmarkID in
 		return -1, fmt.Errorf("Title must not be empty")
 	}
 
-	// Set default ID and modified time
-	if bookmark.ID == 0 {
-		bookmark.ID, err = db.GetNewID("bookmark")
-		if err != nil {
-			return -1, err
-		}
-	}
-
 	if bookmark.Modified == "" {
 		bookmark.Modified = time.Now().UTC().Format("2006-01-02 15:04:05")
 	}
 
-	// Begin transaction
+	// Prepare transaction
 	tx, err := db.Beginx()
 	if err != nil {
 		return -1, err
@@ -117,11 +124,10 @@ func (db *SQLiteDatabase) InsertBookmark(bookmark model.Bookmark) (bookmarkID in
 	}()
 
 	// Save article to database
-	tx.MustExec(`INSERT INTO bookmark (
-		id, url, title, image_url, excerpt, author, 
+	res := tx.MustExec(`INSERT INTO bookmark (
+		url, title, image_url, excerpt, author, 
 		min_read_time, max_read_time, modified) 
-		VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-		bookmark.ID,
+		VALUES(?, ?, ?, ?, ?, ?, ?, ?)`,
 		bookmark.URL,
 		bookmark.Title,
 		bookmark.ImageURL,
@@ -131,10 +137,15 @@ func (db *SQLiteDatabase) InsertBookmark(bookmark model.Bookmark) (bookmarkID in
 		bookmark.MaxReadTime,
 		bookmark.Modified)
 
+	// Get last inserted ID
+	bookmarkID64, err := res.LastInsertId()
+	checkError(err)
+	bookmarkID = int(bookmarkID64)
+
 	// Save bookmark content
 	tx.MustExec(`INSERT INTO bookmark_content 
 		(docid, title, content, html) VALUES (?, ?, ?, ?)`,
-		bookmark.ID, bookmark.Title, bookmark.Content, bookmark.HTML)
+		bookmarkID, bookmark.Title, bookmark.Content, bookmark.HTML)
 
 	// Save tags
 	stmtGetTag, err := tx.Preparex(`SELECT id FROM tag WHERE name = ?`)
@@ -143,7 +154,7 @@ func (db *SQLiteDatabase) InsertBookmark(bookmark model.Bookmark) (bookmarkID in
 	stmtInsertTag, err := tx.Preparex(`INSERT INTO tag (name) VALUES (?)`)
 	checkError(err)
 
-	stmtInsertBookmarkTag, err := tx.Preparex(`INSERT OR IGNORE INTO bookmark_tag (tag_id, bookmark_id) VALUES (?, ?)`)
+	stmtInsertBookmarkTag, err := tx.Preparex(`INSERT IGNORE INTO bookmark_tag (tag_id, bookmark_id) VALUES (?, ?)`)
 	checkError(err)
 
 	for _, tag := range bookmark.Tags {
@@ -158,45 +169,28 @@ func (db *SQLiteDatabase) InsertBookmark(bookmark model.Bookmark) (bookmarkID in
 			res := stmtInsertTag.MustExec(tagName)
 			tagID64, err := res.LastInsertId()
 			checkError(err)
-
 			tagID = int(tagID64)
 		}
 
-		stmtInsertBookmarkTag.Exec(tagID, bookmark.ID)
+		stmtInsertBookmarkTag.Exec(tagID, bookmarkID)
 	}
 
 	// Commit transaction
 	err = tx.Commit()
 	checkError(err)
 
-	bookmarkID = bookmark.ID
 	return bookmarkID, err
 }
 
-// GetBookmarks fetch list of bookmarks based on submitted ids.
-func (db *SQLiteDatabase) GetBookmarks(withContent bool, ids ...int) ([]model.Bookmark, error) {
-	// Create query
-	query := `SELECT 
-		b.id, b.url, b.title, b.image_url, b.excerpt, b.author, 
-		b.min_read_time, b.max_read_time, b.modified, bc.content <> "" has_content
-		FROM bookmark b
-		LEFT JOIN bookmark_content bc ON bc.docid = b.id`
-
-	if withContent {
-		query = `SELECT 
-			b.id, b.url, b.title, b.image_url, b.excerpt, b.author, 
-			b.min_read_time, b.max_read_time, b.modified, bc.content, bc.html, 
-			bc.content <> "" has_content
-			FROM bookmark b
-			LEFT JOIN bookmark_content bc ON bc.docid = b.id`
-	}
+// GetBookmarks fetch list of bookmarks based on submitted indices.
+func (db *MySQLDatabase) GetBookmarks(withContent bool, ids ...int) ([]model.Bookmark, error) {
 
 	// Prepare where clause
 	args := []interface{}{}
 	whereClause := " WHERE 1"
 
 	if len(ids) > 0 {
-		whereClause = " WHERE b.id IN ("
+		whereClause = " WHERE id IN ("
 		for _, id := range ids {
 			args = append(args, id)
 			whereClause += "?,"
@@ -207,21 +201,32 @@ func (db *SQLiteDatabase) GetBookmarks(withContent bool, ids ...int) ([]model.Bo
 	}
 
 	// Fetch bookmarks
-	query += whereClause
+	query := `SELECT id, 
+		url, title, image_url, excerpt, author, 
+		min_read_time, max_read_time, modified
+		FROM bookmark` + whereClause
+
 	bookmarks := []model.Bookmark{}
 	err := db.Select(&bookmarks, query, args...)
 	if err != nil && err != sql.ErrNoRows {
 		return nil, err
 	}
 
-	// Fetch tags for each bookmarks
+	// Fetch tags and contents for each bookmarks
 	stmtGetTags, err := db.Preparex(`SELECT t.id, t.name 
 		FROM bookmark_tag bt LEFT JOIN tag t ON bt.tag_id = t.id
 		WHERE bt.bookmark_id = ? ORDER BY t.name`)
 	if err != nil {
 		return nil, err
 	}
+
+	stmtGetContent, err := db.Preparex(`SELECT title, content, html FROM bookmark_content WHERE docid = ?`)
+	if err != nil {
+		return nil, err
+	}
+
 	defer stmtGetTags.Close()
+	defer stmtGetContent.Close()
 
 	for i, book := range bookmarks {
 		book.Tags = []model.Tag{}
@@ -230,14 +235,22 @@ func (db *SQLiteDatabase) GetBookmarks(withContent bool, ids ...int) ([]model.Bo
 			return nil, err
 		}
 
+		if withContent {
+			err = stmtGetContent.Get(&book, book.ID)
+			if err != nil && err != sql.ErrNoRows {
+				return nil, err
+			}
+		}
+
 		bookmarks[i] = book
 	}
 
 	return bookmarks, nil
 }
 
-// DeleteBookmarks removes all record with matching ids from database.
-func (db *SQLiteDatabase) DeleteBookmarks(ids ...int) (err error) {
+// DeleteBookmarks removes all record with matching indices from database.
+func (db *MySQLDatabase) DeleteBookmarks(ids ...int) (err error) {
+
 	// Create args and where clause
 	args := []interface{}{}
 	whereClause := " WHERE 1"
@@ -285,28 +298,24 @@ func (db *SQLiteDatabase) DeleteBookmarks(ids ...int) (err error) {
 }
 
 // SearchBookmarks search bookmarks by the keyword or tags.
-func (db *SQLiteDatabase) SearchBookmarks(orderLatest bool, keyword string, tags ...string) ([]model.Bookmark, error) {
-	// Prepare query
+func (db *MySQLDatabase) SearchBookmarks(orderLatest bool, keyword string, tags ...string) ([]model.Bookmark, error) {
+	// Create initial variable
+	keyword = strings.TrimSpace(keyword)
+	whereClause := "WHERE 1"
 	args := []interface{}{}
-	query := `SELECT 
-		b.id, b.url, b.title, b.image_url, b.excerpt, b.author, 
-		b.min_read_time, b.max_read_time, b.modified, bc.content <> "" has_content
-		FROM bookmark b
-		LEFT JOIN bookmark_content bc ON bc.docid = b.id
-		WHERE 1`
 
 	// Create where clause for keyword
-	keyword = strings.TrimSpace(keyword)
 	if keyword != "" {
-		query += ` AND (b.url LIKE ? OR b.id IN (
-			SELECT docid id FROM bookmark_content 
-			WHERE title MATCH ? OR content MATCH ?))`
-		args = append(args, "%"+keyword+"%", keyword, keyword)
+		whereClause += ` AND (url LIKE ? OR id IN (
+			SELECT docid FROM bookmark_content 
+			WHERE MATCH(title,content) AGAINST (?) )
+		)`
+		args = append(args, "%"+keyword+"%", keyword)
 	}
 
 	// Create where clause for tags
 	if len(tags) > 0 {
-		whereTagClause := ` AND b.id IN (
+		whereTagClause := ` AND id IN (
 			SELECT bookmark_id FROM bookmark_tag 
 			WHERE tag_id IN (SELECT id FROM tag WHERE name IN (`
 
@@ -319,15 +328,19 @@ func (db *SQLiteDatabase) SearchBookmarks(orderLatest bool, keyword string, tags
 		whereTagClause += `)) GROUP BY bookmark_id HAVING COUNT(bookmark_id) >= ?)`
 		args = append(args, len(tags))
 
-		query += whereTagClause
+		whereClause += whereTagClause
 	}
 
-	// Set order clause
+	// Search bookmarks
+	query := `SELECT id, 
+		url, title, image_url, excerpt, author, 
+		min_read_time, max_read_time, modified
+		FROM bookmark ` + whereClause
+
 	if orderLatest {
-		query += ` ORDER BY modified DESC`
+		query += ` ORDER BY id DESC`
 	}
 
-	// Fetch bookmarks
 	bookmarks := []model.Bookmark{}
 	err := db.Select(&bookmarks, query, args...)
 	if err != nil && err != sql.ErrNoRows {
@@ -357,7 +370,7 @@ func (db *SQLiteDatabase) SearchBookmarks(orderLatest bool, keyword string, tags
 }
 
 // UpdateBookmarks updates the saved bookmark in database.
-func (db *SQLiteDatabase) UpdateBookmarks(bookmarks ...model.Bookmark) (result []model.Bookmark, err error) {
+func (db *MySQLDatabase) UpdateBookmarks(bookmarks ...model.Bookmark) (result []model.Bookmark, err error) {
 	// Prepare transaction
 	tx, err := db.Beginx()
 	if err != nil {
@@ -391,7 +404,7 @@ func (db *SQLiteDatabase) UpdateBookmarks(bookmarks ...model.Bookmark) (result [
 	stmtInsertTag, err := tx.Preparex(`INSERT INTO tag (name) VALUES (?)`)
 	checkError(err)
 
-	stmtInsertBookmarkTag, err := tx.Preparex(`INSERT OR IGNORE INTO bookmark_tag (tag_id, bookmark_id) VALUES (?, ?)`)
+	stmtInsertBookmarkTag, err := tx.Preparex(`INSERT IGNORE INTO bookmark_tag (tag_id, bookmark_id) VALUES (?, ?)`)
 	checkError(err)
 
 	stmtDeleteBookmarkTag, err := tx.Preparex(`DELETE FROM bookmark_tag WHERE bookmark_id = ? AND tag_id = ?`)
@@ -399,7 +412,6 @@ func (db *SQLiteDatabase) UpdateBookmarks(bookmarks ...model.Bookmark) (result [
 
 	result = []model.Bookmark{}
 	for _, book := range bookmarks {
-		// Save bookmark
 		stmtUpdateBookmark.MustExec(
 			book.URL,
 			book.Title,
@@ -411,14 +423,12 @@ func (db *SQLiteDatabase) UpdateBookmarks(bookmarks ...model.Bookmark) (result [
 			book.Modified,
 			book.ID)
 
-		// Save bookmark content
 		stmtUpdateBookmarkContent.MustExec(
 			book.Title,
 			book.Content,
 			book.HTML,
 			book.ID)
 
-		// Save bookmark tags
 		newTags := []model.Tag{}
 		for _, tag := range book.Tags {
 			if tag.Deleted {
@@ -435,7 +445,6 @@ func (db *SQLiteDatabase) UpdateBookmarks(bookmarks ...model.Bookmark) (result [
 					res := stmtInsertTag.MustExec(tag.Name)
 					tagID64, err := res.LastInsertId()
 					checkError(err)
-
 					tagID = int(tagID64)
 				}
 
@@ -457,7 +466,7 @@ func (db *SQLiteDatabase) UpdateBookmarks(bookmarks ...model.Bookmark) (result [
 }
 
 // CreateAccount saves new account to database. Returns new ID and error if any happened.
-func (db *SQLiteDatabase) CreateAccount(username, password string) (err error) {
+func (db *MySQLDatabase) CreateAccount(username, password string) (err error) {
 	// Hash password with bcrypt
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), 10)
 	if err != nil {
@@ -473,7 +482,7 @@ func (db *SQLiteDatabase) CreateAccount(username, password string) (err error) {
 }
 
 // GetAccount fetch account with matching username
-func (db *SQLiteDatabase) GetAccount(username string) (model.Account, error) {
+func (db *MySQLDatabase) GetAccount(username string) (model.Account, error) {
 	account := model.Account{}
 	err := db.Get(&account,
 		`SELECT id, username, password FROM account WHERE username = ?`,
@@ -481,29 +490,28 @@ func (db *SQLiteDatabase) GetAccount(username string) (model.Account, error) {
 	return account, err
 }
 
-// GetAccounts fetch list of accounts with matching keyword
-func (db *SQLiteDatabase) GetAccounts(keyword string) ([]model.Account, error) {
-	// Create query
-	args := []interface{}{}
+// GetAccounts fetch list of accounts in database
+func (db *MySQLDatabase) GetAccounts(keyword string) ([]model.Account, error) {
 	query := `SELECT id, username, password FROM account`
-
-	if keyword == "" {
-		query += " WHERE 1"
-	} else {
-		query += " WHERE username LIKE ?"
-		args = append(args, "%"+keyword+"%")
+	args := []interface{}{}
+	if keyword != "" {
+		if false {
+			query += ` WHERE username = ?`
+			args = append(args, keyword)
+		} else {
+			query += ` WHERE username LIKE ?`
+			args = append(args, "%"+keyword+"%")
+		}
 	}
-
 	query += ` ORDER BY username`
 
-	// Fetch list account
 	accounts := []model.Account{}
 	err := db.Select(&accounts, query, args...)
 	return accounts, err
 }
 
 // DeleteAccounts removes all record with matching usernames
-func (db *SQLiteDatabase) DeleteAccounts(usernames ...string) error {
+func (db *MySQLDatabase) DeleteAccounts(usernames ...string) error {
 	// Prepare where clause
 	args := []interface{}{}
 	whereClause := " WHERE 1"
@@ -525,7 +533,7 @@ func (db *SQLiteDatabase) DeleteAccounts(usernames ...string) error {
 }
 
 // GetTags fetch list of tags and their frequency
-func (db *SQLiteDatabase) GetTags() ([]model.Tag, error) {
+func (db *MySQLDatabase) GetTags() ([]model.Tag, error) {
 	tags := []model.Tag{}
 	query := `SELECT bt.tag_id id, t.name, COUNT(bt.tag_id) n_bookmarks 
 		FROM bookmark_tag bt 
@@ -541,7 +549,7 @@ func (db *SQLiteDatabase) GetTags() ([]model.Tag, error) {
 }
 
 // GetNewID creates new ID for specified table
-func (db *SQLiteDatabase) GetNewID(table string) (int, error) {
+func (db *MySQLDatabase) GetNewID(table string) (int, error) {
 	var tableID int
 	query := fmt.Sprintf(`SELECT IFNULL(MAX(id) + 1, 1) FROM %s`, table)
 
@@ -554,7 +562,7 @@ func (db *SQLiteDatabase) GetNewID(table string) (int, error) {
 }
 
 // GetBookmarkID fetchs bookmark ID based by its url
-func (db *SQLiteDatabase) GetBookmarkID(url string) int {
+func (db *MySQLDatabase) GetBookmarkID(url string) int {
 	var bookmarkID int
 	db.Get(&bookmarkID, `SELECT id FROM bookmark WHERE url = ?`, url)
 	return bookmarkID
