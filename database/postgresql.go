@@ -146,7 +146,7 @@ func (db *PostgreSQLDatabase) InsertBookmark(bookmark model.Bookmark) (bookmarkI
 	stmtGetTag, err := tx.Preparex(`SELECT id FROM tag WHERE name = $1`)
 	checkError(err)
 
-	stmtInsertTag, err := tx.Preparex(`INSERT INTO tag (name) VALUES ($1)`)
+	stmtInsertTag, err := tx.Preparex(`INSERT INTO tag (name) VALUES ($1) RETURNING id`)
 	checkError(err)
 
 	stmtInsertBookmarkTag, err := tx.Preparex(`INSERT INTO bookmark_tag (tag_id, bookmark_id) VALUES ($1, $2)`)
@@ -161,10 +161,9 @@ func (db *PostgreSQLDatabase) InsertBookmark(bookmark model.Bookmark) (bookmarkI
 		checkError(err)
 
 		if tagID == -1 {
-			res := stmtInsertTag.MustExec(tagName)
-			tagID64, err := res.LastInsertId()
+			res := stmtInsertTag.QueryRow(tagName)
+			err = res.Scan(&tagID)
 			checkError(err)
-			tagID = int(tagID64)
 		}
 
 		stmtInsertBookmarkTag.Exec(tagID, bookmarkID)
@@ -398,7 +397,7 @@ func (db *PostgreSQLDatabase) UpdateBookmarks(bookmarks ...model.Bookmark) (resu
 	stmtGetTag, err := tx.Preparex(`SELECT id FROM tag WHERE name = $1`)
 	checkError(err)
 
-	stmtInsertTag, err := tx.Preparex(`INSERT INTO tag (name) VALUES ($1)`)
+	stmtInsertTag, err := tx.Preparex(`INSERT INTO tag (name) VALUES ($1) RETURNING id`)
 	checkError(err)
 
 	stmtInsertBookmarkTag, err := tx.Preparex(`INSERT INTO bookmark_tag (tag_id, bookmark_id) VALUES ($1, $2)`)
@@ -439,10 +438,9 @@ func (db *PostgreSQLDatabase) UpdateBookmarks(bookmarks ...model.Bookmark) (resu
 				checkError(err)
 
 				if tagID == -1 {
-					res := stmtInsertTag.MustExec(tag.Name)
-					tagID64, err := res.LastInsertId()
+					res := stmtInsertTag.QueryRow(tag.Name)
+					err = res.Scan(&tagID)
 					checkError(err)
-					tagID = int(tagID64)
 				}
 
 				stmtInsertBookmarkTag.Exec(tagID, book.ID)
