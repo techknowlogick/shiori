@@ -18,6 +18,7 @@ import (
 	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/julienschmidt/httprouter"
 	"golang.org/x/crypto/bcrypt"
+	"github.com/gofrs/uuid"
 )
 
 // login is handler for POST /api/login
@@ -158,10 +159,14 @@ func (h *webHandler) apiInsertBookmark(w http.ResponseWriter, r *http.Request, p
 	}
 
 	// Save bookmark image to local disk
-	imgPath := fp.Join(h.dataDir, "thumb", fmt.Sprintf("%d", book.ID))
+	u2, err := uuid.NewV4()
+	if err != nil {
+		checkError(err)
+	}
+	imgPath := fp.Join(h.dataDir, "thumb", u2.String())
 	err = downloadFile(article.Meta.Image, imgPath, 20*time.Second)
 	if err == nil {
-		book.ImageURL = fmt.Sprintf("/thumb/%d", book.ID)
+		book.ImageURL = fmt.Sprintf("/thumb/%s", u2)
 	}
 
 	// Return new saved result
@@ -360,10 +365,14 @@ func (h *webHandler) apiUpdateCache(w http.ResponseWriter, r *http.Request, ps h
 			}
 
 			// Update bookmark image in local disk
-			imgPath := fp.Join(h.dataDir, "thumb", fmt.Sprintf("%d", book.ID))
+			u2, err := uuid.NewV4()
+			if err != nil {
+				checkError(err)
+			}
+			imgPath := fp.Join(h.dataDir, "thumb", u2.String())
 			err = downloadFile(article.Meta.Image, imgPath, 20*time.Second)
 			if err == nil {
-				book.ImageURL = fmt.Sprintf("/thumb/%d", book.ID)
+				book.ImageURL = fmt.Sprintf("/thumb/%s", u2)
 			}
 
 			// Update list of bookmarks
