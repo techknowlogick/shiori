@@ -253,12 +253,14 @@ func (db *PostgreSQLDatabase) DeleteBookmarks(ids ...int) (err error) {
 
 	if len(ids) > 0 {
 		whereClause = " WHERE id IN ("
+		i := 1
 		for _, id := range ids {
 			args = append(args, id)
-			whereClause += "?,"
+			whereClause += fmt.Sprintf("$%d, ",i)
+			i=i+1
 		}
 
-		whereClause = whereClause[:len(whereClause)-1]
+		whereClause = whereClause[:len(whereClause)-2]
 		whereClause += ")"
 	}
 
