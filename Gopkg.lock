@@ -69,6 +69,14 @@
   version = "v1.4.0"
 
 [[projects]]
+  digest = "1:33c0c8f77a5735b1e2f2348a70dd98856ef9fc08c39e06dd605a7e2e91295faf"
+  name = "github.com/gofrs/uuid"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "c52a24014454cb81a53adfe807a68f6a20b49d74"
+  version = "v3.0.0"
+
+[[projects]]
   branch = "master"
   digest = "1:cde3502ff38bf880c3a783acc5b48754aa509c651c4902c68726d2769883e9de"
   name = "github.com/gosuri/uilive"
@@ -258,6 +266,7 @@
     "github.com/fatih/color",
     "github.com/go-shiori/go-readability",
     "github.com/go-sql-driver/mysql",
+    "github.com/gofrs/uuid",
     "github.com/gosuri/uiprogress",
     "github.com/jmoiron/sqlx",
     "github.com/julienschmidt/httprouter",
