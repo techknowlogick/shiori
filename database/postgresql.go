@@ -120,10 +120,10 @@ func (db *PostgreSQLDatabase) InsertBookmark(bookmark model.Bookmark) (bookmarkI
 	}()
 
 	// Save article to database
-	res := tx.MustExec(`INSERT INTO bookmark (
+	res := tx.QueryRow(`INSERT INTO bookmark (
 		url, title, image_url, excerpt, author, 
 		min_read_time, max_read_time, modified) 
-		VALUES($1, $2, $3, $4, $5, $6, $7, $8)`,
+		VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id`,
 		bookmark.URL,
 		bookmark.Title,
 		bookmark.ImageURL,
@@ -134,9 +134,8 @@ func (db *PostgreSQLDatabase) InsertBookmark(bookmark model.Bookmark) (bookmarkI
 		bookmark.Modified)
 
 	// Get last inserted ID
-	bookmarkID64, err := res.LastInsertId()
+	err = res.Scan(&bookmarkID)
 	checkError(err)
-	bookmarkID = int(bookmarkID64)
 
 	// Save bookmark content
 	tx.MustExec(`INSERT INTO bookmark_content 
@@ -194,7 +193,7 @@ func (db *PostgreSQLDatabase) GetBookmarks(withContent bool, ids ...int) ([]mode
 			i=i+1
 		}
 
-		whereClause = whereClause[:len(whereClause)-1]
+		whereClause = whereClause[:len(whereClause)-2]
 		whereClause += ")"
 	}
 
