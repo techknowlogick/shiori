@@ -509,12 +509,14 @@ func (db *PostgreSQLDatabase) DeleteAccounts(usernames ...string) error {
 
 	if len(usernames) > 0 {
 		whereClause = " WHERE username IN ("
+		i := 1
 		for _, username := range usernames {
 			args = append(args, username)
-			whereClause += "?,"
+			whereClause += fmt.Sprintf("$%d, ",i)
+			i=i+1
 		}
 
-		whereClause = whereClause[:len(whereClause)-1]
+		whereClause = whereClause[:len(whereClause)-2]
 		whereClause += ")"
 	}
 
