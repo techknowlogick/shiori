@@ -305,7 +305,7 @@ func (db *PostgreSQLDatabase) SearchBookmarks(orderLatest bool, keyword string, 
 	// Create where clause for keyword
 	i := 1
 	if keyword != "" {
-		whereClause += ` AND (url LIKE $1 OR id IN (
+		whereClause += ` AND (b.url LIKE $1 OR b.id IN (
 			SELECT docid FROM bookmark_content 
 			WHERE MATCH(title,content) AGAINST ($2) )
 		)`
@@ -315,7 +315,7 @@ func (db *PostgreSQLDatabase) SearchBookmarks(orderLatest bool, keyword string, 
 
 	// Create where clause for tags
 	if len(tags) > 0 {
-		whereTagClause := ` AND id IN (
+		whereTagClause := ` AND b.id IN (
 			SELECT bookmark_id FROM bookmark_tag 
 			WHERE tag_id IN (SELECT id FROM tag WHERE name IN (`
 
@@ -333,13 +333,13 @@ func (db *PostgreSQLDatabase) SearchBookmarks(orderLatest bool, keyword string, 
 	}
 
 	// Search bookmarks
-	query := `SELECT id, 
-		url, title, image_url, excerpt, author, 
-		min_read_time, max_read_time, modified
-		FROM bookmark ` + whereClause
+	query := `SELECT b.id, 
+		b.url, b.title, b.image_url, b.excerpt, b.author, 
+		b.min_read_time, b.max_read_time, b.modified, bc.content <> '' has_content
+		FROM bookmark b LEFT JOIN bookmark_content bc ON bc.docid = b.id ` + whereClause
 
 	if orderLatest {
-		query += ` ORDER BY id DESC`
+		query += ` ORDER BY b.id DESC`
 	}
 
 	bookmarks := []model.Bookmark{}
