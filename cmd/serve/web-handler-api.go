@@ -150,14 +150,6 @@ func (h *webHandler) apiInsertBookmark(w http.ResponseWriter, r *http.Request, p
 		book.HasContent = true
 	}
 
-	// Save bookmark to database
-	book.ID, err = h.db.InsertBookmark(book)
-	if err != nil {
-		book.Modified = time.Now().UTC().Format("2006-01-02 15:04:05")
-		_, err = h.db.UpdateBookmarks(book)
-		checkError(err)
-	}
-
 	// Save bookmark image to local disk
 	u2, err := uuid.NewV4()
 	if err != nil {
@@ -167,6 +159,14 @@ func (h *webHandler) apiInsertBookmark(w http.ResponseWriter, r *http.Request, p
 	err = downloadFile(article.Meta.Image, imgPath, 20*time.Second)
 	if err == nil {
 		book.ImageURL = fmt.Sprintf("/thumb/%s", u2)
+	}
+
+	// Save bookmark to database
+	book.ID, err = h.db.InsertBookmark(book)
+	if err != nil {
+		book.Modified = time.Now().UTC().Format("2006-01-02 15:04:05")
+		_, err = h.db.UpdateBookmarks(book)
+		checkError(err)
 	}
 
 	// Return new saved result

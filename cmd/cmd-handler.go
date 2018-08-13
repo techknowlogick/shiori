@@ -19,6 +19,7 @@ import (
 	valid "github.com/asaskevich/govalidator"
 	"github.com/gosuri/uiprogress"
 	"github.com/spf13/cobra"
+	"github.com/gofrs/uuid"
 )
 
 // cmdHandler is handler for all action in AccountCmd
@@ -89,18 +90,22 @@ func (h *cmdHandler) addBookmark(cmd *cobra.Command, args []string) {
 		book.Title = book.URL
 	}
 
+	// Save bookmark image to local disk
+	u2, err := uuid.NewV4()
+	if err != nil {
+		checkError(err)
+	}
+	imgPath := fp.Join(h.dataDir, "thumb", u2.String())
+	err = downloadFile(article.Meta.Image, imgPath, 20*time.Second)
+	if err == nil {
+		book.ImageURL = fmt.Sprintf("/thumb/%s", u2)
+	}
+
 	// Save bookmark to database
 	book.ID, err = h.db.InsertBookmark(book)
 	if err != nil {
 		cError.Println(err)
 		return
-	}
-
-	// Save bookmark image to local disk
-	imgPath := fp.Join(h.dataDir, "thumb", fmt.Sprintf("%d", book.ID))
-	err = downloadFile(article.Meta.Image, imgPath, 20*time.Second)
-	if err == nil {
-		book.ImageURL = fmt.Sprintf("/thumb/%d", book.ID)
 	}
 
 	printBookmarks(book)
@@ -332,11 +337,19 @@ func (h *cmdHandler) updateBookmarks(cmd *cobra.Command, args []string) {
 					book.Excerpt = article.Meta.Excerpt
 				}
 
-				// Update bookmark image in local disk
-				imgPath := fp.Join(h.dataDir, "thumb", fmt.Sprintf("%d", book.ID))
+				// Save bookmark image to local disk
+				u2, err := uuid.NewV4()
+				if err != nil {
+					mx.Lock()
+					errorMsg := fmt.Sprintf("Failed generate uuid")
+					listErrorMsg = append(listErrorMsg, errorMsg)
+					mx.Unlock()
+					return
+				}
+				imgPath := fp.Join(h.dataDir, "thumb", u2.String())
 				err = downloadFile(article.Meta.Image, imgPath, 20*time.Second)
 				if err == nil {
-					book.ImageURL = fmt.Sprintf("/thumb/%d", book.ID)
+					book.ImageURL = fmt.Sprintf("/thumb/%s", u2)
 				}
 
 				// Update list of bookmarks

@@ -184,7 +184,7 @@ func (db *PostgreSQLDatabase) GetBookmarks(withContent bool, ids ...int) ([]mode
 	whereClause := " WHERE true"
 
 	if len(ids) > 0 {
-		whereClause = " WHERE id IN ("
+		whereClause = " WHERE b.id IN ("
 		i := 1
 		for _, id := range ids {
 			args = append(args, id)
@@ -197,10 +197,10 @@ func (db *PostgreSQLDatabase) GetBookmarks(withContent bool, ids ...int) ([]mode
 	}
 
 	// Fetch bookmarks
-	query := `SELECT id, 
-		url, title, image_url, excerpt, author, 
-		min_read_time, max_read_time, modified
-		FROM bookmark` + whereClause
+	query := `SELECT b.id, 
+		b.url, b.title, b.image_url, b.excerpt, b.author, 
+		b.min_read_time, b.max_read_time, b.modified, bc.content <> '' has_content
+		FROM bookmark b LEFT JOIN bookmark_content bc ON bc.docid = b.id ` + whereClause
 
 	bookmarks := []model.Bookmark{}
 	err := db.Select(&bookmarks, query, args...)
@@ -303,12 +303,14 @@ func (db *PostgreSQLDatabase) SearchBookmarks(orderLatest bool, keyword string, 
 	args := []interface{}{}
 
 	// Create where clause for keyword
+	i := 1
 	if keyword != "" {
-		whereClause += ` AND (url LIKE ? OR id IN (
+		whereClause += ` AND (url LIKE $1 OR id IN (
 			SELECT docid FROM bookmark_content 
-			WHERE MATCH(title,content) AGAINST (?) )
+			WHERE MATCH(title,content) AGAINST ($2) )
 		)`
 		args = append(args, "%"+keyword+"%", keyword)
+		i = i + 2
 	}
 
 	// Create where clause for tags
@@ -319,13 +321,14 @@ func (db *PostgreSQLDatabase) SearchBookmarks(orderLatest bool, keyword string, 
 
 		for _, tag := range tags {
 			args = append(args, tag)
-			whereTagClause += "?,"
+			whereTagClause += fmt.Sprintf("$%d,", i)
+			i = i + 1
 		}
 
 		whereTagClause = whereTagClause[:len(whereTagClause)-1]
-	whereTagClause += `)) GROUP BY bookmark_id HAVING COUNT(bookmark_id) >= ?)`
+		whereTagClause += fmt.Sprintf(`)) GROUP BY bookmark_id HAVING COUNT(bookmark_id) >= $%d)`, i)
+		i = i + 1 
 		args = append(args, len(tags))
-
 		whereClause += whereTagClause
 	}
 
