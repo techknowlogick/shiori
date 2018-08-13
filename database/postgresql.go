@@ -20,8 +20,8 @@ type PostgreSQLDatabase struct {
 // OpenPostgreSQLDatabase creates and opens a connection the PostgreSQL Database
 func OpenPostgreSQLDatabase(host, username, password, dbname string) (*PostgreSQLDatabase, error) {
 	var err error
-	connString := fmt.Sprintf("%s:%s@/%s", username, password, dbname)
-	db := sqlx.MustConnect("postgresql", connString)
+	connString := fmt.Sprintf("postgres://%s:%s@%s/%s?sslmode=disable", username, password, host, dbname)
+	db := sqlx.MustConnect("postgres", connString)
 	db.SetMaxOpenConns(100)
 	db.SetConnMaxLifetime(time.Second)
 
@@ -41,13 +41,13 @@ func OpenPostgreSQLDatabase(host, username, password, dbname string) (*PostgreSQ
 
 	tables := []string{`
 	CREATE TABLE IF NOT EXISTS account(
-		id INTEGER PRIMARY KEY AUTO_INCREMENT,
+		id serial primary key,
 		username VARCHAR(250) UNIQUE NOT NULL,
 		password VARCHAR(100) NOT NULL
 	)
 	`, `
 	CREATE TABLE IF NOT EXISTS bookmark( 
-		id INTEGER PRIMARY KEY AUTO_INCREMENT,
+		id serial primary key,
 		url VARCHAR(512) UNIQUE NOT NULL,
 		title TEXT NOT NULL,
 		image_url TEXT NOT NULL, 
@@ -59,25 +59,20 @@ func OpenPostgreSQLDatabase(host, username, password, dbname string) (*PostgreSQ
 	)
 	`, `
 	CREATE TABLE IF NOT EXISTS tag( 
-		id INTEGER PRIMARY KEY AUTO_INCREMENT, 
+		id serial primary key,
 		name VARCHAR(512) UNIQUE NOT NULL
 	)
 	`, `
 	CREATE TABLE IF NOT EXISTS bookmark_tag(
 		bookmark_id INTEGER NOT NULL,
-		tag_id INTEGER NOT NULL, 
-		PRIMARY KEY(bookmark_id,tag_id),
-		FOREIGN KEY (tag_id) REFERENCES tag(id),
-		FOREIGN KEY(bookmark_id) REFERENCES bookmark(id)
+		tag_id INTEGER NOT NULL
 	)
 	`, `
 	CREATE TABLE IF NOT EXISTS bookmark_content (
 		docid INTEGER NOT NULL,
 		title TEXT,
 		content TEXT,
-		html TEXT,
-		FULLTEXT(title,content),
-		FOREIGN KEY(docid) REFERENCES bookmark(id)
+		html TEXT
 	)
 	`,
 	}
@@ -128,7 +123,7 @@ func (db *PostgreSQLDatabase) InsertBookmark(bookmark model.Bookmark) (bookmarkI
 	res := tx.MustExec(`INSERT INTO bookmark (
 		url, title, image_url, excerpt, author, 
 		min_read_time, max_read_time, modified) 
-		VALUES(?, ?, ?, ?, ?, ?, ?, ?)`,
+		VALUES($1, $2, $3, $4, $5, $6, $7, $8)`,
 		bookmark.URL,
 		bookmark.Title,
 		bookmark.ImageURL,
@@ -145,17 +140,17 @@ func (db *PostgreSQLDatabase) InsertBookmark(bookmark model.Bookmark) (bookmarkI
 
 	// Save bookmark content
 	tx.MustExec(`INSERT INTO bookmark_content 
-		(docid, title, content, html) VALUES (?, ?, ?, ?)`,
+		(docid, title, content, html) VALUES ($1, $2, $3, $4)`,
 		bookmarkID, bookmark.Title, bookmark.Content, bookmark.HTML)
 
 	// Save tags
-	stmtGetTag, err := tx.Preparex(`SELECT id FROM tag WHERE name = ?`)
+	stmtGetTag, err := tx.Preparex(`SELECT id FROM tag WHERE name = $1`)
 	checkError(err)
 
-	stmtInsertTag, err := tx.Preparex(`INSERT INTO tag (name) VALUES (?)`)
+	stmtInsertTag, err := tx.Preparex(`INSERT INTO tag (name) VALUES ($1)`)
 	checkError(err)
 
-	stmtInsertBookmarkTag, err := tx.Preparex(`INSERT IGNORE INTO bookmark_tag (tag_id, bookmark_id) VALUES (?, ?)`)
+	stmtInsertBookmarkTag, err := tx.Preparex(`INSERT INTO bookmark_tag (tag_id, bookmark_id) VALUES ($1, $2)`)
 	checkError(err)
 
 	for _, tag := range bookmark.Tags {
@@ -188,13 +183,15 @@ func (db *PostgreSQLDatabase) GetBookmarks(withContent bool, ids ...int) ([]mode
 
 	// Prepare where clause
 	args := []interface{}{}
-	whereClause := " WHERE 1"
+	whereClause := " WHERE true"
 
 	if len(ids) > 0 {
 		whereClause = " WHERE id IN ("
+		i := 1
 		for _, id := range ids {
 			args = append(args, id)
-			whereClause += "?,"
+			whereClause += fmt.Sprintf("$%d, ",i)
+			i=i+1
 		}
 
 		whereClause = whereClause[:len(whereClause)-1]
@@ -216,12 +213,12 @@ func (db *PostgreSQLDatabase) GetBookmarks(withContent bool, ids ...int) ([]mode
 	// Fetch tags and contents for each bookmarks
 	stmtGetTags, err := db.Preparex(`SELECT t.id, t.name 
 		FROM bookmark_tag bt LEFT JOIN tag t ON bt.tag_id = t.id
-		WHERE bt.bookmark_id = ? ORDER BY t.name`)
+		WHERE bt.bookmark_id = $1 ORDER BY t.name`)
 	if err != nil {
 		return nil, err
 	}
 
-	stmtGetContent, err := db.Preparex(`SELECT title, content, html FROM bookmark_content WHERE docid = ?`)
+	stmtGetContent, err := db.Preparex(`SELECT title, content, html FROM bookmark_content WHERE docid = $1`)
 	if err != nil {
 		return nil, err
 	}
@@ -254,7 +251,7 @@ func (db *PostgreSQLDatabase) DeleteBookmarks(ids ...int) (err error) {
 
 	// Create args and where clause
 	args := []interface{}{}
-	whereClause := " WHERE 1"
+	whereClause := " "
 
 	if len(ids) > 0 {
 		whereClause = " WHERE id IN ("
@@ -302,7 +299,7 @@ func (db *PostgreSQLDatabase) DeleteBookmarks(ids ...int) (err error) {
 func (db *PostgreSQLDatabase) SearchBookmarks(orderLatest bool, keyword string, tags ...string) ([]model.Bookmark, error) {
 	// Create initial variable
 	keyword = strings.TrimSpace(keyword)
-	whereClause := "WHERE 1"
+	whereClause := " WHERE true "
 	args := []interface{}{}
 
 	// Create where clause for keyword
@@ -326,7 +323,7 @@ func (db *PostgreSQLDatabase) SearchBookmarks(orderLatest bool, keyword string, 
 		}
 
 		whereTagClause = whereTagClause[:len(whereTagClause)-1]
-		whereTagClause += `)) GROUP BY bookmark_id HAVING COUNT(bookmark_id) >= ?)`
+	whereTagClause += `)) GROUP BY bookmark_id HAVING COUNT(bookmark_id) >= ?)`
 		args = append(args, len(tags))
 
 		whereClause += whereTagClause
@@ -351,7 +348,7 @@ func (db *PostgreSQLDatabase) SearchBookmarks(orderLatest bool, keyword string, 
 	// Fetch tags for each bookmarks
 	stmtGetTags, err := db.Preparex(`SELECT t.id, t.name 
 		FROM bookmark_tag bt LEFT JOIN tag t ON bt.tag_id = t.id
-		WHERE bt.bookmark_id = ? ORDER BY t.name`)
+		WHERE bt.bookmark_id = $1 ORDER BY t.name`)
 	if err != nil {
 		return nil, err
 	}
@@ -391,24 +388,24 @@ func (db *PostgreSQLDatabase) UpdateBookmarks(bookmarks ...model.Bookmark) (resu
 
 	// Prepare statement
 	stmtUpdateBookmark, err := tx.Preparex(`UPDATE bookmark SET
-		url = ?, title = ?, image_url = ?, excerpt = ?, author = ?,
-		min_read_time = ?, max_read_time = ?, modified = ? WHERE id = ?`)
+		url = $1, title = $2, image_url = $3, excerpt = $4, author = $5,
+		min_read_time = $6, max_read_time = $7, modified = $8 WHERE id = $9`)
 	checkError(err)
 
 	stmtUpdateBookmarkContent, err := tx.Preparex(`UPDATE bookmark_content SET
-		title = ?, content = ?, html = ? WHERE docid = ?`)
+		title = $1, content = $2, html = $3 WHERE docid = $4`)
 	checkError(err)
 
-	stmtGetTag, err := tx.Preparex(`SELECT id FROM tag WHERE name = ?`)
+	stmtGetTag, err := tx.Preparex(`SELECT id FROM tag WHERE name = $1`)
 	checkError(err)
 
-	stmtInsertTag, err := tx.Preparex(`INSERT INTO tag (name) VALUES (?)`)
+	stmtInsertTag, err := tx.Preparex(`INSERT INTO tag (name) VALUES ($1)`)
 	checkError(err)
 
-	stmtInsertBookmarkTag, err := tx.Preparex(`INSERT IGNORE INTO bookmark_tag (tag_id, bookmark_id) VALUES (?, ?)`)
+	stmtInsertBookmarkTag, err := tx.Preparex(`INSERT INTO bookmark_tag (tag_id, bookmark_id) VALUES ($1, $2)`)
 	checkError(err)
 
-	stmtDeleteBookmarkTag, err := tx.Preparex(`DELETE FROM bookmark_tag WHERE bookmark_id = ? AND tag_id = ?`)
+	stmtDeleteBookmarkTag, err := tx.Preparex(`DELETE FROM bookmark_tag WHERE bookmark_id = $1 AND tag_id = $2`)
 	checkError(err)
 
 	result = []model.Bookmark{}
@@ -475,8 +472,7 @@ func (db *PostgreSQLDatabase) CreateAccount(username, password string) (err erro
 	}
 
 	// Insert account to database
-	_, err = db.Exec(`INSERT INTO account
-		(username, password) VALUES (?, ?)`,
+	_, err = db.Exec(`INSERT INTO account (username, password) VALUES ($1, $2)`,
 		username, hashedPassword)
 
 	return err
@@ -486,7 +482,7 @@ func (db *PostgreSQLDatabase) CreateAccount(username, password string) (err erro
 func (db *PostgreSQLDatabase) GetAccount(username string) (model.Account, error) {
 	account := model.Account{}
 	err := db.Get(&account,
-		`SELECT id, username, password FROM account WHERE username = ?`,
+		`SELECT id, username, password FROM account WHERE username = $1`,
 		username)
 	return account, err
 }
@@ -496,13 +492,8 @@ func (db *PostgreSQLDatabase) GetAccounts(keyword string) ([]model.Account, erro
 	query := `SELECT id, username, password FROM account`
 	args := []interface{}{}
 	if keyword != "" {
-		if false {
-			query += ` WHERE username = ?`
-			args = append(args, keyword)
-		} else {
-			query += ` WHERE username LIKE ?`
-			args = append(args, "%"+keyword+"%")
-		}
+		query += ` WHERE username LIKE ?`
+		args = append(args, "%"+keyword+"%")
 	}
 	query += ` ORDER BY username`
 
@@ -515,7 +506,7 @@ func (db *PostgreSQLDatabase) GetAccounts(keyword string) ([]model.Account, erro
 func (db *PostgreSQLDatabase) DeleteAccounts(usernames ...string) error {
 	// Prepare where clause
 	args := []interface{}{}
-	whereClause := " WHERE 1"
+	whereClause := " WHERE true"
 
 	if len(usernames) > 0 {
 		whereClause = " WHERE username IN ("
@@ -539,7 +530,7 @@ func (db *PostgreSQLDatabase) GetTags() ([]model.Tag, error) {
 	query := `SELECT bt.tag_id id, t.name, COUNT(bt.tag_id) n_bookmarks 
 		FROM bookmark_tag bt 
 		LEFT JOIN tag t ON bt.tag_id = t.id
-		GROUP BY bt.tag_id ORDER BY t.name`
+		GROUP BY bt.tag_id, t.name ORDER BY t.name`
 
 	err := db.Select(&tags, query)
 	if err != nil && err != sql.ErrNoRows {
@@ -552,7 +543,7 @@ func (db *PostgreSQLDatabase) GetTags() ([]model.Tag, error) {
 // GetNewID creates new ID for specified table
 func (db *PostgreSQLDatabase) GetNewID(table string) (int, error) {
 	var tableID int
-	query := fmt.Sprintf(`SELECT IFNULL(MAX(id) + 1, 1) FROM %s`, table)
+	query := fmt.Sprintf(`SELECT coalesce(MAX(id) + 1, 1) FROM %s`, table)
 
 	err := db.Get(&tableID, query)
 	if err != nil && err != sql.ErrNoRows {
@@ -565,6 +556,6 @@ func (db *PostgreSQLDatabase) GetNewID(table string) (int, error) {
 // GetBookmarkID fetchs bookmark ID based by its url
 func (db *PostgreSQLDatabase) GetBookmarkID(url string) int {
 	var bookmarkID int
-	db.Get(&bookmarkID, `SELECT id FROM bookmark WHERE url = ?`, url)
+	db.Get(&bookmarkID, `SELECT id FROM bookmark WHERE url = $1`, url)
 	return bookmarkID
 }
