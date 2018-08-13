@@ -121,10 +121,6 @@ func (h *webHandler) apiInsertBookmark(w http.ResponseWriter, r *http.Request, p
 	clearUTMParams(parsedURL)
 	book.URL = parsedURL.String()
 
-	// Get new bookmark id
-	// book.ID, err = h.db.GetNewID("bookmark")
-	// checkError(err)
-
 	// Fetch data from internet
 	article, _ := readability.FromURL(parsedURL, 20*time.Second)
 

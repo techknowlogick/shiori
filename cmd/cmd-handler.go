@@ -34,7 +34,6 @@ func (h *cmdHandler) addBookmark(cmd *cobra.Command, args []string) {
 	title, _ := cmd.Flags().GetString("title")
 	excerpt, _ := cmd.Flags().GetString("excerpt")
 	tags, _ := cmd.Flags().GetStringSlice("tags")
-	offline, _ := cmd.Flags().GetBool("offline")
 
 	// Make sure URL valid
 	parsedURL, err := nurl.Parse(url)
@@ -67,31 +66,22 @@ func (h *cmdHandler) addBookmark(cmd *cobra.Command, args []string) {
 		book.Tags[i].Name = strings.TrimSpace(tag)
 	}
 
-	// If it's not offline mode, fetch data from internet
-	if !offline {
-		article, _ := readability.FromURL(parsedURL, 20*time.Second)
+	// fetch data from internet
+	article, _ := readability.FromURL(parsedURL, 20*time.Second)
 
-		book.Author = article.Meta.Author
-		book.MinReadTime = article.Meta.MinReadTime
-		book.MaxReadTime = article.Meta.MaxReadTime
-		book.Content = article.Content
-		book.HTML = article.RawContent
+	book.Author = article.Meta.Author
+	book.MinReadTime = article.Meta.MinReadTime
+	book.MaxReadTime = article.Meta.MaxReadTime
+	book.Content = article.Content
+	book.HTML = article.RawContent
 
-		// If title and excerpt doesnt have submitted value, use from article
-		if book.Title == "" {
-			book.Title = article.Meta.Title
-		}
+	// If title and excerpt doesnt have submitted value, use from article
+	if book.Title == "" {
+		book.Title = article.Meta.Title
+	}
 
-		if book.Excerpt == "" {
-			book.Excerpt = article.Meta.Excerpt
-		}
-
-		// Save bookmark image to local disk
-		imgPath := fp.Join(h.dataDir, "thumb", fmt.Sprintf("%d", book.ID))
-		err = downloadFile(article.Meta.Image, imgPath, 20*time.Second)
-		if err == nil {
-			book.ImageURL = fmt.Sprintf("/thumb/%d", book.ID)
-		}
+	if book.Excerpt == "" {
+		book.Excerpt = article.Meta.Excerpt
 	}
 
 	// Make sure title is not empty
@@ -100,10 +90,17 @@ func (h *cmdHandler) addBookmark(cmd *cobra.Command, args []string) {
 	}
 
 	// Save bookmark to database
-	_, err = h.db.InsertBookmark(book)
+	book.ID, err = h.db.InsertBookmark(book)
 	if err != nil {
 		cError.Println(err)
 		return
+	}
+
+	// Save bookmark image to local disk
+	imgPath := fp.Join(h.dataDir, "thumb", fmt.Sprintf("%d", book.ID))
+	err = downloadFile(article.Meta.Image, imgPath, 20*time.Second)
+	if err == nil {
+		book.ImageURL = fmt.Sprintf("/thumb/%d", book.ID)
 	}
 
 	printBookmarks(book)
