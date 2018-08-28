@@ -7,8 +7,8 @@ import (
 	"time"
 
 	"code.techknowlogick.com/techknowlogick/shiori/model"
-	_ "github.com/lib/pq" // db driver
 	"github.com/jmoiron/sqlx"
+	_ "github.com/lib/pq" // db driver
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -85,7 +85,6 @@ func OpenPostgreSQLDatabase(host, username, password, dbname string) (*PostgreSQ
 
 	return &PostgreSQLDatabase{*db}, nil
 }
-
 
 // CreateBookmark saves new bookmark to database. Returns new ID and error if any happened.
 func (db *PostgreSQLDatabase) InsertBookmark(bookmark model.Bookmark) (bookmarkID int, err error) {
@@ -188,8 +187,8 @@ func (db *PostgreSQLDatabase) GetBookmarks(withContent bool, ids ...int) ([]mode
 		i := 1
 		for _, id := range ids {
 			args = append(args, id)
-			whereClause += fmt.Sprintf("$%d, ",i)
-			i=i+1
+			whereClause += fmt.Sprintf("$%d, ", i)
+			i = i + 1
 		}
 
 		whereClause = whereClause[:len(whereClause)-2]
@@ -256,8 +255,8 @@ func (db *PostgreSQLDatabase) DeleteBookmarks(ids ...int) (err error) {
 		i := 1
 		for _, id := range ids {
 			args = append(args, id)
-			whereClause += fmt.Sprintf("$%d, ",i)
-			i=i+1
+			whereClause += fmt.Sprintf("$%d, ", i)
+			i = i + 1
 		}
 
 		whereClause = whereClause[:len(whereClause)-2]
@@ -327,7 +326,7 @@ func (db *PostgreSQLDatabase) SearchBookmarks(orderLatest bool, keyword string, 
 
 		whereTagClause = whereTagClause[:len(whereTagClause)-1]
 		whereTagClause += fmt.Sprintf(`)) GROUP BY bookmark_id HAVING COUNT(bookmark_id) >= $%d)`, i)
-		i = i + 1 
+		i = i + 1
 		args = append(args, len(tags))
 		whereClause += whereTagClause
 	}
@@ -515,8 +514,8 @@ func (db *PostgreSQLDatabase) DeleteAccounts(usernames ...string) error {
 		i := 1
 		for _, username := range usernames {
 			args = append(args, username)
-			whereClause += fmt.Sprintf("$%d, ",i)
-			i=i+1
+			whereClause += fmt.Sprintf("$%d, ", i)
+			i = i + 1
 		}
 
 		whereClause = whereClause[:len(whereClause)-2]

@@ -13,12 +13,12 @@ import (
 	"time"
 
 	"code.techknowlogick.com/techknowlogick/shiori/model"
-	"github.com/go-shiori/go-readability"
 	valid "github.com/asaskevich/govalidator"
 	jwt "github.com/dgrijalva/jwt-go"
+	"github.com/go-shiori/go-readability"
+	"github.com/gofrs/uuid"
 	"github.com/julienschmidt/httprouter"
 	"golang.org/x/crypto/bcrypt"
-	"github.com/gofrs/uuid"
 )
 
 // login is handler for POST /api/login

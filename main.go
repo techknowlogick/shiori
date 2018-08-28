@@ -3,8 +3,8 @@
 package main
 
 import (
-	fp "path/filepath"
 	"os"
+	fp "path/filepath"
 
 	"code.techknowlogick.com/techknowlogick/shiori/cmd"
 	dt "code.techknowlogick.com/techknowlogick/shiori/database"
