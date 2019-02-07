@@ -113,7 +113,7 @@
                 </div>
                 <div class="bookmark" v-for="(book, idx) in visibleBookmarks" :class="{selected: isSelected(idx)}">
                     <a class="bookmark-selector" v-if="editMode" @click="toggleSelection(idx)"></a>
-                    <a class="bookmark-link" :href="getBookLink(book, true)" :title="getBookLinkTitle(book, true)" target="_blank">
+                    <a class="bookmark-link" :href="getBookLink(book, true)" :title="getBookLinkTitle(book, true)" rel="noopener noreferrer nofollow" target="_blank">
                         <img v-if="book.imageURL !== ''" :src="book.imageURL">
                         <p class="title">{{book.title}}</p>
                         <p class="excerpt" v-if="book.imageURL === ''">{{book.excerpt}}</p>
@@ -124,7 +124,7 @@
                     </div>
                     <div class="spacer"></div>
                     <div class="bookmark-menu">
-                        <a class="url" :href="getBookLink(book, false)" :title="getBookLinkTitle(book, false)" target="_blank">
+                        <a class="url" :href="getBookLink(book, false)" :title="getBookLinkTitle(book, false)" rel="noopener noreferrer nofollow" target="_blank">
                             {{getHostname(book.url)}}
                         </a>
                         <a title="Edit bookmark" @click="showDialogEdit(idx)">
@@ -164,9 +164,9 @@
         <yla-dialog id="dialog-about" v-bind="dialogAbout">
             <p>
                 Shiori is a simple bookmarks manager written in Go language, developed by
-                <a target="_blank" href="https://github.com/RadhiFadlillah">Radhi Fadlillah</a> and other
-                <a target="_blank" href="https://github.com/RadhiFadlillah/shiori/graphs/contributors">contributors</a>. The source code is available on
-                <a target="_blank" href="https://github.com/RadhiFadlillah/shiori">GitHub</a> and released under MIT license.
+                <a rel="noopener noreferrer nofollow" target="_blank" href="https://github.com/RadhiFadlillah">Radhi Fadlillah</a> and other
+                <a rel="noopener noreferrer nofollow" target="_blank" href="https://github.com/RadhiFadlillah/shiori/graphs/contributors">contributors</a>. The source code is available on
+                <a rel="noopener noreferrer nofollow" target="_blank" href="https://github.com/RadhiFadlillah/shiori">GitHub</a> and released under MIT license.
             </p>
             <p>For ease of use, you can install the Shiori Bookmarklet by dragging this link (
                 <a :href="bookmarklet" onclick="event.preventDefault()">+Shiori</a>) to your bookmark bar.
