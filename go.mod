@@ -20,7 +20,7 @@ require (
 	github.com/mattn/go-isatty v0.0.3 // indirect
 	github.com/mattn/go-sqlite3 v1.9.0
 	github.com/mitchellh/go-homedir v0.0.0-20180801233206-58046073cbff // indirect
-	github.com/muesli/go-app-paths v0.0.0-20180316084437-7553d996d008
+	github.com/muesli/go-app-paths v0.0.0-20190207224558-913f7f7ac60f
 	github.com/onsi/ginkgo v1.7.0 // indirect
 	github.com/onsi/gomega v1.4.3 // indirect
 	github.com/shurcooL/httpfs v0.0.0-20181222201310-74dc9339e414 // indirect
