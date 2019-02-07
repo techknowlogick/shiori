@@ -1,0 +1,62 @@
+# github.com/PuerkitoBio/goquery v1.4.1
+github.com/PuerkitoBio/goquery
+# github.com/abadojack/whatlanggo v0.0.0-20180505133106-8ba3f9b6a996
+github.com/abadojack/whatlanggo
+# github.com/andybalholm/cascadia v1.0.0
+github.com/andybalholm/cascadia
+# github.com/asaskevich/govalidator v0.0.0-20180315120708-ccb8e960c48f
+github.com/asaskevich/govalidator
+# github.com/dgrijalva/jwt-go v3.2.0+incompatible
+github.com/dgrijalva/jwt-go
+github.com/dgrijalva/jwt-go/request
+# github.com/fatih/color v1.7.0
+github.com/fatih/color
+# github.com/go-shiori/go-readability v0.0.0-20180803130947-13aa531ebcea
+github.com/go-shiori/go-readability
+# github.com/go-sql-driver/mysql v1.4.0
+github.com/go-sql-driver/mysql
+# github.com/gofrs/uuid v3.0.0+incompatible
+github.com/gofrs/uuid
+# github.com/gosuri/uilive v0.0.0-20170323041506-ac356e6e42cd
+github.com/gosuri/uilive
+# github.com/gosuri/uiprogress v0.0.0-20170224063937-d0567a9d84a1
+github.com/gosuri/uiprogress
+github.com/gosuri/uiprogress/util/strutil
+# github.com/inconshreveable/mousetrap v1.0.0
+github.com/inconshreveable/mousetrap
+# github.com/jmoiron/sqlx v0.0.0-20180614180643-0dae4fefe7c0
+github.com/jmoiron/sqlx
+github.com/jmoiron/sqlx/reflectx
+# github.com/julienschmidt/httprouter v1.1.0
+github.com/julienschmidt/httprouter
+# github.com/lib/pq v0.0.0-20180523175426-90697d60dd84
+github.com/lib/pq
+github.com/lib/pq/oid
+# github.com/mattn/go-colorable v0.0.9
+github.com/mattn/go-colorable
+# github.com/mattn/go-isatty v0.0.3
+github.com/mattn/go-isatty
+# github.com/mattn/go-sqlite3 v1.9.0
+github.com/mattn/go-sqlite3
+# github.com/mitchellh/go-homedir v0.0.0-20180801233206-58046073cbff
+github.com/mitchellh/go-homedir
+# github.com/muesli/go-app-paths v0.0.0-20180316084437-7553d996d008
+github.com/muesli/go-app-paths
+# github.com/sirupsen/logrus v1.0.6
+github.com/sirupsen/logrus
+# github.com/spf13/cobra v0.0.3
+github.com/spf13/cobra
+# github.com/spf13/pflag v1.0.2
+github.com/spf13/pflag
+# golang.org/x/crypto v0.0.0-20180808211826-de0752318171
+golang.org/x/crypto/ssh/terminal
+golang.org/x/crypto/bcrypt
+golang.org/x/crypto/blowfish
+# golang.org/x/net v0.0.0-20180906233101-161cd47e91fd
+golang.org/x/net/html
+golang.org/x/net/html/atom
+# golang.org/x/sys v0.0.0-20180909124046-d0be0721c37e
+golang.org/x/sys/unix
+golang.org/x/sys/windows
+# google.golang.org/appengine v1.1.0
+google.golang.org/appengine/cloudsql
