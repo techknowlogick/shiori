@@ -1,0 +1,11 @@
+services:
+  - docker
+
+script:
+  - docker build -t techknowlogick/shiori:latest .
+
+deploy:
+  provider: script
+  script: bash docker_push
+  on:
+    branch: master
