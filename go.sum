@@ -46,6 +46,7 @@ github.com/mitchellh/go-homedir v0.0.0-20180801233206-58046073cbff h1:jM4Eo4qMmm
 github.com/mitchellh/go-homedir v0.0.0-20180801233206-58046073cbff/go.mod h1:SfyaCUpYCn1Vlf4IUYiD9fPX4A5wJrkLzIz1N1q0pr0=
 github.com/muesli/go-app-paths v0.0.0-20180316084437-7553d996d008 h1:jr7WbdTysB9VxRk5GuFip1y4SeNxBNtyIbJhxJL+mZM=
 github.com/muesli/go-app-paths v0.0.0-20180316084437-7553d996d008/go.mod h1:YIG7FlQLGglsbGA+CX6/boYl9aNdoQXfx+ZtACJCMug=
+github.com/muesli/go-app-paths v0.0.0-20190207224558-913f7f7ac60f/go.mod h1:YIG7FlQLGglsbGA+CX6/boYl9aNdoQXfx+ZtACJCMug=
 github.com/onsi/ginkgo v1.6.0/go.mod h1:lLunBs/Ym6LB5Z9jYTR76FiuTmxDTDusOGeTQH+WWjE=
 github.com/onsi/ginkgo v1.7.0 h1:WSHQ+IS43OoUrWtD1/bbclrwK8TTH5hzp+umCiuxHgs=
 github.com/onsi/ginkgo v1.7.0/go.mod h1:lLunBs/Ym6LB5Z9jYTR76FiuTmxDTDusOGeTQH+WWjE=
