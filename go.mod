@@ -4,7 +4,7 @@ require (
 	github.com/PuerkitoBio/goquery v1.4.1
 	github.com/abadojack/whatlanggo v0.0.0-20180505133106-8ba3f9b6a996 // indirect
 	github.com/andybalholm/cascadia v1.0.0 // indirect
-	github.com/asaskevich/govalidator v0.0.0-20180315120708-ccb8e960c48f
+	github.com/asaskevich/govalidator v0.0.0-20190207205813-f9ffefc3facf
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/fatih/color v1.7.0
 	github.com/go-shiori/go-readability v0.0.0-20180803130947-13aa531ebcea
