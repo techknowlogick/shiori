@@ -42,6 +42,10 @@ github.com/mattn/go-sqlite3
 github.com/mitchellh/go-homedir
 # github.com/muesli/go-app-paths v0.0.0-20180316084437-7553d996d008
 github.com/muesli/go-app-paths
+# github.com/shurcooL/httpfs v0.0.0-20181222201310-74dc9339e414
+github.com/shurcooL/httpfs/vfsutil
+# github.com/shurcooL/vfsgen v0.0.0-20181202132449-6a9ea43bcacd
+github.com/shurcooL/vfsgen
 # github.com/sirupsen/logrus v1.0.6
 github.com/sirupsen/logrus
 # github.com/spf13/cobra v0.0.3
