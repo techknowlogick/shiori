@@ -3,7 +3,7 @@ package database
 import (
 	"database/sql"
 
-	"code.techknowlogick.com/techknowlogick/shiori/model"
+	"github.com/techknowlogick/shiori/model"
 )
 
 // Database is interface for manipulating data in database.

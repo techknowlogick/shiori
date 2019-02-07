@@ -12,7 +12,7 @@ import (
 	"sync"
 	"time"
 
-	"code.techknowlogick.com/techknowlogick/shiori/model"
+	"github.com/techknowlogick/shiori/model"
 	valid "github.com/asaskevich/govalidator"
 	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/go-shiori/go-readability"

@@ -1,9 +1,9 @@
 package cmd
 
 import (
-	"code.techknowlogick.com/techknowlogick/shiori/cmd/account"
-	"code.techknowlogick.com/techknowlogick/shiori/cmd/serve"
-	dt "code.techknowlogick.com/techknowlogick/shiori/database"
+	"github.com/techknowlogick/shiori/cmd/account"
+	"github.com/techknowlogick/shiori/cmd/serve"
+	dt "github.com/techknowlogick/shiori/database"
 	"github.com/spf13/cobra"
 )
 

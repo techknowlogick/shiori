@@ -1,7 +1,7 @@
 package account
 
 import (
-	dt "code.techknowlogick.com/techknowlogick/shiori/database"
+	dt "github.com/techknowlogick/shiori/database"
 	"github.com/fatih/color"
 	"github.com/spf13/cobra"
 )

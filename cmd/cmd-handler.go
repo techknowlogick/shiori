@@ -12,8 +12,8 @@ import (
 	"sync"
 	"time"
 
-	dt "code.techknowlogick.com/techknowlogick/shiori/database"
-	"code.techknowlogick.com/techknowlogick/shiori/model"
+	dt "github.com/techknowlogick/shiori/database"
+	"github.com/techknowlogick/shiori/model"
 	"github.com/PuerkitoBio/goquery"
 	valid "github.com/asaskevich/govalidator"
 	"github.com/go-shiori/go-readability"

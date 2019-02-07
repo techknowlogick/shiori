@@ -7,7 +7,7 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	dt "code.techknowlogick.com/techknowlogick/shiori/database"
+	dt "github.com/techknowlogick/shiori/database"
 	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/dgrijalva/jwt-go/request"
 )

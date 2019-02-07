@@ -6,8 +6,8 @@ import (
 	"os"
 	fp "path/filepath"
 
-	"code.techknowlogick.com/techknowlogick/shiori/cmd"
-	dt "code.techknowlogick.com/techknowlogick/shiori/database"
+	"github.com/techknowlogick/shiori/cmd"
+	dt "github.com/techknowlogick/shiori/database"
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/sirupsen/logrus"
 )

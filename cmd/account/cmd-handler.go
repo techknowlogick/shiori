@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"syscall"
 
-	dt "code.techknowlogick.com/techknowlogick/shiori/database"
+	dt "github.com/techknowlogick/shiori/database"
 	"github.com/spf13/cobra"
 	"golang.org/x/crypto/ssh/terminal"
 )
