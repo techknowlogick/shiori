@@ -1,10 +1,10 @@
 # github.com/PuerkitoBio/goquery v1.4.1
 github.com/PuerkitoBio/goquery
-# github.com/abadojack/whatlanggo v0.0.0-20180505133106-8ba3f9b6a996
+# github.com/abadojack/whatlanggo v0.0.0-20190207205756-01d4c01a5a7c
 github.com/abadojack/whatlanggo
 # github.com/andybalholm/cascadia v1.0.0
 github.com/andybalholm/cascadia
-# github.com/asaskevich/govalidator v0.0.0-20180315120708-ccb8e960c48f
+# github.com/asaskevich/govalidator v0.0.0-20190207205813-f9ffefc3facf
 github.com/asaskevich/govalidator
 # github.com/dgrijalva/jwt-go v3.2.0+incompatible
 github.com/dgrijalva/jwt-go
@@ -13,9 +13,9 @@ github.com/dgrijalva/jwt-go/request
 github.com/fatih/color
 # github.com/go-shiori/go-readability v0.0.0-20180803130947-13aa531ebcea
 github.com/go-shiori/go-readability
-# github.com/go-sql-driver/mysql v1.4.0
+# github.com/go-sql-driver/mysql v1.4.1
 github.com/go-sql-driver/mysql
-# github.com/gofrs/uuid v3.0.0+incompatible
+# github.com/gofrs/uuid v3.2.0+incompatible
 github.com/gofrs/uuid
 # github.com/gosuri/uilive v0.0.0-20170323041506-ac356e6e42cd
 github.com/gosuri/uilive
@@ -40,7 +40,7 @@ github.com/mattn/go-isatty
 github.com/mattn/go-sqlite3
 # github.com/mitchellh/go-homedir v0.0.0-20180801233206-58046073cbff
 github.com/mitchellh/go-homedir
-# github.com/muesli/go-app-paths v0.0.0-20180316084437-7553d996d008
+# github.com/muesli/go-app-paths v0.0.0-20190207224558-913f7f7ac60f
 github.com/muesli/go-app-paths
 # github.com/shurcooL/httpfs v0.0.0-20181222201310-74dc9339e414
 github.com/shurcooL/httpfs/vfsutil
@@ -52,7 +52,7 @@ github.com/sirupsen/logrus
 github.com/spf13/cobra
 # github.com/spf13/pflag v1.0.2
 github.com/spf13/pflag
-# golang.org/x/crypto v0.0.0-20180808211826-de0752318171
+# golang.org/x/crypto v0.0.0-20190207224619-b8fe1690c613
 golang.org/x/crypto/ssh/terminal
 golang.org/x/crypto/bcrypt
 golang.org/x/crypto/blowfish

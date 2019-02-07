@@ -9,7 +9,7 @@ require (
 	github.com/fatih/color v1.7.0
 	github.com/go-shiori/go-readability v0.0.0-20180803130947-13aa531ebcea
 	github.com/go-sql-driver/mysql v1.4.1
-	github.com/gofrs/uuid v3.2.0
+	github.com/gofrs/uuid v3.2.0+incompatible
 	github.com/gosuri/uilive v0.0.0-20170323041506-ac356e6e42cd // indirect
 	github.com/gosuri/uiprogress v0.0.0-20170224063937-d0567a9d84a1
 	github.com/inconshreveable/mousetrap v1.0.0 // indirect

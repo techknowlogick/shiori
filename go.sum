@@ -2,11 +2,13 @@ github.com/PuerkitoBio/goquery v1.4.1 h1:smcIRGdYm/w7JSbcdeLHEMzxmsBQvl8lhf0dSw2
 github.com/PuerkitoBio/goquery v1.4.1/go.mod h1:T9ezsOHcCrDCgA8aF1Cqr3sSYbO/xgdy8/R/XiIMAhA=
 github.com/abadojack/whatlanggo v0.0.0-20180505133106-8ba3f9b6a996 h1:LQZO7fTPF3A+1joNAOvXKjs2ItOjGBZ4zwBU9hfVGFA=
 github.com/abadojack/whatlanggo v0.0.0-20180505133106-8ba3f9b6a996/go.mod h1:JdU7lKuvX8qqAFrjw25JGWCVmbEzBknb3+L69+8BRJo=
+github.com/abadojack/whatlanggo v0.0.0-20190207205756-01d4c01a5a7c h1:8Y5aGMtMKIytxF3b6FToZijyvpscJP3ORR+Gd13IWeU=
 github.com/abadojack/whatlanggo v0.0.0-20190207205756-01d4c01a5a7c/go.mod h1:JdU7lKuvX8qqAFrjw25JGWCVmbEzBknb3+L69+8BRJo=
 github.com/andybalholm/cascadia v1.0.0 h1:hOCXnnZ5A+3eVDX8pvgl4kofXv2ELss0bKcqRySc45o=
 github.com/andybalholm/cascadia v1.0.0/go.mod h1:GsXiBklL0woXo1j/WYWtSYYC4ouU9PqHO0sqidkEA4Y=
 github.com/asaskevich/govalidator v0.0.0-20180315120708-ccb8e960c48f h1:y2hSFdXeA1y5z5f0vfNO0Dg5qVY036qzlz3Pds0B92o=
 github.com/asaskevich/govalidator v0.0.0-20180315120708-ccb8e960c48f/go.mod h1:lB+ZfQJz7igIIfQNfa7Ml4HSf2uFQQRzpGGRXenZAgY=
+github.com/asaskevich/govalidator v0.0.0-20190207205813-f9ffefc3facf h1:AB3uE0KKcKS+7VIadhrr+yK7beZm+kca0GrRn2nak0I=
 github.com/asaskevich/govalidator v0.0.0-20190207205813-f9ffefc3facf/go.mod h1:lB+ZfQJz7igIIfQNfa7Ml4HSf2uFQQRzpGGRXenZAgY=
 github.com/davecgh/go-spew v1.1.0 h1:ZDRjVQ15GmhC3fiQ8ni8+OwkZQO4DARzQgrnXU1Liz8=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
@@ -20,9 +22,11 @@ github.com/go-shiori/go-readability v0.0.0-20180803130947-13aa531ebcea h1:L8rbe+
 github.com/go-shiori/go-readability v0.0.0-20180803130947-13aa531ebcea/go.mod h1:3CKDJ+wAIJjcVnB+q71vghT7z8619JWBC8C/K0nqRMI=
 github.com/go-sql-driver/mysql v1.4.0 h1:7LxgVwFb2hIQtMm87NdgAVfXjnt4OePseqT1tKx+opk=
 github.com/go-sql-driver/mysql v1.4.0/go.mod h1:zAC/RDZ24gD3HViQzih4MyKcchzm+sOG5ZlKdlhCg5w=
+github.com/go-sql-driver/mysql v1.4.1 h1:g24URVg0OFbNUTx9qqY1IRZ9D9z3iPyi5zKhQZpNwpA=
 github.com/go-sql-driver/mysql v1.4.1/go.mod h1:zAC/RDZ24gD3HViQzih4MyKcchzm+sOG5ZlKdlhCg5w=
 github.com/gofrs/uuid v3.0.0+incompatible h1:sJLIdkd8DIecyzMGF35Su8jzQtdaa/8H+PuK72x64hY=
 github.com/gofrs/uuid v3.0.0+incompatible/go.mod h1:b2aQJv3Z4Fp6yNu3cdSllBxTCLRxnplIgP/c0N/04lM=
+github.com/gofrs/uuid v3.2.0+incompatible h1:y12jRkkFxsd7GpqdSZ+/KCs/fJbqpEXSGd4+jfEaewE=
 github.com/gofrs/uuid v3.2.0+incompatible/go.mod h1:b2aQJv3Z4Fp6yNu3cdSllBxTCLRxnplIgP/c0N/04lM=
 github.com/golang/protobuf v1.2.0 h1:P3YflyNX/ehuJFLhxviNdFxQPkGK5cDcApsge1SqnvM=
 github.com/golang/protobuf v1.2.0/go.mod h1:6lQm79b+lXiMfvg/cZm0SGofjICqVBUtrP5yJMmIC1U=
@@ -50,6 +54,7 @@ github.com/mitchellh/go-homedir v0.0.0-20180801233206-58046073cbff h1:jM4Eo4qMmm
 github.com/mitchellh/go-homedir v0.0.0-20180801233206-58046073cbff/go.mod h1:SfyaCUpYCn1Vlf4IUYiD9fPX4A5wJrkLzIz1N1q0pr0=
 github.com/muesli/go-app-paths v0.0.0-20180316084437-7553d996d008 h1:jr7WbdTysB9VxRk5GuFip1y4SeNxBNtyIbJhxJL+mZM=
 github.com/muesli/go-app-paths v0.0.0-20180316084437-7553d996d008/go.mod h1:YIG7FlQLGglsbGA+CX6/boYl9aNdoQXfx+ZtACJCMug=
+github.com/muesli/go-app-paths v0.0.0-20190207224558-913f7f7ac60f h1:kZxF2BAhoMansZuF/fFAPxyAK+QmppWGU2xyDUQywnI=
 github.com/muesli/go-app-paths v0.0.0-20190207224558-913f7f7ac60f/go.mod h1:YIG7FlQLGglsbGA+CX6/boYl9aNdoQXfx+ZtACJCMug=
 github.com/onsi/ginkgo v1.6.0/go.mod h1:lLunBs/Ym6LB5Z9jYTR76FiuTmxDTDusOGeTQH+WWjE=
 github.com/onsi/ginkgo v1.7.0 h1:WSHQ+IS43OoUrWtD1/bbclrwK8TTH5hzp+umCiuxHgs=
@@ -73,6 +78,7 @@ github.com/stretchr/testify v1.3.0 h1:TivCn/peBQ7UY8ooIcPgZFpTNSz0Q2U6UrFlUfqbe0
 github.com/stretchr/testify v1.3.0/go.mod h1:M5WIy9Dh21IEIfnGCwXGc5bZfKNJtfHm1UVUgZn+9EI=
 golang.org/x/crypto v0.0.0-20180808211826-de0752318171 h1:vYogbvSFj2YXcjQxFHu/rASSOt9sLytpCaSkiwQ135I=
 golang.org/x/crypto v0.0.0-20180808211826-de0752318171/go.mod h1:6SG95UA2DQfeDnfUPMdvaQW0Q7yPrPDi9nlGo2tz2b4=
+golang.org/x/crypto v0.0.0-20190207224619-b8fe1690c613 h1:9YAAIHOIez6evGwXKUy8+sidiq2zXkDxxIWUCPEOr2Q=
 golang.org/x/crypto v0.0.0-20190207224619-b8fe1690c613/go.mod h1:6SG95UA2DQfeDnfUPMdvaQW0Q7yPrPDi9nlGo2tz2b4=
 golang.org/x/net v0.0.0-20180218175443-cbe0f9307d01/go.mod h1:mL1N/T3taQHkDXs73rZJwtUhF3w3ftmwwsq0BUmARs4=
 golang.org/x/net v0.0.0-20180906233101-161cd47e91fd h1:nTDtHvHSdCn1m6ITfMRqtOd/9+7a3s8RBNOZ3eYZzJA=
