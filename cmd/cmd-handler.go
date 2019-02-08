@@ -75,7 +75,7 @@ func (h *cmdHandler) addBookmark(cmd *cobra.Command, args []string) {
 	}
 
 	if book.Excerpt == "" {
-		book.Excerpt = article.Meta.Excerpt
+		book.Excerpt = strings.Map(fixUtf, article.Meta.Excerpt)
 	}
 
 	// Make sure title is not empty

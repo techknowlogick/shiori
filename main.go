@@ -11,10 +11,9 @@ import (
 	dt "github.com/techknowlogick/shiori/database"
 )
 
-var dataDir = "."
+var dataDir = "./"
 
 func main() {
-
 	dbType := "sqlite3"
 	dsn := fp.Join(dataDir, "shiori.db")
 

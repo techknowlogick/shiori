@@ -7,33 +7,33 @@ import (
 // Tag is tag for the bookmark
 type Tag struct {
 	gorm.Model
-	Name       string `db:"name"        json:"name"`
-	NBookmarks int    `db:"n_bookmarks" json:"nBookmarks"`
-	Deleted    bool   `json:"-"`
+	Name      string `json:"name"`
+	Deleted   bool
+	Bookmarks []*Bookmark `gorm:"many2many:bookmark_tags;"`
 }
 
 // Bookmark is record of a specified URL
 type Bookmark struct {
 	gorm.Model
-	URL         string `db:"url"                json:"url"`
-	Title       string `db:"title"              json:"title"`
-	ImageURL    string `db:"image_url"          json:"imageURL"`
-	Excerpt     string `db:"excerpt"            json:"excerpt"`
-	Author      string `db:"author"             json:"author"`
-	MinReadTime int    `db:"min_read_time"      json:"minReadTime"`
-	MaxReadTime int    `db:"max_read_time"      json:"maxReadTime"`
-	Modified    string `db:"modified"           json:"modified"`
-	Content     string `db:"content"            json:"-"`
-	HTML        string `db:"html"               json:"html,omitempty"`
-	HasContent  bool   `db:"has_content"        json:"hasContent"`
-	Tags        []Tag  `gorm:"foreignkey:TagID" json:"tags"`
+	URL         string `json:"url"`
+	Title       string `json:"title"`
+	ImageURL    string `json:"imageURL"`
+	Excerpt     string `json:"excerpt"`
+	Author      string `json:"author"`
+	MinReadTime int    `json:"minReadTime"`
+	MaxReadTime int    `json:"maxReadTime"`
+	Modified    string `json:"modified"`
+	Content     string `json:"-"`
+	HTML        string `json:"html,omitempty"`
+	HasContent  bool   `json:"hasContent"`
+	Tags        []Tag  `gorm:"many2many:bookmark_tags;" json:"tags"`
 }
 
 // Account is account for accessing bookmarks from web interface
 type Account struct {
 	gorm.Model
-	Username string `db:"username" json:"username"`
-	Password string `db:"password" json:"password"`
+	Username string `json:"username"`
+	Password string `json:"password"`
 }
 
 // LoginRequest is login request

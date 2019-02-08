@@ -11,6 +11,7 @@ import (
 	"strings"
 	"sync"
 	"time"
+	"unicode/utf8"
 
 	valid "github.com/asaskevich/govalidator"
 	jwt "github.com/dgrijalva/jwt-go"
@@ -137,7 +138,7 @@ func (h *webHandler) apiInsertBookmark(w http.ResponseWriter, r *http.Request, p
 	}
 
 	if book.Excerpt == "" {
-		book.Excerpt = article.Meta.Excerpt
+		book.Excerpt = strings.Map(fixUtf, article.Meta.Excerpt)
 	}
 
 	// Make sure title is not empty
@@ -436,4 +437,11 @@ func clearUTMParams(url *nurl.URL) {
 	}
 
 	url.RawQuery = newQuery.Encode()
+}
+
+func fixUtf(r rune) rune {
+	if r == utf8.RuneError {
+		return -1
+	}
+	return r
 }
