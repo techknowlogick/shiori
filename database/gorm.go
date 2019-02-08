@@ -17,7 +17,7 @@ import (
 )
 
 // SQLiteDatabase is implementation of Database interface for connecting to SQLite3 database.
-type GORMDatabase struct {
+type GormDatabase struct {
 	*gorm.DB
 }
 
