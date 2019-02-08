@@ -30,7 +30,7 @@ require (
 	github.com/sirupsen/logrus v1.3.0
 	github.com/spf13/afero v1.2.1 // indirect
 	github.com/spf13/cobra v0.0.3
-	github.com/ugorji/go/codec v0.0.0-20190204201341-e444a5086c43 // indirect
+	github.com/ugorji/go/codec v1.1.2 // indirect
 	golang.org/x/crypto v0.0.0-20190207224619-b8fe1690c613
 	golang.org/x/net v0.0.0-20190206173232-65e2d4e15006 // indirect
 	golang.org/x/sys v0.0.0-20190204203706-41f3e6584952 // indirect
