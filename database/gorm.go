@@ -7,13 +7,13 @@ import (
 
 	"github.com/techknowlogick/shiori/model"
 
-	"gopkg.in/gormigrate.v1"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
 	"github.com/sirupsen/logrus"
 	"golang.org/x/crypto/bcrypt"
+	"gopkg.in/gormigrate.v1"
 )
 
 // SQLiteDatabase is implementation of Database interface for connecting to SQLite3 database.
