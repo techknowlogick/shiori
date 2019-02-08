@@ -268,106 +268,34 @@ func (db *GormDatabase) SearchBookmarks(orderLatest bool, keyword string, tags .
 
 // UpdateBookmarks updates the saved bookmark in database.
 func (db *GormDatabase) UpdateBookmarks(bookmarks ...model.Bookmark) (result []model.Bookmark, err error) {
-	// Prepare transaction
-	tx, err := db.Beginx()
-	if err != nil {
-		return []model.Bookmark{}, err
-	}
-
-	// Make sure to rollback if panic ever happened
+	tx := db.Begin()
 	defer func() {
 		if r := recover(); r != nil {
-			panicErr, _ := r.(error)
 			tx.Rollback()
-
+			err = r
 			result = []model.Bookmark{}
-			err = panicErr
 		}
 	}()
-
-	// Prepare statement
-	stmtUpdateBookmark, err := tx.Preparex(`UPDATE bookmark SET
-		url = ?, title = ?, image_url = ?, excerpt = ?, author = ?,
-		min_read_time = ?, max_read_time = ?, modified = ? WHERE id = ?`)
-	checkError(err)
-
-	stmtUpdateBookmarkContent, err := tx.Preparex(`UPDATE bookmark_content SET
-		title = ?, content = ?, html = ? WHERE docid = ?`)
-	checkError(err)
-
-	stmtGetTag, err := tx.Preparex(`SELECT id FROM tag WHERE name = ?`)
-	checkError(err)
-
-	stmtInsertTag, err := tx.Preparex(`INSERT INTO tag (name) VALUES (?)`)
-	checkError(err)
-
-	stmtInsertBookmarkTag, err := tx.Preparex(`INSERT OR IGNORE INTO bookmark_tag (tag_id, bookmark_id) VALUES (?, ?)`)
-	checkError(err)
-
-	stmtDeleteBookmarkTag, err := tx.Preparex(`DELETE FROM bookmark_tag WHERE bookmark_id = ? AND tag_id = ?`)
-	checkError(err)
+	if err := tx.Error; err != nil {
+		return -1, err
+	}
 
 	result = []model.Bookmark{}
 	for _, book := range bookmarks {
-		// Save bookmark
-		stmtUpdateBookmark.MustExec(
-			book.URL,
-			book.Title,
-			book.ImageURL,
-			book.Excerpt,
-			book.Author,
-			book.MinReadTime,
-			book.MaxReadTime,
-			book.Modified,
-			book.ID)
-
-		// Save bookmark content
-		stmtUpdateBookmarkContent.MustExec(
-			book.Title,
-			book.Content,
-			book.HTML,
-			book.ID)
-
-		// Save bookmark tags
-		newTags := []model.Tag{}
-		for _, tag := range book.Tags {
-			if tag.Deleted {
-				stmtDeleteBookmarkTag.MustExec(book.ID, tag.ID)
-				continue
-			}
-
-			if tag.ID == 0 {
-				tagID := -1
-				err = stmtGetTag.Get(&tagID, tag.Name)
-				checkError(err)
-
-				if tagID == -1 {
-					res := stmtInsertTag.MustExec(tag.Name)
-					tagID64, err := res.LastInsertId()
-					checkError(err)
-
-					tagID = int(tagID64)
-				}
-
-				stmtInsertBookmarkTag.Exec(tagID, book.ID)
-			}
-
-			newTags = append(newTags, tag)
+		if err := tx.Save(&book).Error; err != nil {
+			tx.Rollback()
+			return []model.Bookmark{}, err
 		}
-
-		book.Tags = newTags
 		result = append(result, book)
 	}
 
-	// Commit transaction
-	err = tx.Commit()
-	checkError(err)
+	tx.Commit()
 
-	return result, err
+	return result, nil
 }
 
 // CreateAccount saves new account to database. Returns new ID and error if any happened.
-func (db *GormDatabase) CreateAccount(username, password string) (err error) {
+func (db *GormDatabase) CreateAccount(username, password string) error {
 	// Hash password with bcrypt
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), 10)
 	if err != nil {
