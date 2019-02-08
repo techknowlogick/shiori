@@ -1,7 +1,7 @@
 module github.com/techknowlogick/shiori
 
 require (
-	github.com/PuerkitoBio/goquery v1.4.1
+	github.com/PuerkitoBio/goquery v1.5.0
 	github.com/abadojack/whatlanggo v0.0.0-20190207205756-01d4c01a5a7c // indirect
 	github.com/andybalholm/cascadia v1.0.0 // indirect
 	github.com/asaskevich/govalidator v0.0.0-20190207205813-f9ffefc3facf
