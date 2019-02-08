@@ -2,7 +2,6 @@ package database
 
 import (
 	"fmt"
-	"strings"
 	"time"
 
 	"github.com/techknowlogick/shiori/model"
@@ -50,14 +49,14 @@ func OpenGORMDatabase(dsn, dbType string) (*GormDatabase, error) {
 }
 
 // InsertBookmark inserts new bookmark to database. Returns new ID and error if any happened.
-func (db *GormDatabase) InsertBookmark(bookmark model.Bookmark) (int, error) {
+func (db *GormDatabase) InsertBookmark(bookmark model.Bookmark) (uint, error) {
 	// Check URL and title
 	if bookmark.URL == "" {
-		return -1, fmt.Errorf("URL must not be empty")
+		return uint(0), fmt.Errorf("URL must not be empty")
 	}
 
 	if bookmark.Title == "" {
-		return -1, fmt.Errorf("Title must not be empty")
+		return uint(0), fmt.Errorf("Title must not be empty")
 	}
 
 	if bookmark.Modified == "" {
@@ -68,14 +67,15 @@ func (db *GormDatabase) InsertBookmark(bookmark model.Bookmark) (int, error) {
 	defer func() {
 		if r := recover(); r != nil {
 			tx.Rollback()
+			//return 0, r.(error)
 		}
 	}()
 	if err := tx.Error; err != nil {
-		return -1, err
+		return uint(0), err
 	}
 	if err := tx.Create(&bookmark).Error; err != nil {
 		tx.Rollback()
-		return -1, err
+		return uint(0), err
 	}
 
 	tx.Commit()
@@ -84,30 +84,30 @@ func (db *GormDatabase) InsertBookmark(bookmark model.Bookmark) (int, error) {
 }
 
 // GetBookmarks fetch list of bookmarks based on submitted ids.
-func (db *GormDatabase) GetBookmarks(withContent bool, ids ...int) ([]model.Bookmark, error) {
+func (db *GormDatabase) GetBookmarks(withContent bool, ids ...uint) ([]model.Bookmark, error) {
 	bookmarks := []model.Bookmark{}
 	err := db.Find(&bookmarks).Error
 	return bookmarks, err
 }
 
 // DeleteBookmarks removes all record with matching ids from database.
-func (db *GormDatabase) DeleteBookmarks(ids ...int) (err error) {
+func (db *GormDatabase) DeleteBookmarks(ids ...uint) (err error) {
 	tx := db.Begin()
 	defer func() {
 		if r := recover(); r != nil {
 			tx.Rollback()
-			err = r
+			err = r.(error)
 		}
 	}()
 	if err := tx.Error; err != nil {
-		return -1, err
+		return err
 	}
 
 	if len(ids) > 0 {
-		err = db.Where("id in (?)", ids).Delete(&model.Bookmark).Error
+		err = db.Where("id in (?)", ids).Delete(&model.Bookmark{}).Error
 	} else {
 		// if no IDs passed, then delete ALL book marks
-		err = db.Delete(&model.Bookmark).Error
+		err = db.Delete(&model.Bookmark{}).Error
 	}
 
 	tx.Commit()
@@ -127,12 +127,12 @@ func (db *GormDatabase) UpdateBookmarks(bookmarks ...model.Bookmark) (result []m
 	defer func() {
 		if r := recover(); r != nil {
 			tx.Rollback()
-			err = r
+			err = r.(error)
 			result = []model.Bookmark{}
 		}
 	}()
 	if err := tx.Error; err != nil {
-		return -1, err
+		return []model.Bookmark{}, err
 	}
 
 	result = []model.Bookmark{}
@@ -157,7 +157,7 @@ func (db *GormDatabase) CreateAccount(username, password string) error {
 		return err
 	}
 
-	return db.Create(&model.Account{Username: username, Password: hashedPassword}).Error
+	return db.Create(&model.Account{Username: username, Password: string(hashedPassword)}).Error
 }
 
 // GetAccount fetch account with matching username
@@ -178,10 +178,10 @@ func (db *GormDatabase) GetAccounts(keyword string) ([]model.Account, error) {
 // DeleteAccounts removes all record with matching usernames
 func (db *GormDatabase) DeleteAccounts(usernames ...string) error {
 	if len(usernames) > 0 {
-		return db.Where("username in (?)", usernames).Delete(&model.Account).Error
+		return db.Where("username in (?)", usernames).Delete(&model.Account{}).Error
 	}
 	// if no arg passed, then delete ALL accounts
-	return db.Delete(&model.Account).Error
+	return db.Delete(&model.Account{}).Error
 }
 
 // GetTags fetch list of tags and their frequency
@@ -191,7 +191,7 @@ func (db *GormDatabase) GetTags() ([]model.Tag, error) {
 }
 
 // GetBookmarkID fetchs bookmark ID based by its url
-func (db *GormDatabase) GetBookmarkID(url string) int {
+func (db *GormDatabase) GetBookmarkID(url string) uint {
 	bookmark := model.Bookmark{}
 	db.Where("url = ?", url).First(&bookmark)
 	return bookmark.ID

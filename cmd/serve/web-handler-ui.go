@@ -62,7 +62,7 @@ func (h *webHandler) serveBookmarkCache(w http.ResponseWriter, r *http.Request, 
 	checkError(err)
 
 	// Get bookmarks in database
-	bookmarks, err := h.db.GetBookmarks(true, id)
+	bookmarks, err := h.db.GetBookmarks(true, uint(id))
 	checkError(err)
 
 	if len(bookmarks) == 0 {

@@ -94,8 +94,8 @@ func openBrowser(url string) error {
 }
 
 // parseIndexList converts a list of indices to their integer values
-func parseIndexList(indices []string) ([]int, error) {
-	var listIndex []int
+func parseIndexList(indices []string) ([]uint, error) {
+	var listIndex []uint
 	for _, strIndex := range indices {
 		if !strings.Contains(strIndex, "-") {
 			index, err := strconv.Atoi(strIndex)
@@ -103,7 +103,7 @@ func parseIndexList(indices []string) ([]int, error) {
 				return nil, errInvalidIndex
 			}
 
-			listIndex = append(listIndex, index)
+			listIndex = append(listIndex, uint(index))
 			continue
 		}
 
@@ -119,7 +119,7 @@ func parseIndexList(indices []string) ([]int, error) {
 		}
 
 		for i := minIndex; i <= maxIndex; i++ {
-			listIndex = append(listIndex, i)
+			listIndex = append(listIndex, uint(i))
 		}
 	}
 	return listIndex, nil

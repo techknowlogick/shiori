@@ -9,16 +9,16 @@ import (
 // Database is interface for manipulating data in database.
 type Database interface {
 	// InsertBookmark inserts new bookmark to database.
-	InsertBookmark(bookmark model.Bookmark) (int, error)
+	InsertBookmark(bookmark model.Bookmark) (uint, error)
 
 	// GetBookmarks fetch list of bookmarks based on submitted ids.
-	GetBookmarks(withContent bool, ids ...int) ([]model.Bookmark, error)
+	GetBookmarks(withContent bool, ids ...uint) ([]model.Bookmark, error)
 
 	// GetTags fetch list of tags and their frequency
 	GetTags() ([]model.Tag, error)
 
 	// DeleteBookmarks removes all record with matching ids from database.
-	DeleteBookmarks(ids ...int) error
+	DeleteBookmarks(ids ...uint) error
 
 	// SearchBookmarks search bookmarks by the keyword or tags.
 	SearchBookmarks(orderLatest bool, keyword string, tags ...string) ([]model.Bookmark, error)
@@ -39,7 +39,7 @@ type Database interface {
 	DeleteAccounts(usernames ...string) error
 
 	// GetBookmarkID fetchs bookmark ID based by its url
-	GetBookmarkID(url string) int
+	GetBookmarkID(url string) uint
 }
 
 func checkError(err error) {
