@@ -85,65 +85,9 @@ func (db *GormDatabase) InsertBookmark(bookmark model.Bookmark) (int, error) {
 
 // GetBookmarks fetch list of bookmarks based on submitted ids.
 func (db *GormDatabase) GetBookmarks(withContent bool, ids ...int) ([]model.Bookmark, error) {
-	// Create query
-	query := `SELECT 
-		b.id, b.url, b.title, b.image_url, b.excerpt, b.author, 
-		b.min_read_time, b.max_read_time, b.modified, bc.content <> "" has_content
-		FROM bookmark b
-		LEFT JOIN bookmark_content bc ON bc.docid = b.id`
-
-	if withContent {
-		query = `SELECT 
-			b.id, b.url, b.title, b.image_url, b.excerpt, b.author, 
-			b.min_read_time, b.max_read_time, b.modified, bc.content, bc.html, 
-			bc.content <> "" has_content
-			FROM bookmark b
-			LEFT JOIN bookmark_content bc ON bc.docid = b.id`
-	}
-
-	// Prepare where clause
-	args := []interface{}{}
-	whereClause := " WHERE 1"
-
-	if len(ids) > 0 {
-		whereClause = " WHERE b.id IN ("
-		for _, id := range ids {
-			args = append(args, id)
-			whereClause += "?,"
-		}
-
-		whereClause = whereClause[:len(whereClause)-1]
-		whereClause += ")"
-	}
-
-	// Fetch bookmarks
-	query += whereClause
 	bookmarks := []model.Bookmark{}
-	err := db.Select(&bookmarks, query, args...)
-	if err != nil && err != sql.ErrNoRows {
-		return nil, err
-	}
-
-	// Fetch tags for each bookmarks
-	stmtGetTags, err := db.Preparex(`SELECT t.id, t.name 
-		FROM bookmark_tag bt LEFT JOIN tag t ON bt.tag_id = t.id
-		WHERE bt.bookmark_id = ? ORDER BY t.name`)
-	if err != nil {
-		return nil, err
-	}
-	defer stmtGetTags.Close()
-
-	for i, book := range bookmarks {
-		book.Tags = []model.Tag{}
-		err = stmtGetTags.Select(&book.Tags, book.ID)
-		if err != nil && err != sql.ErrNoRows {
-			return nil, err
-		}
-
-		bookmarks[i] = book
-	}
-
-	return bookmarks, nil
+	err := db.Find(&bookmarks).Error
+	return bookmarks, err
 }
 
 // DeleteBookmarks removes all record with matching ids from database.
@@ -173,74 +117,8 @@ func (db *GormDatabase) DeleteBookmarks(ids ...int) (err error) {
 
 // SearchBookmarks search bookmarks by the keyword or tags.
 func (db *GormDatabase) SearchBookmarks(orderLatest bool, keyword string, tags ...string) ([]model.Bookmark, error) {
-	// Prepare query
-	args := []interface{}{}
-	query := `SELECT 
-		b.id, b.url, b.title, b.image_url, b.excerpt, b.author, 
-		b.min_read_time, b.max_read_time, b.modified, bc.content <> "" has_content
-		FROM bookmark b
-		LEFT JOIN bookmark_content bc ON bc.docid = b.id
-		WHERE 1`
-
-	// Create where clause for keyword
-	keyword = strings.TrimSpace(keyword)
-	if keyword != "" {
-		query += ` AND (b.url LIKE ? OR b.id IN (
-			SELECT docid id FROM bookmark_content 
-			WHERE title MATCH ? OR content MATCH ?))`
-		args = append(args, "%"+keyword+"%", keyword, keyword)
-	}
-
-	// Create where clause for tags
-	if len(tags) > 0 {
-		whereTagClause := ` AND b.id IN (
-			SELECT bookmark_id FROM bookmark_tag 
-			WHERE tag_id IN (SELECT id FROM tag WHERE name IN (`
-
-		for _, tag := range tags {
-			args = append(args, tag)
-			whereTagClause += "?,"
-		}
-
-		whereTagClause = whereTagClause[:len(whereTagClause)-1]
-		whereTagClause += `)) GROUP BY bookmark_id HAVING COUNT(bookmark_id) >= ?)`
-		args = append(args, len(tags))
-
-		query += whereTagClause
-	}
-
-	// Set order clause
-	if orderLatest {
-		query += ` ORDER BY modified DESC`
-	}
-
-	// Fetch bookmarks
-	bookmarks := []model.Bookmark{}
-	err := db.Select(&bookmarks, query, args...)
-	if err != nil && err != sql.ErrNoRows {
-		return nil, err
-	}
-
-	// Fetch tags for each bookmarks
-	stmtGetTags, err := db.Preparex(`SELECT t.id, t.name 
-		FROM bookmark_tag bt LEFT JOIN tag t ON bt.tag_id = t.id
-		WHERE bt.bookmark_id = ? ORDER BY t.name`)
-	if err != nil {
-		return nil, err
-	}
-	defer stmtGetTags.Close()
-
-	for i := range bookmarks {
-		tags := []model.Tag{}
-		err = stmtGetTags.Select(&tags, bookmarks[i].ID)
-		if err != nil && err != sql.ErrNoRows {
-			return nil, err
-		}
-
-		bookmarks[i].Tags = tags
-	}
-
-	return bookmarks, nil
+	// TODO: complete this function
+	return []model.Bookmark{}, nil
 }
 
 // UpdateBookmarks updates the saved bookmark in database.
@@ -308,18 +186,8 @@ func (db *GormDatabase) DeleteAccounts(usernames ...string) error {
 
 // GetTags fetch list of tags and their frequency
 func (db *GormDatabase) GetTags() ([]model.Tag, error) {
-	tags := []model.Tag{}
-	query := `SELECT bt.tag_id id, t.name, COUNT(bt.tag_id) n_bookmarks 
-		FROM bookmark_tag bt 
-		LEFT JOIN tag t ON bt.tag_id = t.id
-		GROUP BY bt.tag_id ORDER BY t.name`
-
-	err := db.Select(&tags, query)
-	if err != nil && err != sql.ErrNoRows {
-		return nil, err
-	}
-
-	return tags, nil
+	// TODO: complete this function
+	return []model.Tag{}, nil
 }
 
 // GetBookmarkID fetchs bookmark ID based by its url
