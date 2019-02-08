@@ -10,6 +10,7 @@ import (
 	dt "github.com/techknowlogick/shiori/database"
 	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/dgrijalva/jwt-go/request"
+	"github.com/gobuffalo/packr/v2"
 )
 
 // webHandler is handler for every API and routes to web page
@@ -87,11 +88,11 @@ func (h *webHandler) jwtKeyFunc(token *jwt.Token) (interface{}, error) {
 
 func createTemplate(filename string, funcMap template.FuncMap) (*template.Template, error) {
 	// Open file
-	src, err := assets.Open(filename)
+	box := packr.New("views", "../../view")
+	src, err := box.Find(path)
 	if err != nil {
 		return nil, err
 	}
-	defer src.Close()
 
 	// Read file content
 	srcContent, err := ioutil.ReadAll(src)
