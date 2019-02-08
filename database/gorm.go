@@ -75,7 +75,7 @@ func (db *GormDatabase) InsertBookmark(bookmark model.Bookmark) (int, error) {
 	}
 	if err := tx.Create(&bookmark).Error; err != nil {
 		tx.Rollback()
-		return err
+		return -1, err
 	}
 
 	tx.Commit()
