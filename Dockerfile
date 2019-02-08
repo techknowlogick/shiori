@@ -6,7 +6,7 @@ RUN apk update \
 WORKDIR /go/src/github.com/techknowlogick/shiori
 COPY . .
 RUN go get -d -v ./... && go get -u github.com/gobuffalo/packr/v2/packr2
-RUN packr2 -v
+RUN packr2
 RUN go build -o shiori
 
 FROM alpine:3.9

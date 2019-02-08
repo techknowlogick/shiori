@@ -128,7 +128,6 @@ func serveFile(w http.ResponseWriter, path string) error {
 	if err != nil {
 		return err
 	}
-	defer src.Close()
 
 	// Get content type
 	ext := fp.Ext(path)
