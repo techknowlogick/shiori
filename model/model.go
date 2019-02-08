@@ -2,7 +2,7 @@ package model
 
 // Tag is tag for the bookmark
 type Tag struct {
-	ID         int    `db:"id"          json:"id"`
+	gorm.Model
 	Name       string `db:"name"        json:"name"`
 	NBookmarks int    `db:"n_bookmarks" json:"nBookmarks"`
 	Deleted    bool   `json:"-"`
@@ -10,7 +10,7 @@ type Tag struct {
 
 // Bookmark is record of a specified URL
 type Bookmark struct {
-	ID          int    `db:"id"            json:"id"`
+	gorm.Model
 	URL         string `db:"url"           json:"url"`
 	Title       string `db:"title"         json:"title"`
 	ImageURL    string `db:"image_url"     json:"imageURL"`
@@ -27,13 +27,14 @@ type Bookmark struct {
 
 // Account is account for accessing bookmarks from web interface
 type Account struct {
-	ID       int    `db:"id"       json:"id"`
+	gorm.Model
 	Username string `db:"username" json:"username"`
 	Password string `db:"password" json:"password"`
 }
 
 // LoginRequest is login request
 type LoginRequest struct {
+	gorm.Model
 	Username string `json:"username"`
 	Password string `json:"password"`
 	Remember bool   `json:"remember"`

@@ -8,6 +8,7 @@ require (
 	github.com/coreos/etcd v3.3.12+incompatible // indirect
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/fatih/color v1.7.0
+	github.com/go-gormigrate/gormigrate 1.4.0
 	github.com/go-shiori/go-readability v0.0.0-20180803130947-13aa531ebcea
 	github.com/go-sql-driver/mysql v1.4.1
 	github.com/gobuffalo/buffalo-plugins v1.13.0 // indirect

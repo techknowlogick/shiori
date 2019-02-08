@@ -1,8 +1,7 @@
-//go:generate go run assets-generator.go
-
 package main
 
 import (
+	"fmt"
 	"os"
 	fp "path/filepath"
 
@@ -16,18 +15,16 @@ var dataDir = "."
 
 func main() {
 
+	dbType := "sqlite3"
+	dsn := fp.Join(dataDir, "shiori.db")
+
 	// check and use mysql if env values set
 	if mysqlDBName := os.Getenv("SHIORI_MYSQL_DBNAME"); mysqlDBName != "" {
 		mysqlDBUser := os.Getenv("SHIORI_MYSQL_USER")
 		mysqlDBPass := os.Getenv("SHIORI_MYSQL_PASS")
 		mysqlDBHost := os.Getenv("SHIORI_MYSQL_HOST")
-		mysqlDB, err := dt.OpenMySQLDatabase(mysqlDBHost, mysqlDBUser, mysqlDBPass, mysqlDBName)
-		checkError(err)
-		shioriCmd := cmd.NewShioriCmd(mysqlDB, dataDir)
-		if err := shioriCmd.Execute(); err != nil {
-			logrus.Fatalln(err)
-		}
-		return
+		dbType = "mysql"
+		dsn = fmt.Sprintf("%s:%s@%s/%s?charset=utf8mb4&parseTime=True&loc=Local", mysqlDBUser, mysqlDBPass, mysqlDBHost, mysqlDBName)
 	}
 
 	// check and use postgresql if env values set
@@ -35,22 +32,15 @@ func main() {
 		postgresqlDBUser := os.Getenv("SHIORI_POSTGRESQL_USER")
 		postgresqlDBPass := os.Getenv("SHIORI_POSTGRESQL_PASS")
 		postgresqlDBHost := os.Getenv("SHIORI_POSTGRESQL_HOST")
-		postgresqlDB, err := dt.OpenPostgreSQLDatabase(postgresqlDBHost, postgresqlDBUser, postgresqlDBPass, postgresqlDBName)
-		checkError(err)
-		shioriCmd := cmd.NewShioriCmd(postgresqlDB, dataDir)
-		if err := shioriCmd.Execute(); err != nil {
-			logrus.Fatalln(err)
-		}
-		return
+		dbType = "postgres"
+		dsn = fmt.Sprintf("user=%s password=%s host=%s dbname=%s sslmode=disable", postgresqlDBUser, postgresqlDBPass, postgresqlDBHost, postgresqlDBName)
 	}
 
-	// Open database
-	dbPath := fp.Join(dataDir, "shiori.db")
-	sqliteDB, err := dt.OpenSQLiteDatabase(dbPath)
+	gormDB, err := dt.OpenGORMDatabase(dsn, dbType)
 	checkError(err)
 
 	// Start cmd
-	shioriCmd := cmd.NewShioriCmd(sqliteDB, dataDir)
+	shioriCmd := cmd.NewShioriCmd(gormDB, dataDir)
 	if err := shioriCmd.Execute(); err != nil {
 		logrus.Fatalln(err)
 	}
