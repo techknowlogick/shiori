@@ -36,5 +36,5 @@ require (
 	golang.org/x/sys v0.0.0-20190204203706-41f3e6584952 // indirect
 	google.golang.org/appengine v1.4.0 // indirect
 	gopkg.in/airbrake/gobrake.v3 v3.7.4 // indirect
-	gopkg.in/gemnasium/logrus-airbrake-hook.v2 v2.1.2 // indirect
+	gopkg.in/gemnasium/logrus-airbrake-hook.v3 v3.0.3 // indirect
 )
