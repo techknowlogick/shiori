@@ -1,6 +1,6 @@
 # github.com/BurntSushi/toml v0.3.1
 github.com/BurntSushi/toml
-# github.com/PuerkitoBio/goquery v1.4.1
+# github.com/PuerkitoBio/goquery v1.5.0
 github.com/PuerkitoBio/goquery
 # github.com/abadojack/whatlanggo v0.0.0-20190207205756-01d4c01a5a7c
 github.com/abadojack/whatlanggo
@@ -17,14 +17,14 @@ github.com/fatih/color
 github.com/go-shiori/go-readability
 # github.com/go-sql-driver/mysql v1.4.1
 github.com/go-sql-driver/mysql
-# github.com/gobuffalo/buffalo-plugins v1.12.0
+# github.com/gobuffalo/buffalo-plugins v1.13.0
 github.com/gobuffalo/buffalo-plugins/plugins
 github.com/gobuffalo/buffalo-plugins/plugins/plugdeps
-# github.com/gobuffalo/envy v1.6.13
+# github.com/gobuffalo/envy v1.6.15
 github.com/gobuffalo/envy
 # github.com/gobuffalo/events v1.2.0
 github.com/gobuffalo/events
-# github.com/gobuffalo/flect v0.0.0-20190117212819-a62e61d96794
+# github.com/gobuffalo/flect v0.0.0-20190205211104-b2cb381e56e0
 github.com/gobuffalo/flect/name
 github.com/gobuffalo/flect
 # github.com/gobuffalo/genny v0.0.0-20190131190646-008a76242145
@@ -36,7 +36,7 @@ github.com/gobuffalo/genny/movinglater/gotools/gomods
 github.com/gobuffalo/logger
 # github.com/gobuffalo/mapi v1.0.1
 github.com/gobuffalo/mapi
-# github.com/gobuffalo/meta v0.0.0-20190121163014-ecaa953cbfb3
+# github.com/gobuffalo/meta v0.0.0-20190207205153-50a99e08b8cf
 github.com/gobuffalo/meta
 # github.com/gobuffalo/packd v0.0.0-20181212173646-eca3b8fd6687
 github.com/gobuffalo/packd
@@ -58,9 +58,13 @@ github.com/gosuri/uiprogress
 github.com/gosuri/uiprogress/util/strutil
 # github.com/inconshreveable/mousetrap v1.0.0
 github.com/inconshreveable/mousetrap
-# github.com/jmoiron/sqlx v0.0.0-20180614180643-0dae4fefe7c0
-github.com/jmoiron/sqlx
-github.com/jmoiron/sqlx/reflectx
+# github.com/jinzhu/gorm v1.9.2
+github.com/jinzhu/gorm
+github.com/jinzhu/gorm/dialects/mysql
+github.com/jinzhu/gorm/dialects/postgres
+github.com/jinzhu/gorm/dialects/sqlite
+# github.com/jinzhu/inflection v0.0.0-20180308033659-04140366298a
+github.com/jinzhu/inflection
 # github.com/joho/godotenv v1.3.0
 github.com/joho/godotenv
 # github.com/julienschmidt/httprouter v1.2.0
@@ -71,18 +75,19 @@ github.com/karrick/godirwalk
 github.com/konsorten/go-windows-terminal-sequences
 # github.com/lib/pq v1.0.0
 github.com/lib/pq
+github.com/lib/pq/hstore
 github.com/lib/pq/oid
 # github.com/markbates/oncer v0.0.0-20181203154359-bf2de49a0be2
 github.com/markbates/oncer
 # github.com/markbates/safe v1.0.1
 github.com/markbates/safe
-# github.com/mattn/go-colorable v0.0.9
+# github.com/mattn/go-colorable v0.1.0
 github.com/mattn/go-colorable
 # github.com/mattn/go-isatty v0.0.4
 github.com/mattn/go-isatty
-# github.com/mattn/go-sqlite3 v1.9.0
+# github.com/mattn/go-sqlite3 v1.10.0
 github.com/mattn/go-sqlite3
-# github.com/mitchellh/go-homedir v1.0.0
+# github.com/mitchellh/go-homedir v1.1.0
 github.com/mitchellh/go-homedir
 # github.com/muesli/go-app-paths v0.0.0-20190207224558-913f7f7ac60f
 github.com/muesli/go-app-paths
@@ -102,10 +107,10 @@ github.com/spf13/pflag
 golang.org/x/crypto/ssh/terminal
 golang.org/x/crypto/bcrypt
 golang.org/x/crypto/blowfish
-# golang.org/x/net v0.0.0-20181220203305-927f97764cc3
+# golang.org/x/net v0.0.0-20190206173232-65e2d4e15006
 golang.org/x/net/html
 golang.org/x/net/html/atom
-# golang.org/x/sys v0.0.0-20190116161447-11f53e031339
+# golang.org/x/sys v0.0.0-20190204203706-41f3e6584952
 golang.org/x/sys/unix
 golang.org/x/sys/windows
 # golang.org/x/tools v0.0.0-20190206221403-44bcb96178d3
@@ -122,3 +127,5 @@ golang.org/x/tools/internal/fastwalk
 golang.org/x/tools/go/internal/gcimporter
 # google.golang.org/appengine v1.4.0
 google.golang.org/appengine/cloudsql
+# gopkg.in/gormigrate.v1 v1.4.0
+gopkg.in/gormigrate.v1

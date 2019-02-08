@@ -7,7 +7,7 @@ import (
 
 	"github.com/techknowlogick/shiori/model"
 
-	"github.com/go-gormigrate/gormigrate"
+	"gopkg.in/gormigrate.v1"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
