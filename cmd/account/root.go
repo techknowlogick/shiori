@@ -1,9 +1,9 @@
 package account
 
 import (
-	dt "github.com/techknowlogick/shiori/database"
 	"github.com/fatih/color"
 	"github.com/spf13/cobra"
+	dt "github.com/techknowlogick/shiori/database"
 )
 
 var (

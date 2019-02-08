@@ -1,10 +1,10 @@
 package cmd
 
 import (
+	"github.com/spf13/cobra"
 	"github.com/techknowlogick/shiori/cmd/account"
 	"github.com/techknowlogick/shiori/cmd/serve"
 	dt "github.com/techknowlogick/shiori/database"
-	"github.com/spf13/cobra"
 )
 
 // NewShioriCmd creates new command for shiori

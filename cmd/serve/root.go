@@ -6,10 +6,10 @@ import (
 	"net/http"
 	"time"
 
-	dt "github.com/techknowlogick/shiori/database"
 	"github.com/julienschmidt/httprouter"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
+	dt "github.com/techknowlogick/shiori/database"
 )
 
 // NewServeCmd creates new command for serving web page
@@ -26,7 +26,7 @@ func NewServeCmd(db dt.Database, dataDir string) *cobra.Command {
 			"If --port flag is not used, it will use port 8080 by default.",
 		Run: func(cmd *cobra.Command, args []string) {
 			// Parse flags
-            listenAddress, _ := cmd.Flags().GetString("listen")
+			listenAddress, _ := cmd.Flags().GetString("listen")
 			port, _ := cmd.Flags().GetInt("port")
 
 			// Create router
@@ -73,7 +73,7 @@ func NewServeCmd(db dt.Database, dataDir string) *cobra.Command {
 	}
 
 	// Set flags for root command
-    rootCmd.Flags().StringP("listen", "l", "", "Address the server listens to")
+	rootCmd.Flags().StringP("listen", "l", "", "Address the server listens to")
 	rootCmd.Flags().IntP("port", "p", 8080, "Port that used by server")
 
 	return rootCmd

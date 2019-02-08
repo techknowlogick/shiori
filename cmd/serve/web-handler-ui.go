@@ -12,8 +12,8 @@ import (
 	fp "path/filepath"
 	"strconv"
 
-	"github.com/julienschmidt/httprouter"
 	"github.com/gobuffalo/packr/v2"
+	"github.com/julienschmidt/httprouter"
 )
 
 // serveFiles serve files
@@ -137,6 +137,6 @@ func serveFile(w http.ResponseWriter, path string) error {
 	}
 
 	// Serve file
-	_, err = io.Copy(w, src)
-	return err
+	w.Write(src)
+	return nil
 }

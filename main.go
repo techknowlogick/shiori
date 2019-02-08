@@ -6,10 +6,10 @@ import (
 	"os"
 	fp "path/filepath"
 
-	"github.com/techknowlogick/shiori/cmd"
-	dt "github.com/techknowlogick/shiori/database"
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/sirupsen/logrus"
+	"github.com/techknowlogick/shiori/cmd"
+	dt "github.com/techknowlogick/shiori/database"
 )
 
 var dataDir = "."

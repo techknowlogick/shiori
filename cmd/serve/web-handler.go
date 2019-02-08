@@ -4,13 +4,12 @@ import (
 	"crypto/rand"
 	"fmt"
 	"html/template"
-	"io/ioutil"
 	"net/http"
 
-	dt "github.com/techknowlogick/shiori/database"
 	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/dgrijalva/jwt-go/request"
 	"github.com/gobuffalo/packr/v2"
+	dt "github.com/techknowlogick/shiori/database"
 )
 
 // webHandler is handler for every API and routes to web page
@@ -89,19 +88,13 @@ func (h *webHandler) jwtKeyFunc(token *jwt.Token) (interface{}, error) {
 func createTemplate(filename string, funcMap template.FuncMap) (*template.Template, error) {
 	// Open file
 	box := packr.New("views", "../../view")
-	src, err := box.Find(path)
-	if err != nil {
-		return nil, err
-	}
-
-	// Read file content
-	srcContent, err := ioutil.ReadAll(src)
+	src, err := box.Find(filename)
 	if err != nil {
 		return nil, err
 	}
 
 	// Create template
-	return template.New(filename).Delims("$|", "|$").Funcs(funcMap).Parse(string(srcContent))
+	return template.New(filename).Delims("$|", "|$").Funcs(funcMap).Parse(string(src))
 }
 
 func redirectPage(w http.ResponseWriter, r *http.Request, url string) {

@@ -12,12 +12,12 @@ import (
 	"sync"
 	"time"
 
-	"github.com/techknowlogick/shiori/model"
 	valid "github.com/asaskevich/govalidator"
 	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/go-shiori/go-readability"
 	"github.com/gofrs/uuid"
 	"github.com/julienschmidt/httprouter"
+	"github.com/techknowlogick/shiori/model"
 	"golang.org/x/crypto/bcrypt"
 )
 

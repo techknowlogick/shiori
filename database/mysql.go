@@ -6,9 +6,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/techknowlogick/shiori/model"
 	_ "github.com/go-sql-driver/mysql" // db driver
 	"github.com/jmoiron/sqlx"
+	"github.com/techknowlogick/shiori/model"
 	"golang.org/x/crypto/bcrypt"
 )
 

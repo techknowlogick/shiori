@@ -12,14 +12,14 @@ import (
 	"sync"
 	"time"
 
-	dt "github.com/techknowlogick/shiori/database"
-	"github.com/techknowlogick/shiori/model"
 	"github.com/PuerkitoBio/goquery"
 	valid "github.com/asaskevich/govalidator"
 	"github.com/go-shiori/go-readability"
 	"github.com/gofrs/uuid"
 	"github.com/gosuri/uiprogress"
 	"github.com/spf13/cobra"
+	dt "github.com/techknowlogick/shiori/database"
+	"github.com/techknowlogick/shiori/model"
 )
 
 // cmdHandler is handler for all action in AccountCmd
