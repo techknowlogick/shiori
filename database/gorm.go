@@ -178,10 +178,10 @@ func (db *GormDatabase) GetAccounts(keyword string) ([]model.Account, error) {
 // DeleteAccounts removes all record with matching usernames
 func (db *GormDatabase) DeleteAccounts(usernames ...string) error {
 	if len(usernames) > 0 {
-		return db.Where("username in (?)", usernames).Delete(&model.Accounts).Error
+		return db.Where("username in (?)", usernames).Delete(&model.Account).Error
 	}
 	// if no arg passed, then delete ALL accounts
-	return db.Delete(&model.Accounts).Error
+	return db.Delete(&model.Account).Error
 }
 
 // GetTags fetch list of tags and their frequency
