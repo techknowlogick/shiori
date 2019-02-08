@@ -148,50 +148,27 @@ func (db *GormDatabase) GetBookmarks(withContent bool, ids ...int) ([]model.Book
 
 // DeleteBookmarks removes all record with matching ids from database.
 func (db *GormDatabase) DeleteBookmarks(ids ...int) (err error) {
-	// Create args and where clause
-	args := []interface{}{}
-	whereClause := " WHERE 1"
-
-	if len(ids) > 0 {
-		whereClause = " WHERE id IN ("
-		for _, id := range ids {
-			args = append(args, id)
-			whereClause += "?,"
-		}
-
-		whereClause = whereClause[:len(whereClause)-1]
-		whereClause += ")"
-	}
-
-	// Begin transaction
-	tx, err := db.Beginx()
-	if err != nil {
-		return err
-	}
-
-	// Make sure to rollback if panic ever happened
+	tx := db.Begin()
 	defer func() {
 		if r := recover(); r != nil {
-			panicErr, _ := r.(error)
 			tx.Rollback()
-
-			err = panicErr
+			err = r
 		}
 	}()
+	if err := tx.Error; err != nil {
+		return -1, err
+	}
 
-	// Delete bookmarks
-	whereTagClause := strings.Replace(whereClause, "id", "bookmark_id", 1)
-	whereContentClause := strings.Replace(whereClause, "id", "docid", 1)
+	if len(ids) > 0 {
+		err = db.Where("id in (?)", ids).Delete(&model.Bookmark).Error
+	} else {
+		// if no IDs passed, then delete ALL book marks
+		err = db.Delete(&model.Bookmark).Error
+	}
 
-	tx.MustExec("DELETE FROM bookmark "+whereClause, args...)
-	tx.MustExec("DELETE FROM bookmark_tag "+whereTagClause, args...)
-	tx.MustExec("DELETE FROM bookmark_content "+whereContentClause, args...)
+	tx.Commit()
 
-	// Commit transaction
-	err = tx.Commit()
-	checkError(err)
-
-	return err
+	return nil
 }
 
 // SearchBookmarks search bookmarks by the keyword or tags.
@@ -308,51 +285,25 @@ func (db *GormDatabase) CreateAccount(username, password string) error {
 // GetAccount fetch account with matching username
 func (db *GormDatabase) GetAccount(username string) (model.Account, error) {
 	account := model.Account{}
-	err := db.Where("username = ?", username).First(&account)
+	err := db.Where("username = ?", username).First(&account).Error
 	return account, err
 }
 
 // GetAccounts fetch list of accounts with matching keyword
 func (db *GormDatabase) GetAccounts(keyword string) ([]model.Account, error) {
-	// Create query
-	args := []interface{}{}
-	query := `SELECT id, username, password FROM account`
-
-	if keyword == "" {
-		query += " WHERE 1"
-	} else {
-		query += " WHERE username LIKE ?"
-		args = append(args, "%"+keyword+"%")
-	}
-
-	query += ` ORDER BY username`
-
-	// Fetch list account
 	accounts := []model.Account{}
-	err := db.Select(&accounts, query, args...)
+	err := db.Where("username LIKE ?", "%"+keyword+"%").Find(&accounts).Error
+
 	return accounts, err
 }
 
 // DeleteAccounts removes all record with matching usernames
 func (db *GormDatabase) DeleteAccounts(usernames ...string) error {
-	// Prepare where clause
-	args := []interface{}{}
-	whereClause := " WHERE 1"
-
 	if len(usernames) > 0 {
-		whereClause = " WHERE username IN ("
-		for _, username := range usernames {
-			args = append(args, username)
-			whereClause += "?,"
-		}
-
-		whereClause = whereClause[:len(whereClause)-1]
-		whereClause += ")"
+		return db.Where("username in (?)", usernames).Delete(&model.Accounts).Error
 	}
-
-	// Delete usernames
-	_, err := db.Exec(`DELETE FROM account `+whereClause, args...)
-	return err
+	// if no arg passed, then delete ALL accounts
+	return db.Delete(&model.Accounts).Error
 }
 
 // GetTags fetch list of tags and their frequency
