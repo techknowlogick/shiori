@@ -1,5 +1,9 @@
 package model
 
+import (
+	"github.com/jinzhu/gorm"
+)
+
 // Tag is tag for the bookmark
 type Tag struct {
 	gorm.Model
