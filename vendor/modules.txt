@@ -1,3 +1,5 @@
+# github.com/BurntSushi/toml v0.3.1
+github.com/BurntSushi/toml
 # github.com/PuerkitoBio/goquery v1.4.1
 github.com/PuerkitoBio/goquery
 # github.com/abadojack/whatlanggo v0.0.0-20190207205756-01d4c01a5a7c
@@ -15,6 +17,38 @@ github.com/fatih/color
 github.com/go-shiori/go-readability
 # github.com/go-sql-driver/mysql v1.4.1
 github.com/go-sql-driver/mysql
+# github.com/gobuffalo/buffalo-plugins v1.12.0
+github.com/gobuffalo/buffalo-plugins/plugins
+github.com/gobuffalo/buffalo-plugins/plugins/plugdeps
+# github.com/gobuffalo/envy v1.6.13
+github.com/gobuffalo/envy
+# github.com/gobuffalo/events v1.2.0
+github.com/gobuffalo/events
+# github.com/gobuffalo/flect v0.0.0-20190117212819-a62e61d96794
+github.com/gobuffalo/flect/name
+github.com/gobuffalo/flect
+# github.com/gobuffalo/genny v0.0.0-20190131190646-008a76242145
+github.com/gobuffalo/genny
+github.com/gobuffalo/genny/movinglater/gotools
+github.com/gobuffalo/genny/movinglater/gotools/goimports
+github.com/gobuffalo/genny/movinglater/gotools/gomods
+# github.com/gobuffalo/logger v0.0.0-20181127160119-5b956e21995c
+github.com/gobuffalo/logger
+# github.com/gobuffalo/mapi v1.0.1
+github.com/gobuffalo/mapi
+# github.com/gobuffalo/meta v0.0.0-20190121163014-ecaa953cbfb3
+github.com/gobuffalo/meta
+# github.com/gobuffalo/packd v0.0.0-20181212173646-eca3b8fd6687
+github.com/gobuffalo/packd
+# github.com/gobuffalo/packr/v2 v2.0.1
+github.com/gobuffalo/packr/v2
+github.com/gobuffalo/packr/v2/file
+github.com/gobuffalo/packr/v2/file/resolver
+github.com/gobuffalo/packr/v2/jam/parser
+github.com/gobuffalo/packr/v2/plog
+github.com/gobuffalo/packr/v2/file/resolver/encoding/hex
+# github.com/gobuffalo/syncx v0.0.0-20181120194010-558ac7de985f
+github.com/gobuffalo/syncx
 # github.com/gofrs/uuid v3.2.0+incompatible
 github.com/gofrs/uuid
 # github.com/gosuri/uilive v0.0.0-20170323041506-ac356e6e42cd
@@ -27,40 +61,64 @@ github.com/inconshreveable/mousetrap
 # github.com/jmoiron/sqlx v0.0.0-20180614180643-0dae4fefe7c0
 github.com/jmoiron/sqlx
 github.com/jmoiron/sqlx/reflectx
-# github.com/julienschmidt/httprouter v1.1.0
+# github.com/joho/godotenv v1.3.0
+github.com/joho/godotenv
+# github.com/julienschmidt/httprouter v1.2.0
 github.com/julienschmidt/httprouter
-# github.com/lib/pq v0.0.0-20180523175426-90697d60dd84
+# github.com/karrick/godirwalk v1.7.8
+github.com/karrick/godirwalk
+# github.com/konsorten/go-windows-terminal-sequences v1.0.1
+github.com/konsorten/go-windows-terminal-sequences
+# github.com/lib/pq v1.0.0
 github.com/lib/pq
 github.com/lib/pq/oid
+# github.com/markbates/oncer v0.0.0-20181203154359-bf2de49a0be2
+github.com/markbates/oncer
+# github.com/markbates/safe v1.0.1
+github.com/markbates/safe
 # github.com/mattn/go-colorable v0.0.9
 github.com/mattn/go-colorable
-# github.com/mattn/go-isatty v0.0.3
+# github.com/mattn/go-isatty v0.0.4
 github.com/mattn/go-isatty
 # github.com/mattn/go-sqlite3 v1.9.0
 github.com/mattn/go-sqlite3
-# github.com/mitchellh/go-homedir v0.0.0-20180801233206-58046073cbff
+# github.com/mitchellh/go-homedir v1.0.0
 github.com/mitchellh/go-homedir
 # github.com/muesli/go-app-paths v0.0.0-20190207224558-913f7f7ac60f
 github.com/muesli/go-app-paths
-# github.com/shurcooL/httpfs v0.0.0-20181222201310-74dc9339e414
-github.com/shurcooL/httpfs/vfsutil
-# github.com/shurcooL/vfsgen v0.0.0-20181202132449-6a9ea43bcacd
-github.com/shurcooL/vfsgen
-# github.com/sirupsen/logrus v1.0.6
+# github.com/pkg/errors v0.8.1
+github.com/pkg/errors
+# github.com/rogpeppe/go-internal v1.1.0
+github.com/rogpeppe/go-internal/modfile
+github.com/rogpeppe/go-internal/module
+github.com/rogpeppe/go-internal/semver
+# github.com/sirupsen/logrus v1.3.0
 github.com/sirupsen/logrus
 # github.com/spf13/cobra v0.0.3
 github.com/spf13/cobra
-# github.com/spf13/pflag v1.0.2
+# github.com/spf13/pflag v1.0.3
 github.com/spf13/pflag
 # golang.org/x/crypto v0.0.0-20190207224619-b8fe1690c613
 golang.org/x/crypto/ssh/terminal
 golang.org/x/crypto/bcrypt
 golang.org/x/crypto/blowfish
-# golang.org/x/net v0.0.0-20180906233101-161cd47e91fd
+# golang.org/x/net v0.0.0-20181220203305-927f97764cc3
 golang.org/x/net/html
 golang.org/x/net/html/atom
-# golang.org/x/sys v0.0.0-20180909124046-d0be0721c37e
+# golang.org/x/sys v0.0.0-20190116161447-11f53e031339
 golang.org/x/sys/unix
 golang.org/x/sys/windows
-# google.golang.org/appengine v1.1.0
+# golang.org/x/tools v0.0.0-20190206221403-44bcb96178d3
+golang.org/x/tools/go/ast/astutil
+golang.org/x/tools/imports
+golang.org/x/tools/go/packages
+golang.org/x/tools/internal/gopathwalk
+golang.org/x/tools/internal/module
+golang.org/x/tools/go/gcexportdata
+golang.org/x/tools/go/internal/cgo
+golang.org/x/tools/go/internal/packagesdriver
+golang.org/x/tools/internal/semver
+golang.org/x/tools/internal/fastwalk
+golang.org/x/tools/go/internal/gcimporter
+# google.golang.org/appengine v1.4.0
 google.golang.org/appengine/cloudsql

@@ -13,6 +13,7 @@ import (
 	"strconv"
 
 	"github.com/julienschmidt/httprouter"
+	"github.com/gobuffalo/packr/v2"
 )
 
 // serveFiles serve files
@@ -122,7 +123,8 @@ func (h *webHandler) serveThumbnailImage(w http.ResponseWriter, r *http.Request,
 
 func serveFile(w http.ResponseWriter, path string) error {
 	// Open file
-	src, err := assets.Open(path)
+	box := packr.New("views", "../../view")
+	src, err := box.Find(path)
 	if err != nil {
 		return err
 	}
