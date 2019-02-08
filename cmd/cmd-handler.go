@@ -54,13 +54,6 @@ func (h *cmdHandler) addBookmark(cmd *cobra.Command, args []string) {
 		Excerpt: normalizeSpace(excerpt),
 	}
 
-	// Get new bookmark id
-	book.ID, err = h.db.GetNewID("bookmark")
-	if err != nil {
-		cError.Println(err)
-		return
-	}
-
 	// Set bookmark tags
 	book.Tags = make([]model.Tag, len(tags))
 	for i, tag := range tags {

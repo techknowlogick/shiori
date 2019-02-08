@@ -46,11 +46,11 @@ func OpenGORMDatabase(dsn, dbType string) (*GormDatabase, error) {
 		logrus.Fatalf("Could not migrate: %v", err)
 	}
 
-	return &GormDatabase{*db}, nil
+	return &GormDatabase{db}, nil
 }
 
 // InsertBookmark inserts new bookmark to database. Returns new ID and error if any happened.
-func (db *GormDatabase) InsertBookmark(bookmark model.Bookmark) (bookmarkID int, err error) {
+func (db *GormDatabase) InsertBookmark(bookmark model.Bookmark) (int, error) {
 	// Check URL and title
 	if bookmark.URL == "" {
 		return -1, fmt.Errorf("URL must not be empty")
@@ -60,90 +60,27 @@ func (db *GormDatabase) InsertBookmark(bookmark model.Bookmark) (bookmarkID int,
 		return -1, fmt.Errorf("Title must not be empty")
 	}
 
-	// Set default ID and modified time
-	if bookmark.ID == 0 {
-		bookmark.ID, err = db.GetNewID("bookmark")
-		if err != nil {
-			return -1, err
-		}
-	}
-
 	if bookmark.Modified == "" {
 		bookmark.Modified = time.Now().UTC().Format("2006-01-02 15:04:05")
 	}
 
-	// Begin transaction
-	tx, err := db.Beginx()
-	if err != nil {
-		return -1, err
-	}
-
-	// Make sure to rollback if panic ever happened
+	tx := db.Begin()
 	defer func() {
 		if r := recover(); r != nil {
-			panicErr, _ := r.(error)
 			tx.Rollback()
-
-			bookmarkID = -1
-			err = panicErr
 		}
 	}()
-
-	// Save article to database
-	tx.MustExec(`INSERT INTO bookmark (
-		id, url, title, image_url, excerpt, author, 
-		min_read_time, max_read_time, modified) 
-		VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-		bookmark.ID,
-		bookmark.URL,
-		bookmark.Title,
-		bookmark.ImageURL,
-		bookmark.Excerpt,
-		bookmark.Author,
-		bookmark.MinReadTime,
-		bookmark.MaxReadTime,
-		bookmark.Modified)
-
-	// Save bookmark content
-	tx.MustExec(`INSERT INTO bookmark_content 
-		(docid, title, content, html) VALUES (?, ?, ?, ?)`,
-		bookmark.ID, bookmark.Title, bookmark.Content, bookmark.HTML)
-
-	// Save tags
-	stmtGetTag, err := tx.Preparex(`SELECT id FROM tag WHERE name = ?`)
-	checkError(err)
-
-	stmtInsertTag, err := tx.Preparex(`INSERT INTO tag (name) VALUES (?)`)
-	checkError(err)
-
-	stmtInsertBookmarkTag, err := tx.Preparex(`INSERT OR IGNORE INTO bookmark_tag (tag_id, bookmark_id) VALUES (?, ?)`)
-	checkError(err)
-
-	for _, tag := range bookmark.Tags {
-		tagName := strings.ToLower(tag.Name)
-		tagName = strings.TrimSpace(tagName)
-
-		tagID := -1
-		err = stmtGetTag.Get(&tagID, tagName)
-		checkError(err)
-
-		if tagID == -1 {
-			res := stmtInsertTag.MustExec(tagName)
-			tagID64, err := res.LastInsertId()
-			checkError(err)
-
-			tagID = int(tagID64)
-		}
-
-		stmtInsertBookmarkTag.Exec(tagID, bookmark.ID)
+	if err := tx.Error; err != nil {
+		return -1, err
+	}
+	if err := tx.Create(&bookmark).Error; err != nil {
+		tx.Rollback()
+		return err
 	}
 
-	// Commit transaction
-	err = tx.Commit()
-	checkError(err)
+	tx.Commit()
 
-	bookmarkID = bookmark.ID
-	return bookmarkID, err
+	return bookmark.ID, nil
 }
 
 // GetBookmarks fetch list of bookmarks based on submitted ids.
@@ -437,20 +374,13 @@ func (db *GormDatabase) CreateAccount(username, password string) (err error) {
 		return err
 	}
 
-	// Insert account to database
-	_, err = db.Exec(`INSERT INTO account
-		(username, password) VALUES (?, ?)`,
-		username, hashedPassword)
-
-	return err
+	return db.Create(&model.Account{Username: username, Password: hashedPassword}).Error
 }
 
 // GetAccount fetch account with matching username
 func (db *GormDatabase) GetAccount(username string) (model.Account, error) {
 	account := model.Account{}
-	err := db.Get(&account,
-		`SELECT id, username, password FROM account WHERE username = ?`,
-		username)
+	err := db.Where("username = ?", username).First(&account)
 	return account, err
 }
 
@@ -513,22 +443,9 @@ func (db *GormDatabase) GetTags() ([]model.Tag, error) {
 	return tags, nil
 }
 
-// GetNewID creates new ID for specified table
-func (db *GormDatabase) GetNewID(table string) (int, error) {
-	var tableID int
-	query := fmt.Sprintf(`SELECT IFNULL(MAX(id) + 1, 1) FROM %s`, table)
-
-	err := db.Get(&tableID, query)
-	if err != nil && err != sql.ErrNoRows {
-		return -1, err
-	}
-
-	return tableID, nil
-}
-
 // GetBookmarkID fetchs bookmark ID based by its url
 func (db *GormDatabase) GetBookmarkID(url string) int {
-	var bookmarkID int
-	db.Get(&bookmarkID, `SELECT id FROM bookmark WHERE url = ?`, url)
-	return bookmarkID
+	bookmark := model.Bookmark{}
+	db.Where("url = ?", url).First(&bookmark)
+	return bookmark.ID
 }

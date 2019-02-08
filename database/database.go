@@ -17,9 +17,6 @@ type Database interface {
 	// GetTags fetch list of tags and their frequency
 	GetTags() ([]model.Tag, error)
 
-	//GetNewID get new id for specified table
-	GetNewID(table string) (int, error)
-
 	// DeleteBookmarks removes all record with matching ids from database.
 	DeleteBookmarks(ids ...int) error
 
