@@ -26,7 +26,6 @@ func getDataDirectory() string {
 	// Try to use platform specific app path
 	userScope := apppaths.NewScope(apppaths.User, "shiori", "shiori")
 	dataDir, err := userScope.DataDir()
-	//fmt.Println(dataDir)
 	if err == nil {
 		return dataDir
 	}
