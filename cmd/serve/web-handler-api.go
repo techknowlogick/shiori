@@ -11,6 +11,7 @@ import (
 	"strings"
 	"sync"
 	"time"
+	"unicode/utf8"
 
 	valid "github.com/asaskevich/govalidator"
 	jwt "github.com/dgrijalva/jwt-go"
@@ -137,7 +138,7 @@ func (h *webHandler) apiInsertBookmark(w http.ResponseWriter, r *http.Request, p
 	}
 
 	if book.Excerpt == "" {
-		book.Excerpt = article.Meta.Excerpt
+		book.Excerpt = strings.Map(fixUtf, article.Meta.Excerpt)
 	}
 
 	// Make sure title is not empty
@@ -162,10 +163,8 @@ func (h *webHandler) apiInsertBookmark(w http.ResponseWriter, r *http.Request, p
 	}
 
 	// Save bookmark to database
-	book.ID, err = h.db.InsertBookmark(book)
+	err = h.db.InsertBookmark(&book)
 	if err != nil {
-		book.Modified = time.Now().UTC().Format("2006-01-02 15:04:05")
-		_, err = h.db.UpdateBookmarks(book)
 		checkError(err)
 	}
 
@@ -215,7 +214,8 @@ func (h *webHandler) apiUpdateBookmark(w http.ResponseWriter, r *http.Request, p
 	}
 
 	// Get existing bookmark from database
-	bookmarks, err := h.db.GetBookmarks(true, request.ID)
+	reqID := request.ID
+	bookmarks, err := h.db.GetBookmarks(true, reqID)
 	checkError(err)
 	if len(bookmarks) == 0 {
 		panic(fmt.Errorf("No bookmark with matching index"))
@@ -434,4 +434,11 @@ func clearUTMParams(url *nurl.URL) {
 	}
 
 	url.RawQuery = newQuery.Encode()
+}
+
+func fixUtf(r rune) rune {
+	if r == utf8.RuneError {
+		return -1
+	}
+	return r
 }

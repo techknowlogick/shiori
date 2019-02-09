@@ -119,7 +119,7 @@
                         <p class="excerpt" v-if="book.imageURL === ''">{{book.excerpt}}</p>
                         <p v-show="options.showBookmarkID" class="id">{{book.id}}</p>
                     </a>
-                    <div class="bookmark-tags" v-if="book.tags.length > 0">
+                    <div class="bookmark-tags" v-if="book.tags && book.tags.length > 0">
                         <a v-for="tag in book.tags" @click="filterTag(tag.name)">{{tag.name}}</a>
                     </div>
                     <div class="spacer"></div>
@@ -259,8 +259,10 @@
                 visibleBookmarks() {
                     var start = this.page * pageSize,
                         finish = start + pageSize;
-
-                    return this.bookmarks.slice(start, finish);
+                    if (this.bookmarks) {
+                        return this.bookmarks.slice(start, finish);
+                    }
+                    return []
                 }
             },
             methods: {
@@ -439,8 +441,8 @@
                 showDialogEdit(idx) {
                     idx += this.page * pageSize;
 
-                    var book = JSON.parse(JSON.stringify(this.bookmarks[idx])),
-                        strTags = book.tags.map(tag => tag.name).join(', ');
+                    var book = this.bookmarks ? JSON.parse(JSON.stringify(this.bookmarks[idx])) : [],
+                        strTags = book.tags ? book.tags.map(tag => tag.name).join(', '): '';
 
                     this.showDialog({
                         title: 'Edit Bookmark',
@@ -725,13 +727,13 @@
                 getBookLink(book, isMainLink) {
                     if ((this.options.mainOpenOriginal && isMainLink) ||
                         (!this.options.mainOpenOriginal && !isMainLink)) return book.url;
-                    if (book.hasContent) return '/bookmark/' + book.id;
+                    if (book.content.length > 0) return '/bookmark/' + book.id;
                     return null;
                 },
                 getBookLinkTitle(book, isMainLink) {
                     if ((this.options.mainOpenOriginal && isMainLink) ||
                         (!this.options.mainOpenOriginal && !isMainLink)) return 'View original';
-                    if (book.hasContent) return 'View cache';
+                    if (book.content.length > 0) return 'View cache';
                     return null;
                 }
             },

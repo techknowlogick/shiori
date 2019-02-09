@@ -20,7 +20,7 @@ type cachedPlugin struct {
 
 type cachedPlugins map[string]cachedPlugin
 
-var cachePath = func() string {
+var CachePath = func() string {
 	home := "."
 	if usr, err := user.Current(); err == nil {
 		home = usr.HomeDir
@@ -37,7 +37,7 @@ var cache = func() cachedPlugins {
 	if cacheOn != "on" {
 		return m
 	}
-	f, err := os.Open(cachePath)
+	f, err := os.Open(CachePath)
 	if err != nil {
 		return m
 	}
@@ -62,8 +62,8 @@ func saveCache() error {
 	}
 	cacheMoot.Lock()
 	defer cacheMoot.Unlock()
-	os.MkdirAll(filepath.Dir(cachePath), 0744)
-	f, err := os.Create(cachePath)
+	os.MkdirAll(filepath.Dir(CachePath), 0744)
+	f, err := os.Create(CachePath)
 	if err != nil {
 		return err
 	}

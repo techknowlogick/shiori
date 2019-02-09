@@ -9,16 +9,13 @@ import (
 // Database is interface for manipulating data in database.
 type Database interface {
 	// InsertBookmark inserts new bookmark to database.
-	InsertBookmark(bookmark model.Bookmark) (int, error)
+	InsertBookmark(bookmark *model.Bookmark) error
 
 	// GetBookmarks fetch list of bookmarks based on submitted ids.
 	GetBookmarks(withContent bool, ids ...int) ([]model.Bookmark, error)
 
 	// GetTags fetch list of tags and their frequency
 	GetTags() ([]model.Tag, error)
-
-	//GetNewID get new id for specified table
-	GetNewID(table string) (int, error)
 
 	// DeleteBookmarks removes all record with matching ids from database.
 	DeleteBookmarks(ids ...int) error
