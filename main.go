@@ -11,7 +11,7 @@ import (
 	dt "github.com/techknowlogick/shiori/database"
 )
 
-var dataDir = "./"
+var dataDir = "."
 
 func main() {
 	dbType := "sqlite3"
@@ -35,11 +35,11 @@ func main() {
 		dsn = fmt.Sprintf("user=%s password=%s host=%s dbname=%s sslmode=disable", postgresqlDBUser, postgresqlDBPass, postgresqlDBHost, postgresqlDBName)
 	}
 
-	gormDB, err := dt.OpenGORMDatabase(dsn, dbType)
+	xormDB, err := dt.OpenXormDatabase(dsn, dbType)
 	checkError(err)
 
 	// Start cmd
-	shioriCmd := cmd.NewShioriCmd(gormDB, dataDir)
+	shioriCmd := cmd.NewShioriCmd(xormDB, dataDir)
 	if err := shioriCmd.Execute(); err != nil {
 		logrus.Fatalln(err)
 	}

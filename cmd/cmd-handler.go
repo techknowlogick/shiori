@@ -71,7 +71,7 @@ func (h *cmdHandler) addBookmark(cmd *cobra.Command, args []string) {
 
 	// If title and excerpt doesnt have submitted value, use from article
 	if book.Title == "" {
-		book.Title = article.Meta.Title
+		book.Title = "" //article.Meta.Title
 	}
 
 	if book.Excerpt == "" {
@@ -95,7 +95,7 @@ func (h *cmdHandler) addBookmark(cmd *cobra.Command, args []string) {
 	}
 
 	// Save bookmark to database
-	book.ID, err = h.db.InsertBookmark(book)
+	err = h.db.InsertBookmark(&book)
 	if err != nil {
 		cError.Println(err)
 		return
@@ -378,19 +378,19 @@ func (h *cmdHandler) updateBookmarks(cmd *cobra.Command, args []string) {
 	}
 
 	// Set title, excerpt and tags from user submitted value
-	for i, book := range bookmarks {
+	for i, bookmark := range bookmarks {
 		// Check if user submit his own title or excerpt
 		if title != "" {
-			book.Title = title
+			bookmark.Title = title
 		}
 
 		if excerpt != "" {
-			book.Excerpt = excerpt
+			bookmark.Excerpt = excerpt
 		}
 
 		// Make sure title is not empty
-		if book.Title == "" {
-			book.Title = book.URL
+		if bookmark.Title == "" {
+			bookmark.Title = bookmark.URL
 		}
 
 		// Generate new tags
@@ -400,7 +400,7 @@ func (h *cmdHandler) updateBookmarks(cmd *cobra.Command, args []string) {
 		}
 
 		newTags := []model.Tag{}
-		for _, tag := range book.Tags {
+		for _, tag := range bookmark.Tags {
 			if _, isDeleted := deletedTags[tag.Name]; isDeleted {
 				tag.Deleted = true
 			}
@@ -416,10 +416,10 @@ func (h *cmdHandler) updateBookmarks(cmd *cobra.Command, args []string) {
 			newTags = append(newTags, model.Tag{Name: tag})
 		}
 
-		book.Tags = newTags
+		bookmark.Tags = newTags
 
 		// Set bookmark new data
-		bookmarks[i] = book
+		bookmarks[i] = bookmark
 	}
 
 	// Update database
@@ -642,7 +642,7 @@ func (h *cmdHandler) importBookmarks(cmd *cobra.Command, args []string) {
 			URL:      parsedURL.String(),
 			Title:    normalizeSpace(title),
 			Excerpt:  normalizeSpace(excerpt),
-			Modified: modified.Format("2006-01-02 15:04:05"),
+			Modified: modified,
 			Tags:     tags,
 		}
 
@@ -652,7 +652,7 @@ func (h *cmdHandler) importBookmarks(cmd *cobra.Command, args []string) {
 	// Save bookmarks to database
 	for _, book := range bookmarks {
 		// Save book to database
-		book.ID, err = h.db.InsertBookmark(book)
+		err = h.db.InsertBookmark(&book)
 		if err != nil {
 			cError.Printf("%s is skipped: %v\n\n", book.URL, err)
 			continue
@@ -786,7 +786,7 @@ func (h *cmdHandler) importPockets(cmd *cobra.Command, args []string) {
 		bookmark := model.Bookmark{
 			URL:      parsedURL.String(),
 			Title:    normalizeSpace(title),
-			Modified: modified.Format("2006-01-02 15:04:05"),
+			Modified: modified,
 			Tags:     tags,
 		}
 
@@ -796,7 +796,7 @@ func (h *cmdHandler) importPockets(cmd *cobra.Command, args []string) {
 	// Save bookmarks to database
 	for _, book := range bookmarks {
 		// Save book to database
-		book.ID, err = h.db.InsertBookmark(book)
+		err = h.db.InsertBookmark(&book)
 		if err != nil {
 			cError.Printf("%s is skipped: %v\n\n", book.URL, err)
 			continue

@@ -163,11 +163,8 @@ func (h *webHandler) apiInsertBookmark(w http.ResponseWriter, r *http.Request, p
 	}
 
 	// Save bookmark to database
-	bookmarkID, err := h.db.InsertBookmark(book)
-	book.ID = uint(bookmarkID)
+	err = h.db.InsertBookmark(&book)
 	if err != nil {
-		book.Modified = time.Now().UTC().Format("2006-01-02 15:04:05")
-		_, err = h.db.UpdateBookmarks(book)
 		checkError(err)
 	}
 
@@ -183,7 +180,7 @@ func (h *webHandler) apiDeleteBookmark(w http.ResponseWriter, r *http.Request, p
 	checkError(err)
 
 	// Decode request
-	ids := []uint{}
+	ids := []int{}
 	err = json.NewDecoder(r.Body).Decode(&ids)
 	checkError(err)
 
@@ -217,7 +214,7 @@ func (h *webHandler) apiUpdateBookmark(w http.ResponseWriter, r *http.Request, p
 	}
 
 	// Get existing bookmark from database
-	reqID := uint(request.ID)
+	reqID := request.ID
 	bookmarks, err := h.db.GetBookmarks(true, reqID)
 	checkError(err)
 	if len(bookmarks) == 0 {
@@ -265,7 +262,7 @@ func (h *webHandler) apiUpdateBookmarkTags(w http.ResponseWriter, r *http.Reques
 
 	// Decode request
 	request := struct {
-		IDs  []uint      `json:"ids"`
+		IDs  []int       `json:"ids"`
 		Tags []model.Tag `json:"tags"`
 	}{}
 
@@ -318,7 +315,7 @@ func (h *webHandler) apiUpdateCache(w http.ResponseWriter, r *http.Request, ps h
 	checkError(err)
 
 	// Decode request
-	ids := []uint{}
+	ids := []int{}
 	err = json.NewDecoder(r.Body).Decode(&ids)
 	checkError(err)
 

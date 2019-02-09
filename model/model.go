@@ -1,44 +1,56 @@
 package model
 
 import (
-	"github.com/jinzhu/gorm"
+	//	"database/sql"
+	"time"
 )
 
 // Tag is tag for the bookmark
 type Tag struct {
-	gorm.Model
-	Name      string `json:"name"`
-	Deleted   bool
-	Bookmarks []*Bookmark `gorm:"many2many:bookmark_tags;"`
+	ID        int         `xorm:"'id' pk autoincr" json:"id"`
+	Name      string      `json:"name"`
+	Deleted   bool        `json:"-"`
+	NBookmark int         `xorm:"n_bookmarks" json:"nBookmarks"`
+	Bookmarks []*Bookmark `xorm:"-"`
+	Created   time.Time   `xorm:"created"`
+	Updated   time.Time   `xorm:"updated"`
 }
 
 // Bookmark is record of a specified URL
 type Bookmark struct {
-	gorm.Model
-	URL         string `json:"url"`
-	Title       string `json:"title"`
-	ImageURL    string `json:"imageURL"`
-	Excerpt     string `json:"excerpt"`
-	Author      string `json:"author"`
-	MinReadTime int    `json:"minReadTime"`
-	MaxReadTime int    `json:"maxReadTime"`
-	Modified    string `json:"modified"`
-	Content     string `json:"-"`
-	HTML        string `json:"html,omitempty"`
-	HasContent  bool   `json:"hasContent"`
-	Tags        []Tag  `gorm:"many2many:bookmark_tags;" json:"tags"`
+	ID          int       `xorm:"'id' pk autoincr" json:"id"`
+	URL         string    `xorm:"url" json:"url"`
+	Title       string    `xorm:"'title' NOT NULL" json:"title"`
+	ImageURL    string    `xorm:"'image_url' NOT NULL" json:"imageURL"`
+	Excerpt     string    `xorm:"'excerpt' NOT NULL" json:"excerpt"`
+	Author      string    `xorm:"'author' NOT NULL" json:"author"`
+	MinReadTime int       `xorm:"'min_read_time' DEFAULT 0"   json:"minReadTime"`
+	MaxReadTime int       `xorm:"'max_read_time' DEFAULT 0"   json:"maxReadTime"`
+	Modified    time.Time `xorm:"modified"    json:"modified"`
+	Content     string    `xorm:"content" json:"content"`
+	HTML        string    `xorm:"html" json:"html,omitempty"`
+	HasContent  bool      `xorm:"has_content" json:"hasContent"`
+	Tags        []Tag     `xorm:"-"           json:"tags"`
+	Created     time.Time `xorm:"created"`
+	Updated     time.Time `xorm:"updated"`
+}
+
+type BookmarkTag struct {
+	BookmarkID int `xorm:"bookmark_id"`
+	TagID      int `xorm:"tag_id"`
 }
 
 // Account is account for accessing bookmarks from web interface
 type Account struct {
-	gorm.Model
-	Username string `json:"username"`
-	Password string `json:"password"`
+	ID       int       `xorm:"'id' pk autoincr" json:"id"`
+	Username string    `json:"username"`
+	Password string    `json:"password"`
+	Created  time.Time `xorm:"created"`
+	Updated  time.Time `xorm:"updated"`
 }
 
 // LoginRequest is login request
 type LoginRequest struct {
-	gorm.Model
 	Username string `json:"username"`
 	Password string `json:"password"`
 	Remember bool   `json:"remember"`
