@@ -71,7 +71,7 @@ func (h *cmdHandler) addBookmark(cmd *cobra.Command, args []string) {
 
 	// If title and excerpt doesnt have submitted value, use from article
 	if book.Title == "" {
-		book.Title = "" //article.Meta.Title
+		book.Title = article.Meta.Title
 	}
 
 	if book.Excerpt == "" {
