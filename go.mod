@@ -5,6 +5,7 @@ require (
 	github.com/PuerkitoBio/goquery v1.5.0
 	github.com/abadojack/whatlanggo v0.0.0-20190207205756-01d4c01a5a7c // indirect
 	github.com/asaskevich/govalidator v0.0.0-20190207205813-f9ffefc3facf
+	github.com/denisenkom/go-mssqldb v0.0.0-20181014144952-4e0d7dc8888f
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/fatih/color v1.7.0
 	github.com/go-shiori/go-readability v0.0.0-20180803130947-13aa531ebcea
@@ -16,7 +17,6 @@ require (
 	github.com/gobuffalo/meta v0.0.0-20190207205153-50a99e08b8cf // indirect
 	github.com/gobuffalo/packr/v2 v2.0.1
 	github.com/gofrs/uuid v3.2.0+incompatible
-	github.com/google/go-cmp v0.2.0 // indirect
 	github.com/gosuri/uilive v0.0.0-20170323041506-ac356e6e42cd // indirect
 	github.com/gosuri/uiprogress v0.0.0-20170224063937-d0567a9d84a1
 	github.com/julienschmidt/httprouter v1.2.0

@@ -17,6 +17,13 @@ func main() {
 	dbType := "sqlite3"
 	dsn := fp.Join(dataDir, "shiori.db")
 
+	if rawDsn := os.Getenv("SHIORI_DSN"); rawDsn != "" {
+		dsn = rawDsn
+	}
+	if rawDbType := os.Getenv("SHIORI_DBTYPE"); rawDbType != "" {
+		dbType = rawDbType
+	}
+
 	// check and use mysql if env values set
 	if mysqlDBName := os.Getenv("SHIORI_MYSQL_DBNAME"); mysqlDBName != "" {
 		mysqlDBUser := os.Getenv("SHIORI_MYSQL_USER")
