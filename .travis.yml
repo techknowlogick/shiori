@@ -7,8 +7,7 @@ services:
   - docker
 
 before_install:
-  - npm i
-  - npx parcel build src/*.html --public-url /dist/
+  - make dist
 
 script:
   - docker build -t techknowlogick/shiori:latest .

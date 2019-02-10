@@ -15,7 +15,7 @@
     "vue-template-compiler": "^2.6.4"
   },
   "alias": {
-    "vue": "./node_modules/vue/dist/vue.common.js",
+    "vue": "./node_modules/vue/dist/vue.common.dev.js",
     "axios": "./node_modules/axios/dist/axios.js",
     "cookies": "./node_modules/js-cookie/src/js.cookie.js"
   }

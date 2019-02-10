@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import axios from 'axios'
-import Cookies from 'js-cookie'
+import * as Cookies from 'js-cookie';
 
 new Vue({
   el: '#login-page',
@@ -35,9 +35,7 @@ new Vue({
                 .then(function (response) {
                     // Save token
                     var token = response.data;
-                    Cookies.set('token', token, {
-                        expires: this.rememberMe ? 7 : 1
-                    });
+                    Cookies.set('token', token);
 
                     // Set destination URL
                     var rx = /[&?]dst=([^&]+)(&|$)/g,

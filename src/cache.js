@@ -1,10 +1,9 @@
 import Vue from 'vue'
 import axios from 'axios'
-import Cookies from 'js-cookie'
 
-
- // Create initial variable
-var init = JSON.parse('$|.|$');
+import { Base } from './page/base';
+import { YlaDialog } from './component/yla-dialog';
+import { YlaTooltip } from './component/yla-tooltip';
 
 // Register Vue component
 Vue.component('yla-dialog', new YlaDialog());
@@ -36,7 +35,7 @@ new Vue({
             localStorage.setItem('shiori-serif-mode', this.serifMode ? '1' : '0');
         },
         getHostname(url) {
-            parser = document.createElement('a');
+            var parser = document.createElement('a');
             parser.href = url;
             return parser.hostname.replace(/^www\./g, '');
         }

@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import axios from 'axios'
-import Cookies from 'js-cookie'
+import * as Cookies from 'js-cookie';
+import { Base } from './page/base';
+import { YlaDialog } from './component/yla-dialog';
+import { YlaTooltip } from './component/yla-tooltip';
 
 // Define global variable
 var pageSize = 30;
@@ -80,7 +83,8 @@ new Vue({
             var rxTagA = /['"]#([^'"]+)['"]/g,
                 rxTagB = /(^|\s+)#(\S+)/g,
                 keyword = this.search,
-                tags = [];
+                tags = [],
+                result = [];
 
             // Fetch tag A first
             while ((result = rxTagA.exec(keyword)) !== null) {
@@ -527,7 +531,7 @@ new Vue({
             this.dialogOptions.visible = true;
         },
         getHostname(url) {
-            parser = document.createElement('a');
+            var parser = document.createElement('a');
             parser.href = url;
             return parser.hostname.replace(/^www\./g, '');
         },

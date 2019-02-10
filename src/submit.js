@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import axios from 'axios'
-import Cookies from 'js-cookie'
+import * as Cookies from 'js-cookie';
+
+import { Base } from './page/base';
+import { YlaDialog } from './component/yla-dialog';
 
 // Create private function
 function _inIframe() {
@@ -57,9 +60,7 @@ new Vue({
                         .then((response) => {
                             // Save token
                             var token = response.data;
-                            Cookies.set('token', token, {
-                                expires: this.rememberMe ? 7 : 1
-                            });
+                            Cookies.set('token', token);
 
                             this.showDialogAdd();
                         })
