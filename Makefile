@@ -1,4 +1,6 @@
 
+GO ?= go
+SED_INPLACE := sed -i
 GOFILES := $(shell find . -name "*.go" -type f ! -path "./vendor/*" ! -path "*/*-packr.go")
 GOFMT ?= gofmt -s
 
