@@ -7,8 +7,8 @@ import (
 
 	"github.com/techknowlogick/shiori/model"
 
-	_ "github.com/go-sql-driver/mysql"
 	_ "github.com/denisenkom/go-mssqldb"
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/go-xorm/builder"
 	"github.com/go-xorm/xorm"
 	_ "github.com/lib/pq"
