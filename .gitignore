@@ -10,6 +10,8 @@ shiori*
 thumb/
 dist/*
 .cache/*
+cmd/serve/serve-packr.go
+packrd/*
 
 # Exclude nodejs packages
 node_modules/*
