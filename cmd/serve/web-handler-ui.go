@@ -123,7 +123,7 @@ func (h *webHandler) serveThumbnailImage(w http.ResponseWriter, r *http.Request,
 
 func serveFile(w http.ResponseWriter, path string) error {
 	// Open file
-	box := packr.New("views", "../../view")
+	box := packr.New("views", "../../dist")
 	src, err := box.Find(path)
 	if err != nil {
 		return err

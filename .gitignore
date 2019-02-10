@@ -8,6 +8,8 @@ sample.txt
 shiori*
 *.db
 thumb/
+dist/*
+.cache/*
 
 # Exclude nodejs packages
 node_modules/*

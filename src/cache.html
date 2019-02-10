@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../view/css/fontawesome.css">
+    <link rel="stylesheet" href="../view/css/source-sans-pro.css">
+    <link rel="stylesheet" href="../view/css/source-serif-pro.css">
+    <link rel="stylesheet" href="../view/less/yla-dialog.less">
+    <link rel="stylesheet" href="../view/less/yla-tooltip.less">
+    <link rel="stylesheet" href="../view/less/stylesheet.less">
+    <script src="../view/js/component/yla-tooltip.js"></script>
+    <script src="../view/js/component/yla-dialog.js"></script>
+    <script src="../view/js/page/base.js"></script>
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../view/res/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../view/res/apple-touch-icon-152x152.png" />
+    <link rel="icon" type="image/png" href="../view/res/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="../view/res/favicon-16x16.png" sizes="16x16" />
+    <title>Shiori - Bookmarks Manager</title>
+</head>
+
+<body>
+    <div id="cache-page" class="page" :class="{night: nightMode}">
+        <div id="sidebar">
+            <yla-tooltip placement="right" content="Toggle night mode">
+                <a @click="toggleNightMode">
+                    <i class="fas fa-fw" :class="nightMode ? 'fa-sun' : 'fa-moon'"></i>
+                </a>
+            </yla-tooltip>
+            <yla-tooltip placement="right" content="Toggle font type">
+                <a @click="toggleSerifMode" id="toggle-font" :class="{serif: !serifMode}">Aa</a>
+            </yla-tooltip>
+        </div>
+        <div id="body" :class="{serif: serifMode}">
+            <div id="header">
+                <p id="title">{{title}}</p>
+                <p id="time">Added
+                    <b>{{modified}} UTC</b>
+                </p>
+                <a id="url" :href="url" target="_blank">{{getHostname(url)}}</a>
+            </div>
+            <div id="content" v-html="html"></div>
+            <div id="body-padding"></div>
+        </div>
+        <yla-dialog v-bind="dialog"></yla-dialog>
+    </div>
+    <script src="./cache.js">
+    </script>
+</body>
+
+</html>

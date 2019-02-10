@@ -1,7 +1,14 @@
 language: go
 
+node_js:
+  - 10
+
 services:
   - docker
+
+before_install:
+  - npm i
+  - npx parcel build src/*.html --public-url /dist/
 
 script:
   - docker build -t techknowlogick/shiori:latest .

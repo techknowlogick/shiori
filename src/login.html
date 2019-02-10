@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../view/less/stylesheet.less">
+    <link rel="stylesheet" href="../view/css/fontawesome.css">
+    <link rel="stylesheet" href="../view/css/source-sans-pro.css">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../view/res/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../view/res/apple-touch-icon-152x152.png" />
+    <link rel="icon" type="image/png" href="../view/res/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="../view/res/favicon-16x16.png" sizes="16x16" />
+    <title>Login - Shiori - Bookmarks Manager</title>
+</head>
+
+<body>
+    <div id="login-page" :class="{night: nightMode}">
+        <p class="error-message" v-if="error !== ''">{{error}}</p>
+        <div id="login-box">
+            <div id="logo-area">
+                <p id="logo">
+                    <span>栞</span>shiori
+                </p>
+                <p id="tagline">simple bookmark manager</p>
+            </div>
+            <div id="input-area">
+                <div class="input-field">
+                    <p>Username: </p>
+                    <input type="text" name="username" v-model.trim="username" placeholder="Username" tabindex="1">
+                </div>
+                <div class="input-field">
+                    <p>Password: </p>
+                    <input type="password" name="password" v-model.trim="password" placeholder="Password" tabindex="2" @keyup.enter="login">
+                </div>
+                <div class="input-field">
+                    <a @click="toggleRemember" @keyup.enter="toggleRemember" tabindex="3">
+                        <i class="fa-fw" :class="rememberMe ? 'fas fa-check-square' : 'far fa-square'"></i>Remember me
+                    </a>
+                </div>
+            </div>
+            <div id="button-area">
+                <a v-if="loading">
+                    <i class="fas fa-fw fa-spinner fa-spin"></i>
+                </a>
+                <a v-else class="button" tabindex="4" @click="login" @keyup.enter="login">Login</a>
+            </div>
+        </div>
+    </div>
+    <script src="./login.js"></script>
+</body>
+
+</html>
