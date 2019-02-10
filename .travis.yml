@@ -1,12 +1,19 @@
 language: go
 
+node_js:
+  - 10
+
 services:
   - docker
+
+before_install:
+  - make dist
 
 script:
   - docker build -t techknowlogick/shiori:latest .
   - go get -t -v ./...
   - go vet $(go list ./... | grep -v /vendor/)
+  - make fmt-check
   - go build
   - ./shiori add https://example.com
   - ./shiori print

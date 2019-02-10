@@ -32,10 +32,7 @@ func NewServeCmd(db dt.Database, dataDir string) *cobra.Command {
 			// Create router
 			router := httprouter.New()
 
-			router.GET("/js/*filepath", hdl.serveFiles)
-			router.GET("/res/*filepath", hdl.serveFiles)
-			router.GET("/css/*filepath", hdl.serveFiles)
-			router.GET("/webfonts/*filepath", hdl.serveFiles)
+			router.GET("/dist/*filepath", hdl.serveFiles)
 
 			router.GET("/", hdl.serveIndexPage)
 			router.GET("/login", hdl.serveLoginPage)

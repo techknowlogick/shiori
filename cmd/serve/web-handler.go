@@ -87,7 +87,7 @@ func (h *webHandler) jwtKeyFunc(token *jwt.Token) (interface{}, error) {
 
 func createTemplate(filename string, funcMap template.FuncMap) (*template.Template, error) {
 	// Open file
-	box := packr.New("views", "../../view")
+	box := packr.New("views", "../../dist")
 	src, err := box.Find(filename)
 	if err != nil {
 		return nil, err

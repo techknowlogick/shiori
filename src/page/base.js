@@ -1,4 +1,4 @@
-var Base = function () {
+export function Base() {
     return {
         data() {
             return {

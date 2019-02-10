@@ -1,4 +1,4 @@
-var YlaTooltip = function () {
+export function YlaTooltip() {
     // Private method
     function _createTooltip() {
         var tooltip = document.createElement('span');

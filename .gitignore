@@ -8,3 +8,10 @@ sample.txt
 shiori*
 *.db
 thumb/
+dist/*
+.cache/*
+cmd/serve/serve-packr.go
+packrd/*
+
+# Exclude nodejs packages
+node_modules/*

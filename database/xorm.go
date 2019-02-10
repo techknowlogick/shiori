@@ -7,8 +7,8 @@ import (
 
 	"github.com/techknowlogick/shiori/model"
 
-	_ "github.com/go-sql-driver/mysql"
 	_ "github.com/denisenkom/go-mssqldb"
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/go-xorm/builder"
 	"github.com/go-xorm/xorm"
 	_ "github.com/lib/pq"
@@ -105,7 +105,7 @@ func (db *XormDatabase) GetBookmarks(withContent bool, ids ...int) ([]model.Book
 // DeleteBookmarks removes all record with matching ids from database.
 func (db *XormDatabase) DeleteBookmarks(ids ...int) error {
 	var bookmark model.Bookmark
-	_, err := db.Where("id in (?)", ids).Delete(&bookmark)
+	_, err := db.In("id", ids).Delete(&bookmark)
 	return err
 }
 

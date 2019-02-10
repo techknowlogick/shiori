@@ -1,4 +1,4 @@
-var YlaDialog = function () {
+export function YlaDialog() {
     // Private variable
     var _template = `
         <div v-if="visible" class="yla-dialog__overlay">
