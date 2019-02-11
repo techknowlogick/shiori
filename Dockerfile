@@ -23,6 +23,9 @@ RUN go mod download
 
 FROM golang:1.11-alpine as gobuilder
 
+RUN apk update \
+  && apk --no-cache add git build-base
+
 WORKDIR /go/src/github.com/techknowlogick/shiori
 
 COPY . .
