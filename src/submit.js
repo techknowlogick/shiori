@@ -5,6 +5,9 @@ import * as Cookies from 'js-cookie';
 import { Base } from './page/base';
 import { YlaDialog } from './component/yla-dialog';
 
+import 'typeface-source-sans-pro'
+import '@fortawesome/fontawesome-free/css/all.css'
+
 // Create private function
 function _inIframe() {
     try {

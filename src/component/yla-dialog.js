@@ -1,3 +1,5 @@
+import './yla-dialog.less'
+
 export function YlaDialog() {
     // Private variable
     var _template = `
