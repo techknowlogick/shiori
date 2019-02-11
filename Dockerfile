@@ -24,11 +24,12 @@ RUN apk update \
   && apk --no-cache add git build-base
 
 WORKDIR /go/src/github.com/techknowlogick/shiori
-ENV GO111MODULE=on
+ENV GO111MODULE=auto
 COPY . .
 COPY --from=gobase /go/src/github.com/techknowlogick/shiori/vendor /go/src/github.com/techknowlogick/shiori/vendor/
 COPY --from=nodebuilder /app/dist /go/src/github.com/techknowlogick/shiori/dist/
 RUN go get -u github.com/gobuffalo/packr/v2/packr2
+ENV GO111MODULE=on
 RUN packr2 build -mod vendor -o shiori
 
 FROM alpine:3.9
