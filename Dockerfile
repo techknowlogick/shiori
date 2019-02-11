@@ -19,7 +19,7 @@ WORKDIR /go/src/github.com/techknowlogick/shiori
 COPY go.mod .
 COPY go.sum .
 
-RUN go mod download
+RUN go mod download && go mod vendor
 
 FROM golang:1.11-alpine as gobuilder
 
