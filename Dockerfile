@@ -24,7 +24,7 @@ RUN apk update \
   && apk --no-cache add git build-base
 
 WORKDIR /go/src/github.com/techknowlogick/shiori
-
+ENV GO111MODULE=on
 COPY . .
 COPY --from=gobase /go/src/github.com/techknowlogick/shiori/vendor /go/src/github.com/techknowlogick/shiori/vendor/
 COPY --from=nodebuilder /app/dist /go/src/github.com/techknowlogick/shiori/dist/
