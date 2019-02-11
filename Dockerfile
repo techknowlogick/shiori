@@ -1,4 +1,4 @@
-FROM node:lts-alpine AS nodebuilder
+FROM node:lts-alpine as nodebuilder
 RUN apk --no-cache add python2
 
 WORKDIR /app
