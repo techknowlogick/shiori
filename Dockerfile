@@ -14,7 +14,7 @@ RUN apk update \
 
 WORKDIR /go/src/github.com/techknowlogick/shiori
 COPY . .
-COPY --from=nodebuilder /app/dist /go/src/github.com/techknowlogick/shiori/dist
+COPY --from=nodebuilder /app/dist /go/src/github.com/techknowlogick/shiori/dist/
 RUN go get -d -v ./... && go get -u github.com/gobuffalo/packr/v2/packr2
 RUN packr2
 RUN go build -o shiori
