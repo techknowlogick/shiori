@@ -7,13 +7,26 @@ COPY . .
 
 RUN npm install && npx parcel build src/*.html --public-url /dist/ 
 
-FROM golang:1.11-alpine as gobuilder
+FROM golang:1.11-alpine as gobase
 
 RUN apk update \
   && apk --no-cache add git build-base
 
+ENV GO111MODULE=on
+
 WORKDIR /go/src/github.com/techknowlogick/shiori
+
+COPY go.mod .
+COPY go.sum .
+
+RUN go mod download
+
+FROM golang:1.11-alpine as gobuilder
+
+WORKDIR /go/src/github.com/techknowlogick/shiori
+
 COPY . .
+COPY --from=gobase /go/src/github.com/techknowlogick/shiori/vendor /go/src/github.com/techknowlogick/shiori/vendor/
 COPY --from=nodebuilder /app/dist /go/src/github.com/techknowlogick/shiori/dist/
 RUN go get -d -v ./... && go get -u github.com/gobuffalo/packr/v2/packr2
 RUN packr2
