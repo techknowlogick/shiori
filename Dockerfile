@@ -16,8 +16,7 @@ ENV GO111MODULE=on
 
 WORKDIR /go/src/github.com/techknowlogick/shiori
 
-COPY go.mod .
-COPY go.sum .
+COPY . .
 
 RUN go mod download && go mod vendor
 
