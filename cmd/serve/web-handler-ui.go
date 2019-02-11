@@ -124,13 +124,14 @@ func (h *webHandler) serveThumbnailImage(w http.ResponseWriter, r *http.Request,
 func serveFile(w http.ResponseWriter, path string) error {
 	// Open file
 	box := packr.New("views", "../../dist")
-	src, err := box.Find(path)
+	_, fname := fp.Split(path)
+	src, err := box.Find(fname)
 	if err != nil {
 		return err
 	}
 
 	// Get content type
-	ext := fp.Ext(path)
+	ext := fp.Ext(fname)
 	mimeType := mime.TypeByExtension(ext)
 	if mimeType != "" {
 		w.Header().Set("Content-Type", mimeType)
