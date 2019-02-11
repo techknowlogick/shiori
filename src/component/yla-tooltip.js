@@ -1,3 +1,5 @@
+import './yla-tooltip.less'
+
 export function YlaTooltip() {
     // Private method
     function _createTooltip() {

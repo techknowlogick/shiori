@@ -2,6 +2,9 @@ import Vue from 'vue'
 import axios from 'axios'
 import * as Cookies from 'js-cookie';
 
+import 'typeface-source-sans-pro'
+import '@fortawesome/fontawesome-free/css/all.css'
+
 new Vue({
   el: '#login-page',
   data: {

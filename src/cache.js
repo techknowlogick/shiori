@@ -5,6 +5,10 @@ import { Base } from './page/base';
 import { YlaDialog } from './component/yla-dialog';
 import { YlaTooltip } from './component/yla-tooltip';
 
+import 'typeface-source-sans-pro'
+import 'typeface-source-serif-pro'
+import '@fortawesome/fontawesome-free/css/all.css'
+
 // Register Vue component
 Vue.component('yla-dialog', new YlaDialog());
 Vue.component('yla-tooltip', new YlaTooltip());
