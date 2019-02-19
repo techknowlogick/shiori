@@ -30,6 +30,6 @@ require (
 	github.com/spf13/cobra v0.0.3
 	golang.org/x/crypto v0.0.0-20190211185653-74369b46fc67
 	golang.org/x/net v0.0.0-20190213063636-3a22650c66bd // indirect
-	golang.org/x/sys v0.0.0-20190215145748-d0b11bdaac8a // indirect
+	golang.org/x/sys v0.0.0-20190219095645-153ac476189d // indirect
 	google.golang.org/appengine v1.4.0 // indirect
 )
