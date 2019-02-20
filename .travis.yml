@@ -24,6 +24,7 @@ script:
   - go build
   - ./shiori add https://example.com
   - ./shiori print
+  - packr2
   - gox -os="linux darwin windows" -arch="amd64 386" -output="dist/shiori.." -ldflags "-X main.Rev=`git rev-parse --short HEAD`" -verbose ./...
 
 deploy:
