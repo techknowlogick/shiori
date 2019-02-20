@@ -7,8 +7,8 @@ import (
 
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/sirupsen/logrus"
-	"github.com/techknowlogick/shiori/cmd"
-	dt "github.com/techknowlogick/shiori/database"
+	"src.techknowlogick.com/shiori/cmd"
+	dt "src.techknowlogick.com/shiori/database"
 )
 
 var dataDir = "."

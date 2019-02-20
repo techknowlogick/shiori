@@ -1,5 +1,7 @@
 language: go
 
+go_import_path: src.techknowlogick.com/shiori
+
 node_js:
   - 10
 

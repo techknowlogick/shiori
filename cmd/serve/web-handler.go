@@ -9,7 +9,7 @@ import (
 	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/dgrijalva/jwt-go/request"
 	"github.com/gobuffalo/packr/v2"
-	dt "github.com/techknowlogick/shiori/database"
+	dt "src.techknowlogick.com/shiori/database"
 )
 
 // webHandler is handler for every API and routes to web page

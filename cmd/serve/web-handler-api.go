@@ -18,8 +18,8 @@ import (
 	"github.com/go-shiori/go-readability"
 	"github.com/gofrs/uuid"
 	"github.com/julienschmidt/httprouter"
-	"github.com/techknowlogick/shiori/model"
 	"golang.org/x/crypto/bcrypt"
+	"src.techknowlogick.com/shiori/model"
 )
 
 // login is handler for POST /api/login

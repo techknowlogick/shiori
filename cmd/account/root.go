@@ -3,7 +3,7 @@ package account
 import (
 	"github.com/fatih/color"
 	"github.com/spf13/cobra"
-	dt "github.com/techknowlogick/shiori/database"
+	dt "src.techknowlogick.com/shiori/database"
 )
 
 var (

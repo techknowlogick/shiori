@@ -5,8 +5,8 @@ import (
 	"syscall"
 
 	"github.com/spf13/cobra"
-	dt "github.com/techknowlogick/shiori/database"
 	"golang.org/x/crypto/ssh/terminal"
+	dt "src.techknowlogick.com/shiori/database"
 )
 
 // cmdHandler is handler for all action in AccountCmd
