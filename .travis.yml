@@ -7,6 +7,13 @@ node_js:
 
 services:
   - docker
+  
+before_install:
+  - go get github.com/mitchellh/gox
+  - go get -u github.com/mattn/go-isatty # needed for progress bar in windows
+  - go get -u github.com/inconshreveable/mousetrap # needed for windows builds
+  - mkdir -p "$GOPATH/src/github.com/konsorten"
+  - git clone https://github.com/konsorten/go-windows-terminal-sequences.git "$GOPATH/src/github.com/konsorten/go-windows-terminal-sequences"
 
 script:
   - docker build -t techknowlogick/shiori:latest .
@@ -17,9 +24,20 @@ script:
   - go build
   - ./shiori add https://example.com
   - ./shiori print
+  - packr2
+  - gox -os="linux darwin windows" -arch="amd64 386" -output="dist/shiori.." -ldflags "-X main.Rev=`git rev-parse --short HEAD`" -verbose ./...
 
 deploy:
-  provider: script
-  script: bash docker_push
-  on:
-    branch: master
+  - provider: script
+    script: bash docker_push
+    on:
+      branch: master
+  - provider: releases
+    api_key:
+      secure: L/WOK9ct1h4y4YuVQToZftED8y/RJPhLEosgO+xy/rj1980K1KhFK+7oSSCMNC0uVP6CxK/R/yJkerlQPWLXPKqv9Pt+WYfoAgAYujuO/d/mkc0s74mlIXBFIaatiPQFMU1Wa7AaaMAuE2GCasEGwhRLz/zmjNjceQt/lKiUa0f7P1V/exrySo8vnDNivX3o4muQMR4HxnCq8hthHJAGrSzP2GwlrHntwMB+toQaXvGGVknDCK2cktfVU6J1CHz7cVy1iAXPT5v0aIIH7oaUFVU5yg1W9xoVpnbnvqjEhAX3I89TFuTBe2xUV5f2+EJ2mQzNj7QUCdGidrl4blJAlCKu37SBUUg5oq9kPEETPHXwHkREOPBMUxbrqQ4ngA+Ji6AP2Wr14rdbb3MThfYnbgvi517PTid0ytB7/Y28fMkbIlq4np5H2AhW052X2Gw3poUvqXlWybT3FBRgenJBfRAkIz32vtO9LqGUNyT+KmUkEH6AwbZPfpdGPgW+mZ61skOVnAF89nB6yKiIC2DZCyBzKnAk3QXMsOeOJN04CExM+NksvFKyRXSkkmILwZcRblsRXp8yeGQWwIHzQ8p8hVF5BMzj1cxSm59DI46XVI16QzEgY9u8a9MjMF2dDjjpfYJU8ujb3fz42X8MEfuWoWtzaKonU5HqRno0g7SigCw=
+    file: dist/*
+    file_glob: true
+    skip_cleanup: true
+    on:
+      repo: techknowlogick/shiori
+      tag: true
