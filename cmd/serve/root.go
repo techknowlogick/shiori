@@ -9,7 +9,7 @@ import (
 	"github.com/julienschmidt/httprouter"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
-	dt "github.com/techknowlogick/shiori/database"
+	dt "src.techknowlogick.com/shiori/database"
 )
 
 // NewServeCmd creates new command for serving web page

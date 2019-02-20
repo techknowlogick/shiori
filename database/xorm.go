@@ -5,7 +5,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/techknowlogick/shiori/model"
+	"src.techknowlogick.com/shiori/model"
 
 	_ "github.com/denisenkom/go-mssqldb"
 	_ "github.com/go-sql-driver/mysql"

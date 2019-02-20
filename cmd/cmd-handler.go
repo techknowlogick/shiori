@@ -18,8 +18,8 @@ import (
 	"github.com/gofrs/uuid"
 	"github.com/gosuri/uiprogress"
 	"github.com/spf13/cobra"
-	dt "github.com/techknowlogick/shiori/database"
-	"github.com/techknowlogick/shiori/model"
+	dt "src.techknowlogick.com/shiori/database"
+	"src.techknowlogick.com/shiori/model"
 )
 
 // cmdHandler is handler for all action in AccountCmd

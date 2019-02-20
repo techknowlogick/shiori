@@ -1,4 +1,4 @@
-module github.com/techknowlogick/shiori
+module src.techknowlogick.com/shiori
 
 require (
 	cloud.google.com/go v0.36.0 // indirect
