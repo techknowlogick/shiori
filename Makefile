@@ -1,4 +1,4 @@
-DIST := release
+DIST := dist
 IMPORT := src.techknowlogick.com/shiori
 GO ?= go
 SED_INPLACE := sed -i
@@ -11,9 +11,9 @@ TAGS ?=
 LDFLAGS ?=
 
 ifeq ($(OS), Windows_NT)
-	EXECUTABLE := gitea.exe
+	EXECUTABLE := shiori.exe
 else
-	EXECUTABLE := gitea
+	EXECUTABLE := shiori
 endif
 
 # $(call strip-suffix,filename)
@@ -102,7 +102,7 @@ endif
 
 .PHONY: release-copy
 release-copy:
-	$(foreach file,$(wildcard $(DIST)/binaries/$(EXECUTABLE)-*),cp $(file) $(DIST)/release/$(notdir $(file));)
+	cd $(DIST); for file in `find ./binaries -type f -name "*"`; cp $${file} ./release; done;
 
 .PHONY: release-check
 release-check:

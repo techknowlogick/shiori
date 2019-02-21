@@ -63,12 +63,11 @@ steps:
   image: techknowlogick/xgo
   commands:
   - make cross
-  - ls -la release
+  - ls -lahR release
 
 - name: compress-and-checksum
   image: golang:1.11
   commands:
-  - mkdir -p release
   - make release
   - ls -lahR release
 
@@ -77,6 +76,6 @@ steps:
   settings:
     api_key:
       from_secret: github_token
-    files: release/*
+    files: dist/release/*
   when:
     event: tag
