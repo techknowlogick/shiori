@@ -63,7 +63,7 @@ steps:
   image: techknowlogick/xgo
   commands:
   - make cross
-  - ls -lahR {dist, release}
+  - ls -lahR dist/
   when:
     event:
       exclude:
@@ -73,7 +73,7 @@ steps:
   image: golang:1.11
   commands:
   - make release
-  - ls -lahR {dist, release}
+  - ls -lahR dist/
   when:
     event:
       exclude:
