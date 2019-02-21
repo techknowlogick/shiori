@@ -59,7 +59,7 @@ steps:
         - pull_request
 
 - name: cross
-  image: golang:1.11
+  image: techknowlogick/xgo
   commands:
   - make release
   - ls -la release

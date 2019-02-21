@@ -48,18 +48,33 @@ dist-go:
 	packr2
 
 .PHONY: release
-release: cross release-compress release-check
+release: release-windows release-darwin release-linux release-compress release-check
 
-.PHONY: cross
-cross:
-	@hash gox > /dev/null 2>&1; if [ $$? -ne 0 ]; then \
-		$(GO) get -u github.com/mitchellh/gox; \
+.PHONY: release-windows
+release-windows:
+	@hash xgo > /dev/null 2>&1; if [ $$? -ne 0 ]; then \
+		$(GO) get -u github.com/karalabe/xgo; \
 	fi
 	go get -u github.com/mattn/go-isatty # needed for progress bar in windows
 	go get -u github.com/inconshreveable/mousetrap # needed for windows builds
 	mkdir -p "$(GOPATH)/src/github.com/konsorten"
 	git clone https://github.com/konsorten/go-windows-terminal-sequences.git "$(GOPATH)/src/github.com/konsorten/go-windows-terminal-sequences"
-	gox -output "release/shiori_{{.OS}}_{{.Arch}}" -ldflags "-X main.version=`git rev-parse --short HEAD`" -verbose ./...
+	xgo -v -dest $(DIST) -tags 'netgo $(TAGS)' -ldflags '-linkmode external -extldflags "-static" $(LDFLAGS)' -targets 'windows/*' -out shiori .
+	ls -la /build
+
+.PHONY: release-darwin
+release-darwin:
+	@hash xgo > /dev/null 2>&1; if [ $$? -ne 0 ]; then \
+		$(GO) get -u github.com/karalabe/xgo; \
+	fi
+	xgo -dest $(DIST) -tags 'netgo $(TAGS)' -ldflags '$(LDFLAGS)' -targets 'darwin/*' -out shiori-$(VERSION) .
+
+.PHONY: release-linux
+release-linux:
+	@hash xgo > /dev/null 2>&1; if [ $$? -ne 0 ]; then \
+		$(GO) get -u github.com/karalabe/xgo; \
+	fi
+	xgo -dest $(DIST) -tags 'netgo $(TAGS)' -ldflags '-linkmode external -extldflags "-static" $(LDFLAGS)' -targets 'linux/*' -out shiori-$(VERSION) .
 
 .PHONY: release-check
 release-check:
