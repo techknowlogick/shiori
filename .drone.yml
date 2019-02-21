@@ -16,6 +16,7 @@ steps:
   image: golang:1.11
   commands:
   - make fmt-check
+  - go get -t -v ./...
   - go vet $(go list ./... | grep -v /vendor/)
 
 - name: docker-check
