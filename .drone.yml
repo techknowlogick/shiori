@@ -64,12 +64,20 @@ steps:
   commands:
   - make cross
   - ls -lahR dist
+  when:
+    event:
+      exclude:
+        - pull_request
 
 - name: compress-and-checksum
   image: golang:1.11
   commands:
   - make release
   - ls -lahR dist
+  when:
+    event:
+      exclude:
+        - pull_request
 
 - name: publish
   image: plugins/github-release
