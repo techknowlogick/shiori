@@ -49,5 +49,5 @@ steps:
   - go get -u github.com/inconshreveable/mousetrap # needed for windows builds
   - mkdir -p "$GOPATH/src/github.com/konsorten"
   - git clone https://github.com/konsorten/go-windows-terminal-sequences.git "$GOPATH/src/github.com/konsorten/go-windows-terminal-sequences"
-  - gox -output="dist/shiori.." -ldflags "-X main.Rev=`git rev-parse --short HEAD`" -verbose ./...
-  - ls -la dist
+  - gox -output "releases/shiori_{{.OS}}_{{.Arch}}" -ldflags "-X main.Rev=`git rev-parse --short HEAD`" -verbose ./...
+  - ls -la releases
