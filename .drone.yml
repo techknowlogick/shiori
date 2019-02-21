@@ -62,6 +62,12 @@ steps:
 - name: cross
   image: techknowlogick/xgo
   commands:
+  - make cross
+  - ls -la release
+
+- name: compress-and-checksum
+  image: golang:1.11
+  commands:
   - make release
   - ls -la release
 

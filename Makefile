@@ -50,8 +50,11 @@ dist-go:
 	fi
 	packr2
 
+.PHONY: cross
+cross: release-windows release-darwin release-linux
+
 .PHONY: release
-release: release-windows release-darwin release-linux release-compress release-check
+release: release-compress release-check
 
 .PHONY: release-windows
 release-windows:
