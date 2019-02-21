@@ -102,7 +102,7 @@ endif
 
 .PHONY: release-copy
 release-copy:
-	cd $(DIST); for file in `find ./binaries -type f -name "*"`; cp $${file} ./release; done;
+	cd $(DIST); for file in `find ./binaries -type f -name "*"`; do cp $${file} ./release/; done;
 
 .PHONY: release-check
 release-check:
