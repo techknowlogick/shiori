@@ -4,6 +4,7 @@ GO ?= go
 SED_INPLACE := sed -i
 GOFILES := $(shell find . -name "*.go" -type f ! -path "./vendor/*" ! -path "*/*-packr.go")
 GOFMT ?= gofmt -s
+SHASUM := shasum -a 256
 
 # $(call strip-suffix,filename)
 strip-suffix = $(firstword $(subst ., ,$(1)))
@@ -61,11 +62,11 @@ cross:
 
 .PHONY: release-check
 release-check:
-	cd $(DIST); $(foreach file,$(wildcard $(DIST)/$(EXECUTABLE)_*),sha256sum $(notdir $(file)) > $(notdir $(file)).sha256;)
+	cd $(DIST); for file in `find . -type f -name "*"`; do $(SHASUM) $${file:2} > $${file}.sha256; done;
 
 .PHONY: release-compress
 release-compress:
 	@hash gxz > /dev/null 2>&1; if [ $$? -ne 0 ]; then \
 		$(GO) get -u github.com/ulikunitz/xz/cmd/gxz; \
 	fi
-	cd $(DIST); $(foreach file,$(wildcard $(DIST)/$(EXECUTABLE)_*),gxz -k -9 $(notdir $(file));)
+	cd $(DIST); for file in `find . -type f -name "*"`; do gxz -k -9 $${file}; done;
