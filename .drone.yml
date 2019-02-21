@@ -19,7 +19,7 @@ steps:
     dry_run: true
 
 - name: build-node
-  image: golang:1.11
+  image: node:10
   commands:
   - npm install
   - npx parcel build src/*.html --public-url /dist/
@@ -29,8 +29,11 @@ steps:
   commands:
   - get -u github.com/gobuffalo/packr/v2/packr2
   - packr2 build
+  - ./shiori add https://example.com
+  - ./shiori print
 
 - name: cross
   image: golang:1.11
   commands:
-  - gox -os="linux darwin windows" -arch="amd64 386" -output="dist/shiori.." -ldflags "-X main.Rev=`git rev-parse --short HEAD`" -verbose ./...
+  - gox -output="dist/shiori.." -ldflags "-X main.Rev=`git rev-parse --short HEAD`" -verbose ./...
+  - ls -la dist
