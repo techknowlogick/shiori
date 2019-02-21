@@ -1,4 +1,5 @@
-
+DIST := .
+IMPORT := src.techknowlogick.com/shiori
 GO ?= go
 SED_INPLACE := sed -i
 GOFILES := $(shell find . -name "*.go" -type f ! -path "./vendor/*" ! -path "*/*-packr.go")
