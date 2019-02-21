@@ -10,6 +10,12 @@ SHELL := bash
 TAGS ?=
 LDFLAGS ?=
 
+ifeq ($(OS), Windows_NT)
+	EXECUTABLE := gitea.exe
+else
+	EXECUTABLE := gitea
+endif
+
 # $(call strip-suffix,filename)
 strip-suffix = $(firstword $(subst ., ,$(1)))
 
@@ -51,10 +57,14 @@ dist-go:
 	packr2
 
 .PHONY: cross
-cross: release-windows release-darwin release-linux
+cross: release-dirs release-windows release-darwin release-linux release-copy
 
 .PHONY: release
 release: release-compress release-check
+
+.PHONY: release-dirs
+release-dirs:
+	mkdir -p $(DIST)/binaries $(DIST)/release
 
 .PHONY: release-windows
 release-windows:
@@ -67,7 +77,7 @@ release-windows:
 	git clone https://github.com/konsorten/go-windows-terminal-sequences.git "$(GOPATH)/src/github.com/konsorten/go-windows-terminal-sequences"
 	xgo -dest $(DIST) -tags 'netgo $(TAGS)' -ldflags '-linkmode external -extldflags "-static" $(LDFLAGS)' -targets 'windows/*' -out shiori .
 ifeq ($(CI),drone)
-	mv /build/* `pwd`/release
+	mv /build/* $(DIST)/binaries
 endif
 
 .PHONY: release-darwin
@@ -77,7 +87,7 @@ release-darwin:
 	fi
 	xgo -dest $(DIST) -tags 'netgo $(TAGS)' -ldflags '$(LDFLAGS)' -targets 'darwin/*' -out shiori .
 ifeq ($(CI),drone)
-	mv /build/* `pwd`/release
+	mv /build/* $(DIST)/binaries
 endif
 
 .PHONY: release-linux
@@ -87,8 +97,12 @@ release-linux:
 	fi
 	xgo -dest $(DIST) -tags 'netgo $(TAGS)' -ldflags '-linkmode external -extldflags "-static" $(LDFLAGS)' -targets 'linux/*' -out shiori .
 ifeq ($(CI),drone)
-	mv /build/* `pwd`/release
+	mv /build/* $(DIST)/binaries
 endif
+
+.PHONY: release-copy
+release-copy:
+	$(foreach file,$(wildcard $(DIST)/binaries/$(EXECUTABLE)-*),cp $(file) $(DIST)/release/$(notdir $(file));)
 
 .PHONY: release-check
 release-check:
