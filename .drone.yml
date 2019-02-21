@@ -2,6 +2,11 @@
 kind: pipeline
 name: default
 
+
+workspace:
+  base: /go
+  path: src/src.techknowlogick.com/shiori
+
 platform:
   os: linux
   arch: amd64
