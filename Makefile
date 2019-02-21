@@ -21,11 +21,50 @@ fmt-check:
 		exit 1; \
 	fi;
 
+# dist step is kept for backwords compatibility
 .PHONY: dist
-dist:
+dist: dep-node dep-go
+
+.PHONY: dep
+dep: dep-node dep-go
+
+.PHONY: dep-node
+dist-node:
+	@hash npx > /dev/null 2>&1; if [ $$? -ne 0 ]; then \
+		echo "Please install npm version 5.2+"; \
+		exit 1; \
+	fi;
+	npm install
+	npx parcel build src/*.html --public-url /dist/
+
+.PHONY: dep-go
+dist-go:
 	@hash packr2 > /dev/null 2>&1; if [ $$? -ne 0 ]; then \
 		$(GO) get -u github.com/gobuffalo/packr/v2/packr2; \
 	fi
-	npm install
-	npx parcel build src/*.html --public-url /dist/
 	packr2
+
+.PHONY: release
+release: cross release-compress release-check
+
+.PHONY: cross
+cross:
+	@hash gox > /dev/null 2>&1; if [ $$? -ne 0 ]; then \
+		$(GO) get -u github.com/mitchellh/gox; \
+	fi
+	go get -u github.com/mattn/go-isatty # needed for progress bar in windows
+	go get -u github.com/inconshreveable/mousetrap # needed for windows builds
+	mkdir -p "$(GOPATH)/src/github.com/konsorten"
+	git clone https://github.com/konsorten/go-windows-terminal-sequences.git "$(GOPATH)/src/github.com/konsorten/go-windows-terminal-sequences"
+	gox -output "release/shiori_{{.OS}}_{{.Arch}}" -ldflags "-X main.version=`git rev-parse --short HEAD`" -verbose ./...
+
+.PHONY: release-check
+release-check:
+	cd $(DIST)/release; $(foreach file,$(wildcard $(DIST)/release/$(EXECUTABLE)-*),sha256sum $(notdir $(file)) > $(notdir $(file)).sha256;)
+
+.PHONY: release-compress
+release-compress:
+	@hash gxz > /dev/null 2>&1; if [ $$? -ne 0 ]; then \
+		$(GO) get -u github.com/ulikunitz/xz/cmd/gxz; \
+	fi
+	cd $(DIST)/release; $(foreach file,$(wildcard $(DIST)/binaries/$(EXECUTABLE)-*),gxz -k -9 $(notdir $(file));)
