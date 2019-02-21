@@ -56,7 +56,7 @@ release: release-windows release-darwin release-linux release-compress release-c
 .PHONY: release-windows
 release-windows:
 	@hash xgo > /dev/null 2>&1; if [ $$? -ne 0 ]; then \
-		$(GO) get -u github.com/karalabe/xgo; \
+		$(GO) get -u github.com/techknowlogick/xgo; \
 	fi
 	go get -u github.com/mattn/go-isatty # needed for progress bar in windows
 	go get -u github.com/inconshreveable/mousetrap # needed for windows builds
@@ -70,9 +70,9 @@ endif
 .PHONY: release-darwin
 release-darwin:
 	@hash xgo > /dev/null 2>&1; if [ $$? -ne 0 ]; then \
-		$(GO) get -u github.com/karalabe/xgo; \
+		$(GO) get -u github.com/techknowlogick/xgo; \
 	fi
-	xgo -dest $(DIST) -tags 'netgo $(TAGS)' -ldflags '$(LDFLAGS)' -targets 'darwin/*' -out shiori-$(VERSION) .
+	xgo -dest $(DIST) -tags 'netgo $(TAGS)' -ldflags '$(LDFLAGS)' -targets 'darwin/*' -out shiori .
 ifeq ($(CI),drone)
 	mv /build/* $(DIST)/
 endif
@@ -80,9 +80,9 @@ endif
 .PHONY: release-linux
 release-linux:
 	@hash xgo > /dev/null 2>&1; if [ $$? -ne 0 ]; then \
-		$(GO) get -u github.com/karalabe/xgo; \
+		$(GO) get -u github.com/techknowlogick/xgo; \
 	fi
-	xgo -dest $(DIST) -tags 'netgo $(TAGS)' -ldflags '-linkmode external -extldflags "-static" $(LDFLAGS)' -targets 'linux/*' -out shiori-$(VERSION) .
+	xgo -dest $(DIST) -tags 'netgo $(TAGS)' -ldflags '-linkmode external -extldflags "-static" $(LDFLAGS)' -targets 'linux/*' -out shiori .
 ifeq ($(CI),drone)
 	mv /build/* $(DIST)/
 endif
