@@ -53,6 +53,7 @@ steps:
       from_secret: docker_password
     repo: techknowlogick/shiori
     auto_tag: true
+    default_tags: true
   when:
     event:
       exclude:
