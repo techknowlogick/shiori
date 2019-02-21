@@ -130,8 +130,7 @@ func (db *XormDatabase) SearchBookmarks(orderLatest bool, keyword string, tags .
 	}
 
 	if len(tags) > 0 {
-		tagsCond := builder.NewCond()
-		tagsCond = builder.In("id", builder.Select("bookmark_id").From("bookmark_tag").LeftJoin("tag", builder.Expr("tag.id = bookmark_tag.tag_id")).Where(builder.In("tag.name", tags)))
+		tagsCond := builder.In("id", builder.Select("bookmark_id").From("bookmark_tag").LeftJoin("tag", builder.Expr("tag.id = bookmark_tag.tag_id")).Where(builder.In("tag.name", tags)))
 		searchCond = searchCond.And(tagsCond)
 	}
 
