@@ -48,7 +48,7 @@ dist-go:
 	packr2
 
 .PHONY: release
-release: cross release-check
+release: cross release-compress release-check
 
 .PHONY: cross
 cross:
