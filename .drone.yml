@@ -53,22 +53,35 @@ steps:
       from_secret: docker_password
     repo: techknowlogick/shiori
     auto_tag: true
+    default_tags: true
   when:
     event:
       exclude:
         - pull_request
 
 - name: cross
+  image: techknowlogick/xgo
+  commands:
+  - make cross
+  when:
+    event:
+      exclude:
+        - pull_request
+
+- name: compress-and-checksum
   image: golang:1.11
   commands:
   - make release
-  - ls -la release
+  when:
+    event:
+      exclude:
+        - pull_request
 
 - name: publish
   image: plugins/github-release
   settings:
     api_key:
       from_secret: github_token
-    files: release/*
+    files: dist/release/*
   when:
     event: tag
