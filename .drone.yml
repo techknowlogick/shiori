@@ -63,13 +63,13 @@ steps:
   image: techknowlogick/xgo
   commands:
   - make cross
-  - ls -lahR release
+  - ls -lahR dist
 
 - name: compress-and-checksum
   image: golang:1.11
   commands:
   - make release
-  - ls -lahR release
+  - ls -lahR dist
 
 - name: publish
   image: plugins/github-release
