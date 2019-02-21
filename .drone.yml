@@ -32,7 +32,7 @@ steps:
 - name: build-go
   image: golang:1.11
   commands:
-  - get -u github.com/gobuffalo/packr/v2/packr2
+  - go get -u github.com/gobuffalo/packr/v2/packr2
   - packr2 build
   - ./shiori add https://example.com
   - ./shiori print
