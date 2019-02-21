@@ -44,12 +44,6 @@ steps:
   - ./shiori add https://example.com
   - ./shiori print
 
-- name: cross
-  image: golang:1.11
-  commands:
-  - make release
-  - ls -la release
-
 - name: docker-publish
   image: plugins/docker
   settings:
@@ -63,6 +57,12 @@ steps:
     event:
       exclude:
         - pull_request
+
+- name: cross
+  image: golang:1.11
+  commands:
+  - make release
+  - ls -la release
 
 - name: publish
   image: plugins/github-release
