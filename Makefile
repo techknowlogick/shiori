@@ -1,4 +1,4 @@
-DIST := .
+DIST := release
 IMPORT := src.techknowlogick.com/shiori
 GO ?= go
 SED_INPLACE := sed -i
@@ -61,11 +61,11 @@ cross:
 
 .PHONY: release-check
 release-check:
-	cd $(DIST)/release; $(foreach file,$(wildcard $(DIST)/release/$(EXECUTABLE)-*),sha256sum $(notdir $(file)) > $(notdir $(file)).sha256;)
+	cd $(DIST); $(foreach file,$(wildcard $(DIST)/$(EXECUTABLE)_*),sha256sum $(notdir $(file)) > $(notdir $(file)).sha256;)
 
 .PHONY: release-compress
 release-compress:
 	@hash gxz > /dev/null 2>&1; if [ $$? -ne 0 ]; then \
 		$(GO) get -u github.com/ulikunitz/xz/cmd/gxz; \
 	fi
-	cd $(DIST)/release; $(foreach file,$(wildcard $(DIST)/binaries/$(EXECUTABLE)-*),gxz -k -9 $(notdir $(file));)
+	cd $(DIST); $(foreach file,$(wildcard $(DIST)/$(EXECUTABLE)_*),gxz -k -9 $(notdir $(file));)
