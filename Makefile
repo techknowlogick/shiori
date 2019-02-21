@@ -7,6 +7,9 @@ GOFMT ?= gofmt -s
 SHASUM := shasum -a 256
 SHELL := bash
 
+TAGS ?=
+LDFLAGS ?=
+
 # $(call strip-suffix,filename)
 strip-suffix = $(firstword $(subst ., ,$(1)))
 
@@ -59,8 +62,10 @@ release-windows:
 	go get -u github.com/inconshreveable/mousetrap # needed for windows builds
 	mkdir -p "$(GOPATH)/src/github.com/konsorten"
 	git clone https://github.com/konsorten/go-windows-terminal-sequences.git "$(GOPATH)/src/github.com/konsorten/go-windows-terminal-sequences"
-	xgo -v -dest $(DIST) -tags 'netgo $(TAGS)' -ldflags '-linkmode external -extldflags "-static" $(LDFLAGS)' -targets 'windows/*' -out shiori .
-	ls -la /build
+	xgo -dest $(DIST) -tags 'netgo $(TAGS)' -ldflags '-linkmode external -extldflags "-static" $(LDFLAGS)' -targets 'windows/*' -out shiori .
+ifeq ($(CI),drone)
+	mv /build/* $(DIST)/
+endif
 
 .PHONY: release-darwin
 release-darwin:
@@ -68,6 +73,9 @@ release-darwin:
 		$(GO) get -u github.com/karalabe/xgo; \
 	fi
 	xgo -dest $(DIST) -tags 'netgo $(TAGS)' -ldflags '$(LDFLAGS)' -targets 'darwin/*' -out shiori-$(VERSION) .
+ifeq ($(CI),drone)
+	mv /build/* $(DIST)/
+endif
 
 .PHONY: release-linux
 release-linux:
@@ -75,6 +83,9 @@ release-linux:
 		$(GO) get -u github.com/karalabe/xgo; \
 	fi
 	xgo -dest $(DIST) -tags 'netgo $(TAGS)' -ldflags '-linkmode external -extldflags "-static" $(LDFLAGS)' -targets 'linux/*' -out shiori-$(VERSION) .
+ifeq ($(CI),drone)
+	mv /build/* $(DIST)/
+endif
 
 .PHONY: release-check
 release-check:
