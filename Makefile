@@ -67,7 +67,7 @@ release-windows:
 	git clone https://github.com/konsorten/go-windows-terminal-sequences.git "$(GOPATH)/src/github.com/konsorten/go-windows-terminal-sequences"
 	xgo -dest $(DIST) -tags 'netgo $(TAGS)' -ldflags '-linkmode external -extldflags "-static" $(LDFLAGS)' -targets 'windows/*' -out shiori .
 ifeq ($(CI),drone)
-	mv /build/* $(DIST)/
+	mv /build/* `pwd`/release
 endif
 
 .PHONY: release-darwin
@@ -77,7 +77,7 @@ release-darwin:
 	fi
 	xgo -dest $(DIST) -tags 'netgo $(TAGS)' -ldflags '$(LDFLAGS)' -targets 'darwin/*' -out shiori .
 ifeq ($(CI),drone)
-	mv /build/* $(DIST)/
+	mv /build/* `pwd`/release
 endif
 
 .PHONY: release-linux
@@ -87,7 +87,7 @@ release-linux:
 	fi
 	xgo -dest $(DIST) -tags 'netgo $(TAGS)' -ldflags '-linkmode external -extldflags "-static" $(LDFLAGS)' -targets 'linux/*' -out shiori .
 ifeq ($(CI),drone)
-	mv /build/* $(DIST)/
+	mv /build/* `pwd`/release
 endif
 
 .PHONY: release-check

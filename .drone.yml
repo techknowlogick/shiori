@@ -68,6 +68,7 @@ steps:
 - name: compress-and-checksum
   image: golang:1.11
   commands:
+  - mkdir -p release
   - make release
   - ls -la release
 
