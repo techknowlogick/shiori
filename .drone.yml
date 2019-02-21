@@ -70,7 +70,7 @@ steps:
   commands:
   - mkdir -p release
   - make release
-  - ls -la release
+  - ls -lahR release
 
 - name: publish
   image: plugins/github-release
