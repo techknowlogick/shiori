@@ -1,0 +1,74 @@
+---
+kind: pipeline
+name: default
+
+
+workspace:
+  base: /go
+  path: src/src.techknowlogick.com/shiori
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: check
+  image: golang:1.11
+  commands:
+  - make fmt-check
+
+- name: docker-check
+  image: plugins/docker
+  settings:
+    repo: techknowlogick/shiori
+    dry_run: true
+  when:
+    event:
+    - pull_request
+
+- name: build-node
+  image: node:10
+  commands:
+  - npm install
+  - npx parcel build src/*.html --public-url /dist/
+
+- name: build-go
+  image: golang:1.11
+  environment:
+    GO111MODULE: on
+  commands:
+  - GO111MODULE=auto go get -u github.com/gobuffalo/packr/v2/packr2
+  - go mod download
+  - go mod vendor
+  - packr2 build -mod vendor -o shiori
+  - ./shiori add https://example.com
+  - ./shiori print
+
+- name: docker-publish
+  image: plugins/docker
+  settings:
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+    repo: techknowlogick/shiori
+    auto_tag: true
+  when:
+    event:
+      exclude:
+        - pull_request
+
+- name: cross
+  image: golang:1.11
+  commands:
+  - make release
+  - ls -la release
+
+- name: publish
+  image: plugins/github-release
+  settings:
+    api_key:
+      from_secret: github_token
+    files: release/*
+  when:
+    event: tag

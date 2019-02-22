@@ -12,6 +12,7 @@ dist/*
 .cache/*
 cmd/serve/serve-packr.go
 packrd/*
+release/*
 
 # Exclude nodejs packages
 node_modules/*

@@ -6,3 +6,5 @@ README.md
 screenshot/*
 shiori
 shiori.db
+vendor/*
+dist/*
