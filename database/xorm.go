@@ -126,9 +126,9 @@ func (db *XormDatabase) deleteBookmarks(ids ...int) error {
 	var bookmark model.Bookmark
 	var err error
 	if len(ids) > 0 {
-		_, err := db.In("id", ids).Delete(&bookmark)
+		_, err = db.In("id", ids).Delete(&bookmark)
 	} else {
-		_, err := db.Delete(&bookmark)
+		_, err = db.Delete(&bookmark)
 	}
 	return err
 }
