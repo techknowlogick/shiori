@@ -43,6 +43,9 @@ steps:
   - packr2 build -mod vendor -o shiori
   - ./shiori add https://example.com
   - ./shiori print
+  - ./shiori delete 1
+  - ./shiori add https://src.techknowlogick.com
+  - ./shiori print
 
 - name: docker-publish
   image: plugins/docker

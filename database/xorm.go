@@ -2,6 +2,7 @@ package database
 
 import (
 	"fmt"
+	"math"
 	"strings"
 	"time"
 
@@ -104,8 +105,31 @@ func (db *XormDatabase) GetBookmarks(withContent bool, ids ...int) ([]model.Book
 
 // DeleteBookmarks removes all record with matching ids from database.
 func (db *XormDatabase) DeleteBookmarks(ids ...int) error {
+	if len(ids) == 0 {
+		return db.deleteBookmarks()
+	}
+
+	page := 0
+	for len(ids) > page*100 {
+		upperIndex := int(math.Min(float64(page*100+100), float64(len(ids))))
+		err := db.deleteBookmarks(ids[page*100 : upperIndex]...)
+		if err != nil {
+			fmt.Println(err)
+		}
+		page = page + 1
+	}
+	return nil
+}
+
+// deleteBookmarks removes all record with matching ids from database
+func (db *XormDatabase) deleteBookmarks(ids ...int) error {
 	var bookmark model.Bookmark
-	_, err := db.In("id", ids).Delete(&bookmark)
+	var err error
+	if len(ids) > 0 {
+		_, err = db.In("id", ids).Delete(&bookmark)
+	} else {
+		_, err = db.Delete(&bookmark)
+	}
 	return err
 }
 
