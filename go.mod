@@ -21,7 +21,7 @@ require (
 	github.com/gosuri/uiprogress v0.0.0-20170224063937-d0567a9d84a1
 	github.com/julienschmidt/httprouter v1.2.0
 	github.com/lib/pq v1.0.0
-	github.com/mattn/go-colorable v0.1.0 // indirect
+	github.com/mattn/go-colorable v0.1.1 // indirect
 	github.com/mattn/go-isatty v0.0.5 // indirect
 	github.com/mattn/go-sqlite3 v1.10.0
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
