@@ -2,9 +2,9 @@ package database
 
 import (
 	"fmt"
+	"math"
 	"strings"
 	"time"
-	"math"
 
 	"src.techknowlogick.com/shiori/model"
 
@@ -110,9 +110,9 @@ func (db *XormDatabase) DeleteBookmarks(ids ...int) error {
 	}
 
 	page := 0
-	for ;len(ids) > page * 100; {
+	for len(ids) > page*100 {
 		upperIndex := int(math.Min(float64(page*100+100), float64(len(ids))))
-		err := db.deleteBookmarks(ids[page*100:upperIndex]...)
+		err := db.deleteBookmarks(ids[page*100 : upperIndex]...)
 		if err != nil {
 			fmt.Println(err)
 		}
