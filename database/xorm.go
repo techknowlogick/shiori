@@ -106,7 +106,7 @@ func (db *XormDatabase) GetBookmarks(withContent bool, ids ...int) ([]model.Book
 // DeleteBookmarks removes all record with matching ids from database.
 func (db *XormDatabase) DeleteBookmarks(ids ...int) error {
 	if len(ids) == 0 {
-		return nil
+		return db.deleteBookmarks()
 	}
 
 	page := 0
@@ -124,7 +124,12 @@ func (db *XormDatabase) DeleteBookmarks(ids ...int) error {
 // deleteBookmarks removes all record with matching ids from database
 func (db *XormDatabase) deleteBookmarks(ids ...int) error {
 	var bookmark model.Bookmark
-	_, err := db.In("id", ids).Delete(&bookmark)
+	var err error
+	if len(ids) > 0 {
+		_, err := db.In("id", ids).Delete(&bookmark)
+	} else {
+		_, err := db.Delete(&bookmark)
+	}
 	return err
 }
 
