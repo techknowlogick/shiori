@@ -2,7 +2,7 @@
   "name": "shiori",
   "devDependencies": {
     "@fortawesome/fontawesome-free": "5.7.2",
-    "@vue/component-compiler-utils": "2.5.2",
+    "@vue/component-compiler-utils": "2.6.0",
     "axios": "0.18.0",
     "js-cookie": "2.2.0",
     "less": "3.9.0",
@@ -11,8 +11,8 @@
     "typeface-source-sans-pro": "0.0.54",
     "typeface-source-serif-pro": "0.0.54",
     "typeface-ubuntu-mono": "0.0.54",
-    "vue": "2.6.6",
-    "vue-template-compiler": "2.6.6"
+    "vue": "2.6.7",
+    "vue-template-compiler": "2.6.7"
   },
   "alias": {
     "vue": "./node_modules/vue/dist/vue.common.js",
