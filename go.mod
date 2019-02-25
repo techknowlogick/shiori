@@ -12,7 +12,7 @@ require (
 	github.com/go-sql-driver/mysql v1.4.1
 	github.com/go-xorm/builder v0.3.4
 	github.com/go-xorm/xorm v0.7.1
-	github.com/gobuffalo/buffalo-plugins v1.13.0 // indirect
+	github.com/gobuffalo/buffalo-plugins v1.13.1 // indirect
 	github.com/gobuffalo/envy v1.6.15 // indirect
 	github.com/gobuffalo/meta v0.0.0-20190207205153-50a99e08b8cf // indirect
 	github.com/gobuffalo/packr/v2 v2.0.2
