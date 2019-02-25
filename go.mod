@@ -15,7 +15,7 @@ require (
 	github.com/gobuffalo/buffalo-plugins v1.13.0 // indirect
 	github.com/gobuffalo/envy v1.6.15 // indirect
 	github.com/gobuffalo/meta v0.0.0-20190207205153-50a99e08b8cf // indirect
-	github.com/gobuffalo/packr/v2 v2.0.1
+	github.com/gobuffalo/packr/v2 v2.0.2
 	github.com/gofrs/uuid v3.2.0+incompatible
 	github.com/gosuri/uilive v0.0.0-20170323041506-ac356e6e42cd // indirect
 	github.com/gosuri/uiprogress v0.0.0-20170224063937-d0567a9d84a1
