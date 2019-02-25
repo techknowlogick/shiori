@@ -28,7 +28,7 @@ require (
 	github.com/muesli/go-app-paths v0.0.0-20190207224558-913f7f7ac60f
 	github.com/sirupsen/logrus v1.3.0
 	github.com/spf13/cobra v0.0.3
-	golang.org/x/crypto v0.0.0-20190223035013-ffb98f73852f
+	golang.org/x/crypto v0.0.0-20190225135744-7f87c0fbb88b
 	golang.org/x/net v0.0.0-20190213063636-3a22650c66bd // indirect
 	golang.org/x/sys v0.0.0-20190225075313-cc5685c2db12 // indirect
 	google.golang.org/appengine v1.4.0 // indirect
