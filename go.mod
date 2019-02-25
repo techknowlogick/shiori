@@ -29,7 +29,7 @@ require (
 	github.com/sirupsen/logrus v1.3.0
 	github.com/spf13/cobra v0.0.3
 	golang.org/x/crypto v0.0.0-20190225135744-7f87c0fbb88b
-	golang.org/x/net v0.0.0-20190213063636-3a22650c66bd // indirect
+	golang.org/x/net v0.0.0-20190225160740-fe579d43d832 // indirect
 	golang.org/x/sys v0.0.0-20190225075313-cc5685c2db12 // indirect
 	google.golang.org/appengine v1.4.0 // indirect
 )
