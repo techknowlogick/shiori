@@ -14,7 +14,7 @@ import (
 
 	"github.com/PuerkitoBio/goquery"
 	valid "github.com/asaskevich/govalidator"
-	"github.com/go-shiori/go-readability"
+	"miniflux.app/reader/readability"
 	"github.com/gofrs/uuid"
 	"github.com/gosuri/uiprogress"
 	"github.com/spf13/cobra"
