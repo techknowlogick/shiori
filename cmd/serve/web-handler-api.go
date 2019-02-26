@@ -15,10 +15,10 @@ import (
 
 	valid "github.com/asaskevich/govalidator"
 	jwt "github.com/dgrijalva/jwt-go"
-	"miniflux.app/reader/readability"
 	"github.com/gofrs/uuid"
 	"github.com/julienschmidt/httprouter"
 	"golang.org/x/crypto/bcrypt"
+	"miniflux.app/reader/readability"
 	"src.techknowlogick.com/shiori/model"
 )
 

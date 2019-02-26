@@ -14,10 +14,10 @@ import (
 
 	"github.com/PuerkitoBio/goquery"
 	valid "github.com/asaskevich/govalidator"
-	"miniflux.app/reader/readability"
 	"github.com/gofrs/uuid"
 	"github.com/gosuri/uiprogress"
 	"github.com/spf13/cobra"
+	"miniflux.app/reader/readability"
 	dt "src.techknowlogick.com/shiori/database"
 	"src.techknowlogick.com/shiori/model"
 )
