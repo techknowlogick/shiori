@@ -15,7 +15,7 @@ import (
 
 	valid "github.com/asaskevich/govalidator"
 	jwt "github.com/dgrijalva/jwt-go"
-	"github.com/go-shiori/go-readability"
+	"miniflux.app/reader/readability"
 	"github.com/gofrs/uuid"
 	"github.com/julienschmidt/httprouter"
 	"golang.org/x/crypto/bcrypt"
