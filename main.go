@@ -5,7 +5,6 @@ import (
 	"os"
 	fp "path/filepath"
 
-	_ "github.com/mattn/go-sqlite3"
 	"github.com/sirupsen/logrus"
 	"src.techknowlogick.com/shiori/cmd"
 	dt "src.techknowlogick.com/shiori/database"
