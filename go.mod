@@ -12,7 +12,7 @@ require (
 	github.com/go-xorm/builder v0.3.4
 	github.com/go-xorm/xorm v0.7.1
 	github.com/gobuffalo/buffalo-plugins v1.13.1 // indirect
-	github.com/gobuffalo/packr/v2 v2.0.2
+	github.com/gobuffalo/packr/v2 v2.0.3
 	github.com/gofrs/uuid v3.2.0+incompatible
 	github.com/gosuri/uilive v0.0.0-20170323041506-ac356e6e42cd // indirect
 	github.com/gosuri/uiprogress v0.0.0-20170224063937-d0567a9d84a1
@@ -26,7 +26,7 @@ require (
 	github.com/muesli/go-app-paths v0.0.0-20190207224558-913f7f7ac60f
 	github.com/sirupsen/logrus v1.3.0
 	github.com/spf13/cobra v0.0.3
-	golang.org/x/crypto v0.0.0-20190225135744-7f87c0fbb88b
-	golang.org/x/net v0.0.0-20190225160740-fe579d43d832 // indirect
-	golang.org/x/sys v0.0.0-20190225075313-cc5685c2db12 // indirect
+	golang.org/x/crypto v0.0.0-20190228191405-8dd112bcdc25
+	golang.org/x/net v0.0.0-20190227190440-c95aed5357e7 // indirect
+	golang.org/x/sys v0.0.0-20190228143232-a34e9553db1e // indirect
 )

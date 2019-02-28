@@ -7,7 +7,7 @@ COPY . .
 
 RUN npm install && npx parcel build src/*.html --public-url /dist/ 
 
-FROM golang:1.11-alpine as gobase
+FROM golang:1.12-alpine as gobase
 
 RUN apk update \
   && apk --no-cache add git build-base
