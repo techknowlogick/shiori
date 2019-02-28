@@ -124,21 +124,21 @@ func (h *webHandler) apiInsertBookmark(w http.ResponseWriter, r *http.Request, p
 	book.URL = parsedURL.String()
 
 	// Fetch data from internet
-	article, _ := readability.FromURL(parsedURL, 20*time.Second)
+	article, _ := readability.FromURL(parsedURL.String(), 20*time.Second)
 
-	book.Author = article.Meta.Author
-	book.MinReadTime = article.Meta.MinReadTime
-	book.MaxReadTime = article.Meta.MaxReadTime
-	book.Content = article.Content
-	book.HTML = article.RawContent
+	book.Author = article.Byline
+	book.MinReadTime = article.Length // TODO: recreate logic for max/min readtime
+	book.MaxReadTime = article.Length
+	book.Content = article.TextContent
+	book.HTML = article.Content
 
 	// If title and excerpt doesnt have submitted value, use from article
 	if book.Title == "" {
-		book.Title = article.Meta.Title
+		book.Title = article.Title
 	}
 
 	if book.Excerpt == "" {
-		book.Excerpt = strings.Map(fixUtf, article.Meta.Excerpt)
+		book.Excerpt = strings.Map(fixUtf, article.Excerpt)
 	}
 
 	// Make sure title is not empty
@@ -157,7 +157,7 @@ func (h *webHandler) apiInsertBookmark(w http.ResponseWriter, r *http.Request, p
 		checkError(err)
 	}
 	imgPath := fp.Join(h.dataDir, "thumb", u2.String())
-	err = downloadFile(article.Meta.Image, imgPath, 20*time.Second)
+	err = downloadFile(article.Image, imgPath, 20*time.Second)
 	if err == nil {
 		book.ImageURL = fmt.Sprintf("/thumb/%s", u2)
 	}
@@ -342,21 +342,21 @@ func (h *webHandler) apiUpdateCache(w http.ResponseWriter, r *http.Request, ps h
 			}
 
 			// Fetch data from internet
-			article, err := readability.FromURL(parsedURL, 20*time.Second)
+			article, err := readability.FromURL(parsedURL.String(), 20*time.Second)
 			if err != nil {
 				return
 			}
 
-			book.Excerpt = article.Meta.Excerpt
-			book.Author = article.Meta.Author
-			book.MinReadTime = article.Meta.MinReadTime
-			book.MaxReadTime = article.Meta.MaxReadTime
-			book.Content = article.Content
-			book.HTML = article.RawContent
+			book.Excerpt = article.Excerpt
+			book.Author = article.Byline
+			book.MinReadTime = article.Length // TODO: recreate logic for max/min readtime
+			book.MaxReadTime = article.Length
+			book.Content = article.TextContent
+			book.HTML = article.Content
 
 			// Make sure title is not empty
-			if article.Meta.Title != "" {
-				book.Title = article.Meta.Title
+			if article.Title != "" {
+				book.Title = article.Title
 			}
 
 			// Check if book has content
@@ -370,7 +370,7 @@ func (h *webHandler) apiUpdateCache(w http.ResponseWriter, r *http.Request, ps h
 				checkError(err)
 			}
 			imgPath := fp.Join(h.dataDir, "thumb", u2.String())
-			err = downloadFile(article.Meta.Image, imgPath, 20*time.Second)
+			err = downloadFile(article.Image, imgPath, 20*time.Second)
 			if err == nil {
 				book.ImageURL = fmt.Sprintf("/thumb/%s", u2)
 			}

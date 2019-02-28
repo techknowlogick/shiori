@@ -55,6 +55,8 @@ github.com/ghodss/yaml v1.0.0/go.mod h1:4dBDuWmgqj2HViK6kFavaiC9ZROes6MMH2rRYeME
 github.com/gliderlabs/ssh v0.1.1/go.mod h1:U7qILu1NlMHj9FlMhZLlkCdDnU1DBEAqr0aevW3Awn0=
 github.com/go-shiori/go-readability v0.0.0-20180803130947-13aa531ebcea h1:L8rbe+5UmcjiuSjuwqtJ3dMN+9KURwOsbFS7BJvLYfQ=
 github.com/go-shiori/go-readability v0.0.0-20180803130947-13aa531ebcea/go.mod h1:3CKDJ+wAIJjcVnB+q71vghT7z8619JWBC8C/K0nqRMI=
+github.com/go-shiori/go-readability v0.0.0-20190226185634-f406041601c1 h1:x6VugC+tK7G/xIaS7RXXS2vEH0slDP/iU+zephjVc1M=
+github.com/go-shiori/go-readability v0.0.0-20190226185634-f406041601c1/go.mod h1:3CKDJ+wAIJjcVnB+q71vghT7z8619JWBC8C/K0nqRMI=
 github.com/go-sql-driver/mysql v1.4.0 h1:7LxgVwFb2hIQtMm87NdgAVfXjnt4OePseqT1tKx+opk=
 github.com/go-sql-driver/mysql v1.4.0/go.mod h1:zAC/RDZ24gD3HViQzih4MyKcchzm+sOG5ZlKdlhCg5w=
 github.com/go-sql-driver/mysql v1.4.1 h1:g24URVg0OFbNUTx9qqY1IRZ9D9z3iPyi5zKhQZpNwpA=
