@@ -7,7 +7,7 @@ require (
 	github.com/denisenkom/go-mssqldb v0.0.0-20190210074043-df6d76eb9289
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/fatih/color v1.7.0
-	github.com/go-shiori/go-readability v0.0.0-20190226185634-f406041601c1
+	github.com/go-shiori/go-readability v0.0.0-20190301152547-7e14b711edd4
 	github.com/go-sql-driver/mysql v1.4.1
 	github.com/go-xorm/builder v0.3.4
 	github.com/go-xorm/xorm v0.7.1
