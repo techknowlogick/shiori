@@ -18,7 +18,7 @@ WORKDIR /go/src/src.techknowlogick.com/shiori
 COPY . .
 RUN go mod download && go mod vendor
 
-FROM golang:1.11-alpine as gobuilder
+FROM golang:1.12-alpine as gobuilder
 
 RUN apk update \
   && apk --no-cache add git build-base
