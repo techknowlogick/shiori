@@ -6,7 +6,7 @@ require (
 	github.com/denisenkom/go-mssqldb v0.0.0-20190210074043-df6d76eb9289
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/fatih/color v1.7.0
-	github.com/go-shiori/go-readability v0.0.0-20190226185634-f406041601c1
+	github.com/go-shiori/go-readability v0.0.0-20190301152547-7e14b711edd4
 	github.com/go-sql-driver/mysql v1.4.1
 	github.com/go-xorm/builder v0.3.4
 	github.com/go-xorm/xorm v0.7.1
@@ -26,7 +26,7 @@ require (
 	github.com/sirupsen/logrus v1.3.0
 	github.com/spf13/cobra v0.0.3
 	golang.org/x/crypto v0.0.0-20190228191405-8dd112bcdc25
-	golang.org/x/net v0.0.0-20190228192604-92fc7df08ae7 // indirect
-	golang.org/x/sys v0.0.0-20190228143232-a34e9553db1e // indirect
 	miniflux.app v0.0.0-20190301052333-6764a420b0b1
+	golang.org/x/net v0.0.0-20190302005804-16b79f2e4e95 // indirect
+	golang.org/x/sys v0.0.0-20190302045942-b6889370fb10 // indirect
 )
