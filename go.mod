@@ -2,7 +2,6 @@ module src.techknowlogick.com/shiori
 
 require (
 	github.com/PuerkitoBio/goquery v1.5.0
-	github.com/abadojack/whatlanggo v0.0.0-20190207205756-01d4c01a5a7c // indirect
 	github.com/asaskevich/govalidator v0.0.0-20190207205813-f9ffefc3facf
 	github.com/denisenkom/go-mssqldb v0.0.0-20190210074043-df6d76eb9289
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
@@ -27,6 +26,7 @@ require (
 	github.com/sirupsen/logrus v1.3.0
 	github.com/spf13/cobra v0.0.3
 	golang.org/x/crypto v0.0.0-20190228191405-8dd112bcdc25
+	miniflux.app v0.0.0-20190301052333-6764a420b0b1
 	golang.org/x/net v0.0.0-20190302005804-16b79f2e4e95 // indirect
 	golang.org/x/sys v0.0.0-20190302045942-b6889370fb10 // indirect
 )

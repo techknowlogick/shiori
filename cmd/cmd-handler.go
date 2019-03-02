@@ -18,6 +18,9 @@ import (
 	"github.com/gofrs/uuid"
 	"github.com/gosuri/uiprogress"
 	"github.com/spf13/cobra"
+	"miniflux.app/reader/rewrite"
+	"miniflux.app/reader/sanitizer"
+	"miniflux.app/reader/scraper"
 	dt "src.techknowlogick.com/shiori/database"
 	"src.techknowlogick.com/shiori/model"
 )
@@ -61,13 +64,16 @@ func (h *cmdHandler) addBookmark(cmd *cobra.Command, args []string) {
 	}
 
 	// fetch data from internet
-	article, _ := readability.FromURL(parsedURL.String(), 20*time.Second)
+	rawContent, _ := scraper.Fetch(book.URL, "", "src.techknowlogick.com/shiori")
+	article, _ := readability.FromReader(strings.NewReader(rawContent), book.URL)
+	content := rewrite.Rewriter(book.URL, rawContent, "")
+	content = sanitizer.Sanitize(book.URL, content)
 
 	book.Author = article.Byline
 	book.MinReadTime = article.Length // TODO: recreate logic for max/min readtime
 	book.MaxReadTime = article.Length
-	book.Content = article.TextContent
-	book.HTML = article.Content
+	book.Content = content
+	book.HTML = rawContent
 
 	// If title and excerpt doesnt have submitted value, use from article
 	if book.Title == "" {
@@ -300,7 +306,7 @@ func (h *cmdHandler) updateBookmarks(cmd *cobra.Command, args []string) {
 				}
 
 				// Parse URL
-				parsedURL, err := nurl.Parse(book.URL)
+				_, err := nurl.Parse(book.URL)
 				if err != nil || !valid.IsRequestURL(book.URL) {
 					mx.Lock()
 					errorMsg := fmt.Sprintf("Failed to fetch %s: URL is not valid", book.URL)
@@ -310,7 +316,7 @@ func (h *cmdHandler) updateBookmarks(cmd *cobra.Command, args []string) {
 				}
 
 				// Fetch data from internet
-				article, err := readability.FromURL(parsedURL.String(), 20*time.Second)
+				rawContent, err := scraper.Fetch(book.URL, "", "src.techknowlogick.com/shiori")
 				if err != nil {
 					mx.Lock()
 					errorMsg := fmt.Sprintf("Failed to fetch %s: %v", book.URL, err)
@@ -319,11 +325,15 @@ func (h *cmdHandler) updateBookmarks(cmd *cobra.Command, args []string) {
 					return
 				}
 
+				article, _ := readability.FromReader(strings.NewReader(rawContent), book.URL)
+				content := rewrite.Rewriter(book.URL, rawContent, "")
+				content = sanitizer.Sanitize(book.URL, content)
+
 				book.Author = article.Byline
 				book.MinReadTime = article.Length // TODO: recreate logic for max/min readtime
 				book.MaxReadTime = article.Length
-				book.Content = article.TextContent
-				book.HTML = article.Content
+				book.Content = content
+				book.HTML = rawContent
 
 				if !dontOverwrite {
 					book.Title = article.Title
