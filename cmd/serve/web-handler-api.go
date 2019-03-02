@@ -19,6 +19,9 @@ import (
 	"github.com/gofrs/uuid"
 	"github.com/julienschmidt/httprouter"
 	"golang.org/x/crypto/bcrypt"
+	"miniflux.app/reader/rewrite"
+	"miniflux.app/reader/sanitizer"
+	"miniflux.app/reader/scraper"
 	"src.techknowlogick.com/shiori/model"
 )
 
@@ -123,14 +126,17 @@ func (h *webHandler) apiInsertBookmark(w http.ResponseWriter, r *http.Request, p
 	clearUTMParams(parsedURL)
 	book.URL = parsedURL.String()
 
-	// Fetch data from internet
-	article, _ := readability.FromURL(parsedURL.String(), 20*time.Second)
+	// fetch data from internet
+	rawContent, _ := scraper.Fetch(book.URL, "", "src.techknowlogick.com/shiori")
+	article, _ := readability.FromReader(strings.NewReader(rawContent), book.URL)
+	content := rewrite.Rewriter(book.URL, rawContent, "")
+	content = sanitizer.Sanitize(book.URL, content)
 
 	book.Author = article.Byline
 	book.MinReadTime = article.Length // TODO: recreate logic for max/min readtime
 	book.MaxReadTime = article.Length
-	book.Content = article.TextContent
-	book.HTML = article.Content
+	book.Content = content
+	book.HTML = rawContent
 
 	// If title and excerpt doesnt have submitted value, use from article
 	if book.Title == "" {
@@ -336,23 +342,27 @@ func (h *webHandler) apiUpdateCache(w http.ResponseWriter, r *http.Request, ps h
 			defer wg.Done()
 
 			// Parse URL
-			parsedURL, err := nurl.Parse(book.URL)
+			_, err := nurl.Parse(book.URL)
 			if err != nil || !valid.IsRequestURL(book.URL) {
 				return
 			}
 
 			// Fetch data from internet
-			article, err := readability.FromURL(parsedURL.String(), 20*time.Second)
+			rawContent, err := scraper.Fetch(book.URL, "", "src.techknowlogick.com/shiori")
 			if err != nil {
 				return
 			}
+
+			article, _ := readability.FromReader(strings.NewReader(rawContent), book.URL)
+			content := rewrite.Rewriter(book.URL, rawContent, "")
+			content = sanitizer.Sanitize(book.URL, content)
 
 			book.Excerpt = article.Excerpt
 			book.Author = article.Byline
 			book.MinReadTime = article.Length // TODO: recreate logic for max/min readtime
 			book.MaxReadTime = article.Length
-			book.Content = article.TextContent
-			book.HTML = article.Content
+			book.Content = content
+			book.HTML = rawContent
 
 			// Make sure title is not empty
 			if article.Title != "" {
