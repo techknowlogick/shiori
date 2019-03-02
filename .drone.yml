@@ -13,7 +13,7 @@ platform:
 
 steps:
 - name: check
-  image: golang:1.11
+  image: golang:1.12
   commands:
   - make fmt-check
 
@@ -33,7 +33,7 @@ steps:
   - npx parcel build src/*.html --public-url /dist/
 
 - name: build-go
-  image: golang:1.11
+  image: golang:1.12
   environment:
     GO111MODULE: on
   commands:
@@ -72,7 +72,7 @@ steps:
         - pull_request
 
 - name: compress-and-checksum
-  image: golang:1.11
+  image: golang:1.12
   commands:
   - make release
   when:
