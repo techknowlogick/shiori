@@ -127,8 +127,8 @@ func (h *webHandler) apiInsertBookmark(w http.ResponseWriter, r *http.Request, p
 	article, _ := readability.FromURL(parsedURL.String(), 20*time.Second)
 
 	book.Author = article.Byline
-	book.MinReadTime = article.Length // TODO: recreate logic for max/min readtime
-	book.MaxReadTime = article.Length
+	book.MinReadTime = int(math.Floor(float64(article.Length)/(987+188) + 0.5))
+	book.MaxReadTime = int(math.Floor(float64(article.Length)/(987-188) + 0.5))
 	book.Content = article.TextContent
 	book.HTML = article.Content
 
@@ -349,8 +349,8 @@ func (h *webHandler) apiUpdateCache(w http.ResponseWriter, r *http.Request, ps h
 
 			book.Excerpt = article.Excerpt
 			book.Author = article.Byline
-			book.MinReadTime = article.Length // TODO: recreate logic for max/min readtime
-			book.MaxReadTime = article.Length
+			book.MinReadTime = int(math.Floor(float64(article.Length)/(987+188) + 0.5))
+			book.MaxReadTime = int(math.Floor(float64(article.Length)/(987-188) + 0.5))
 			book.Content = article.TextContent
 			book.HTML = article.Content
 
