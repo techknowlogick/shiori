@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"html/template"
+	"math"
 	nurl "net/url"
 	"os"
 	fp "path/filepath"
