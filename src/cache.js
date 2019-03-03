@@ -5,6 +5,7 @@ import { Base } from './page/base';
 import { YlaDialog } from './component/yla-dialog';
 import { YlaTooltip } from './component/yla-tooltip';
 
+import './less/stylesheet.less'
 import 'typeface-source-sans-pro'
 import 'typeface-source-serif-pro'
 import '@fortawesome/fontawesome-free/css/all.css'
