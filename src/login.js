@@ -2,6 +2,7 @@ import Vue from 'vue'
 import axios from 'axios'
 import * as Cookies from 'js-cookie';
 
+import './less/stylesheet.less'
 import 'typeface-source-sans-pro'
 import '@fortawesome/fontawesome-free/css/all.css'
 
