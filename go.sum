@@ -580,6 +580,8 @@ golang.org/x/sys v0.0.0-20190303134519-d455e41777fc h1:b5kE0P2bdDC02NGhnPqoox7kO
 golang.org/x/sys v0.0.0-20190303134519-d455e41777fc/go.mod h1:STP8DvDyc/dI5b8T5hshtkjS+E42TnysNCUPdjciGhY=
 golang.org/x/sys v0.0.0-20190303194622-c2f5717e611c h1:9xkECHIkPniCQoHh0eo7ZG8lJKAV/P/6xbTkT3+kFJg=
 golang.org/x/sys v0.0.0-20190303194622-c2f5717e611c/go.mod h1:STP8DvDyc/dI5b8T5hshtkjS+E42TnysNCUPdjciGhY=
+golang.org/x/sys v0.0.0-20190304165513-e844e0132e93 h1:uNXDNxhXydtbiNaYJ/DuT3VEm39k77NN7xVVwy2ic6w=
+golang.org/x/sys v0.0.0-20190304165513-e844e0132e93/go.mod h1:STP8DvDyc/dI5b8T5hshtkjS+E42TnysNCUPdjciGhY=
 golang.org/x/text v0.3.0 h1:g61tztE5qeGQ89tm6NTjjM9VPIm088od1l6aSorWRWg=
 golang.org/x/text v0.3.0/go.mod h1:NqM8EUOU14njkJ3fqMW+pc6Ldnwhi/IjpwHt7yyuwOQ=
 golang.org/x/text v0.3.1-0.20180807135948-17ff2d5776d2/go.mod h1:NqM8EUOU14njkJ3fqMW+pc6Ldnwhi/IjpwHt7yyuwOQ=
