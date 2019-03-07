@@ -22,7 +22,7 @@ Shiori is a simple bookmarks manager written in Go language. Intended as a simpl
 
 ### Why did you make this fork?
 
-My goals for this fork were to make change things for my personal preferences.
+My goals for this fork were to change things for my personal preferences.
 
 ### What are the changes made to this repo?
 
