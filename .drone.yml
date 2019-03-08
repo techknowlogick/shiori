@@ -47,7 +47,20 @@ steps:
   - ./shiori add https://src.techknowlogick.com
   - ./shiori print
 
-- name: docker-publish
+- name: docker-publish-nightly
+  image: plugins/docker
+  settings:
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+    repo: techknowlogick/shiori
+    tags: latest, nightly
+  when:
+    event: push
+    branch: master
+ 
+- name: docker-publish-tag
   image: plugins/docker
   settings:
     username:
@@ -58,9 +71,7 @@ steps:
     auto_tag: true
     default_tags: true
   when:
-    event:
-      exclude:
-        - pull_request
+    event: tag
 
 - name: cross
   image: techknowlogick/xgo
