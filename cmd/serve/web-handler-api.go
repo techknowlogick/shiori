@@ -321,7 +321,6 @@ func (h *webHandler) apiUpdateCache(w http.ResponseWriter, r *http.Request, ps h
 	checkError(err)
 
 	// Prepare wait group and mutex
-	mx := sync.Mutex{}
 	wg := sync.WaitGroup{}
 
 	// Fetch bookmarks from database
@@ -329,10 +328,11 @@ func (h *webHandler) apiUpdateCache(w http.ResponseWriter, r *http.Request, ps h
 	checkError(err)
 
 	// Download new cache data
-	for i, book := range books {
+	for _, book := range books {
 		wg.Add(1)
 
-		go func(pos int, book model.Bookmark) {
+		go func(book *model.Bookmark) {
+			fmt.Println(book.ID)
 			// Make sure to stop wait group
 			defer wg.Done()
 
@@ -375,12 +375,7 @@ func (h *webHandler) apiUpdateCache(w http.ResponseWriter, r *http.Request, ps h
 			if err == nil {
 				book.ImageURL = fmt.Sprintf("/thumb/%s", u2)
 			}
-
-			// Update list of bookmarks
-			mx.Lock()
-			books[pos] = book
-			mx.Unlock()
-		}(i, book)
+		}(&book)
 	}
 
 	// Wait until all finished

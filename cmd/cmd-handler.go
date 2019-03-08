@@ -716,7 +716,7 @@ func (h *cmdHandler) exportBookmarks(cmd *cobra.Command, args []string) {
 		`<H1>Bookmarks</H1>` +
 		`<DL><p>` +
 		`{{range $book := .}}` +
-		`<DT><A HREF="{{$book.URL}}" ADD_DATE="{{unix $book.Modified}}" TAGS="{{combine $book.Tags}}">{{$book.Title}}</A>` +
+		`<DT><A HREF="{{$book.URL}}" ADD_DATE="{{$book.Modified}}" TAGS="{{combine $book.Tags}}">{{$book.Title}}</A>` +
 		`{{if gt (len $book.Excerpt) 0}}<DD>{{$book.Excerpt}}{{end}}{{end}}` +
 		`</DL><p>`
 
