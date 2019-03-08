@@ -17,13 +17,13 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-// SQLiteDatabase is implementation of Database interface for connecting to SQLite3 database.
+// SQLiteDatabase is implementation of Database interface for connecting to database.
 type XormDatabase struct {
 	*xorm.Engine
 	dbType string
 }
 
-// OpenSQLiteDatabase creates and open connection to new SQLite3 database.
+// OpenSQLiteDatabase creates and open connection to new database.
 func OpenXormDatabase(dsn, dbType string) (*XormDatabase, error) {
 	// Open database and start transaction
 	db, err := xorm.NewEngine(dbType, dsn)
@@ -184,7 +184,7 @@ func (db *XormDatabase) UpdateBookmarks(bookmarks ...model.Bookmark) (result []m
 	}
 	for _, bookmark := range bookmarks {
 		// create bookmark & get ID
-		session.Update(&bookmark)
+		session.Where("bookmark_id = ?", bookmark.ID).Update(&bookmark)
 		// clear existing tag assignments
 		session.Where("bookmark_id = ?", bookmark.ID).Delete(&model.BookmarkTag{})
 		// insert & assign tag assignments
