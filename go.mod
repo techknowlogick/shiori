@@ -27,5 +27,5 @@ require (
 	github.com/spf13/cobra v0.0.3
 	golang.org/x/crypto v0.0.0-20190308224606-c2843e01d9a2
 	golang.org/x/net v0.0.0-20190310014645-b774fd8d5c0f // indirect
-	golang.org/x/sys v0.0.0-20190309134721-980fc434d28e // indirect
+	golang.org/x/sys v0.0.0-20190310063919-10058d7d4faa // indirect
 )
