@@ -692,12 +692,7 @@ func (h *cmdHandler) exportBookmarks(cmd *cobra.Command, args []string) {
 
 	// Create template
 	funcMap := template.FuncMap{
-		"unix": func(str string) int64 {
-			t, err := time.Parse("2006-01-02 15:04:05", str)
-			if err != nil {
-				return time.Now().Unix()
-			}
-
+		"unix": func(t time.Time) int64 {
 			return t.Unix()
 		},
 		"combine": func(tags []model.Tag) string {
@@ -716,7 +711,7 @@ func (h *cmdHandler) exportBookmarks(cmd *cobra.Command, args []string) {
 		`<H1>Bookmarks</H1>` +
 		`<DL><p>` +
 		`{{range $book := .}}` +
-		`<DT><A HREF="{{$book.URL}}" ADD_DATE="{{$book.Modified}}" TAGS="{{combine $book.Tags}}">{{$book.Title}}</A>` +
+		`<DT><A HREF="{{$book.URL}}" ADD_DATE="{{$book.Modified | unix}}" TAGS="{{combine $book.Tags}}">{{$book.Title}}</A>` +
 		`{{if gt (len $book.Excerpt) 0}}<DD>{{$book.Excerpt}}{{end}}{{end}}` +
 		`</DL><p>`
 
