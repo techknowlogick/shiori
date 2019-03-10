@@ -1,11 +1,11 @@
 FROM node:lts-alpine as nodebuilder
-RUN apk --no-cache add python2
+RUN apk --no-cache add python2 make bash
 
 WORKDIR /app
 
 COPY . .
 
-RUN npm install && npx parcel build src/*.html --public-url /dist/ 
+RUN make dep-node
 
 FROM golang:1.12-alpine as gobase
 

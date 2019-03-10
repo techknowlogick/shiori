@@ -29,8 +29,7 @@ steps:
 - name: build-node
   image: node:10
   commands:
-  - npm install
-  - npx parcel build src/*.html --public-url /dist/
+  - make dep-node
 
 - name: build-go
   image: golang:1.12

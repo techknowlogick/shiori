@@ -23,6 +23,7 @@ type webHandler struct {
 // newWebHandler returns new webHandler
 func newWebHandler(db dt.Database, dataDir string) (*webHandler, error) {
 	// Create JWT key
+	// TODO: allow jwtKey to be configurable (Don't change every start)
 	jwtKey := make([]byte, 32)
 	_, err := rand.Read(jwtKey)
 	if err != nil {
