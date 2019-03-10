@@ -41,16 +41,17 @@ dist: dep-node dep-go
 dep: dep-node dep-go
 
 .PHONY: dep-node
-dist-node:
+dep-node:
 	@hash npx > /dev/null 2>&1; if [ $$? -ne 0 ]; then \
 		echo "Please install npm version 5.2+"; \
 		exit 1; \
 	fi;
 	npm install
 	npx parcel build src/*.html --public-url /dist/
+	npx replace-x '\.\./\.\./\.\./\.\./shiori' '/dist' ./dist/ --include="*.css" -q -r
 
 .PHONY: dep-go
-dist-go:
+dep-go:
 	@hash packr2 > /dev/null 2>&1; if [ $$? -ne 0 ]; then \
 		$(GO) get -u github.com/gobuffalo/packr/v2/packr2; \
 	fi
