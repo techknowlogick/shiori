@@ -48,7 +48,7 @@ dep-node:
 	fi;
 	npm install
 	npx parcel build src/*.html --public-url /dist/
-	npx replace-x '\.\./\.\./\.\./\.\./shiori' '/dist' ./dist/ --include="*.css" -q -r
+	npx replace-x '(\.\./){1,3}shiori' '/dist' ./dist/ --include="*.css" -q -r
 
 .PHONY: dep-go
 dep-go:
