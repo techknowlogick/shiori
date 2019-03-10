@@ -29,7 +29,6 @@ steps:
 - name: build-node
   image: node:10
   commands:
-  - apk --no-cache add python2 make
   - make dep-node
 
 - name: build-go
