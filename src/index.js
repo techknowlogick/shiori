@@ -184,7 +184,7 @@ new Vue({
                 searchTag = rxSpace.test(tag) ? '"#' + tag + '"' : '#' + tag;
 
             // Check if tag already exist in search
-            rxTag = new RegExp(searchTag, 'g');
+            var rxTag = new RegExp(searchTag, 'g');
             if (rxTag.test(this.search)) return;
 
             // Create new search query
