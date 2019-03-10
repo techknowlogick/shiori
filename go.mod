@@ -1,6 +1,7 @@
 module src.techknowlogick.com/shiori
 
 require (
+	cloud.google.com/go v0.36.0
 	github.com/PuerkitoBio/goquery v1.5.0
 	github.com/asaskevich/govalidator v0.0.0-20190207205813-f9ffefc3facf
 	github.com/denisenkom/go-mssqldb v0.0.0-20190210074043-df6d76eb9289
@@ -28,4 +29,5 @@ require (
 	golang.org/x/crypto v0.0.0-20190308224606-c2843e01d9a2
 	golang.org/x/net v0.0.0-20190310162012-c10a0554eabf // indirect
 	golang.org/x/sys v0.0.0-20190310063919-10058d7d4faa // indirect
+	google.golang.org/genproto v0.0.0-20190306203927-b5d61aea6440 // indirect
 )
