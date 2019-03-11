@@ -233,7 +233,7 @@ func (db *XormDatabase) GetAccount(username string) (model.Account, error) {
 func (db *XormDatabase) GetAccounts(keyword string) ([]model.Account, error) {
 	var accounts []model.Account
 	var err error
-	if keyword == "" {
+	if keyword != "" {
 		err = db.Where(builder.Like{"username", keyword}).Find(&accounts)
 	} else {
 		err = db.Find(&accounts)
