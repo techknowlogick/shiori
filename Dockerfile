@@ -21,7 +21,7 @@ RUN go mod download && go mod vendor
 FROM golang:1.12-alpine as gobuilder
 
 RUN apk update \
-  && apk --no-cache add git build-base make
+  && apk --no-cache add git build-base make bash
 
 WORKDIR /go/src/src.techknowlogick.com/shiori
 ENV GO111MODULE=auto

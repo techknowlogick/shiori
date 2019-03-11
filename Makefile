@@ -18,7 +18,7 @@ else
 	else
 		VERSION ?= master
 	endif
-	SHIORI_VERSION := $(shell git describe --tags --always | sed 's/-/+/' | sed 's/^v//')
+	SHIORI_VERSION ?= $(shell git describe --tags --always | sed 's/-/+/' | sed 's/^v//')
 endif
 
 LDFLAGS := -X "main.Version=$(SHIORI_VERSION)" -X "main.Tags=$(TAGS)"

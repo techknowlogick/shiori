@@ -22,6 +22,8 @@ steps:
   settings:
     repo: techknowlogick/shiori
     dry_run: true
+    build_args:
+      - SHIORI_VERSION=${DRONE_COMMIT}
   when:
     event:
     - pull_request
