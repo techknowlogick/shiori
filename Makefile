@@ -8,7 +8,20 @@ SHASUM := shasum -a 256
 SHELL := bash
 
 TAGS ?=
-LDFLAGS ?=
+
+ifneq ($(DRONE_TAG),)
+	VERSION ?= $(subst v,,$(DRONE_TAG))
+	SHIORI_VERSION := $(VERSION)
+else
+	ifneq ($(DRONE_BRANCH),)
+		VERSION ?= $(subst release/v,,$(DRONE_BRANCH))
+	else
+		VERSION ?= master
+	endif
+	SHIORI_VERSION := $(shell git describe --tags --always | sed 's/-/+/' | sed 's/^v//')
+endif
+
+LDFLAGS := -X "main.Version=$(SHIORI_VERSION)" -X "main.Tags=$(TAGS)"
 
 ifeq ($(OS), Windows_NT)
 	EXECUTABLE := shiori.exe
@@ -32,6 +45,12 @@ fmt-check:
 		echo "$${diff}"; \
 		exit 1; \
 	fi;
+
+.PHONY: build
+build: $(EXECUTABLE)
+
+$(EXECUTABLE): $(SOURCES)
+	$(GO) build $(GOFLAGS) $(EXTRA_GOFLAGS) -tags '$(TAGS)' -ldflags '-s -w $(LDFLAGS)' -o $@
 
 # dist step is kept for backwords compatibility
 .PHONY: dist

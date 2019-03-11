@@ -7,30 +7,18 @@ COPY . .
 
 RUN make dep-node
 
-FROM golang:1.12-alpine as gobase
-
-RUN apk update \
-  && apk --no-cache add git build-base
-
-ENV GO111MODULE=on
-WORKDIR /go/src/src.techknowlogick.com/shiori
-
-COPY . .
-RUN go mod download && go mod vendor
-
 FROM golang:1.12-alpine as gobuilder
 
 RUN apk update \
-  && apk --no-cache add git build-base
+  && apk --no-cache add git build-base make bash
 
 WORKDIR /go/src/src.techknowlogick.com/shiori
-ENV GO111MODULE=auto
 COPY . .
-COPY --from=gobase /go/src/src.techknowlogick.com/shiori/vendor /go/src/src.techknowlogick.com/shiori/vendor/
-COPY --from=nodebuilder /app/dist /go/src/src.techknowlogick.com/shiori/dist/
-RUN go get -u github.com/gobuffalo/packr/v2/packr2
 ENV GO111MODULE=on
-RUN packr2 build -mod vendor -o shiori
+RUN go mod download && go mod vendor
+COPY --from=nodebuilder /app/dist /go/src/src.techknowlogick.com/shiori/dist/
+RUN GO111MODULE=auto go get -u github.com/gobuffalo/packr/v2/packr2
+RUN packr2 && make build
 
 FROM alpine:3.9
 
