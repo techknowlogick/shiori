@@ -47,7 +47,7 @@ fmt-check:
 	fi;
 
 .PHONY: build
-build: dist $(EXECUTABLE)
+build: $(EXECUTABLE)
 
 $(EXECUTABLE): $(SOURCES)
 	$(GO) build $(GOFLAGS) $(EXTRA_GOFLAGS) -tags '$(TAGS)' -ldflags '-s -w $(LDFLAGS)' -o $@
