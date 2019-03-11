@@ -50,12 +50,16 @@ func main() {
 		},
 		cli.StringFlag{
 			Name:   "data-dir",
-			Value:  getDataDir(), // TODO: on startup make sure this directory exists
+			Value:  getDataDir(),
 			Usage:  "directory to store all files",
 			EnvVar: "SHIORI_DIR, ENV_SHIORI_DIR",
 		},
 	}
 	app.Flags = append(app.Flags, globalFlags...)
+	app.Before = func(c *cli.Context) error {
+		// ensure data dir is created
+		return os.MkdirAll(c.GlobalString("data-dir"), os.ModePerm)
+	}
 
 	err := app.Run(os.Args)
 	if err != nil {
