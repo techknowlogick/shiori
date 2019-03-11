@@ -1,58 +1,88 @@
 package main
 
 import (
-	"fmt"
 	"os"
-	fp "path/filepath"
+	"runtime"
+	"strings"
 
+	apppaths "github.com/muesli/go-app-paths"
 	"github.com/sirupsen/logrus"
+	"github.com/urfave/cli"
 	"src.techknowlogick.com/shiori/cmd"
-	dt "src.techknowlogick.com/shiori/database"
+	"src.techknowlogick.com/shiori/cmd/serve"
 )
 
-var dataDir = "."
+var (
+	Version = "0.0.0"
+	Tags    = ""
+)
 
 func main() {
-	dbType := "sqlite3"
-	dsn := fp.Join(dataDir, "shiori.db")
-
-	if rawDsn := os.Getenv("SHIORI_DSN"); rawDsn != "" {
-		dsn = rawDsn
+	app := cli.NewApp()
+	app.Name = "shiori"
+	app.Usage = "Simple command-line bookmark manager built with Go"
+	app.Version = Version + formatBuiltWith(Tags)
+	app.Commands = []cli.Command{
+		cmd.CmdAccount,
+		cmd.CmdAdd,
+		cmd.CmdDelete,
+		cmd.CmdExport,
+		cmd.CmdImport,
+		cmd.CmdOpen,
+		cmd.CmdPocket,
+		cmd.CmdPrint,
+		cmd.CmdSearch,
+		serve.CmdServe,
+		cmd.CmdUpdate,
 	}
-	if rawDbType := os.Getenv("SHIORI_DBTYPE"); rawDbType != "" {
-		dbType = rawDbType
+	globalFlags := []cli.Flag{
+		cli.StringFlag{
+			Name:   "db-type",
+			Value:  "sqlite3",
+			Usage:  "Type of database to use",
+			EnvVar: "SHIORI_DBTYPE",
+		},
+		cli.StringFlag{
+			Name:   "db-dsn",
+			Value:  "shiori.db",
+			Usage:  "database connection string",
+			EnvVar: "SHIORI_DSN",
+		},
+		cli.StringFlag{
+			Name:   "data-dir",
+			Value:  getDataDir(),
+			Usage:  "directory to store all files",
+			EnvVar: "SHIORI_DIR, ENV_SHIORI_DIR",
+		},
+	}
+	app.Flags = append(app.Flags, globalFlags...)
+	app.Before = func(c *cli.Context) error {
+		// ensure data dir is created
+		return os.MkdirAll(c.GlobalString("data-dir"), os.ModePerm)
 	}
 
-	// check and use mysql if env values set
-	if mysqlDBName := os.Getenv("SHIORI_MYSQL_DBNAME"); mysqlDBName != "" {
-		mysqlDBUser := os.Getenv("SHIORI_MYSQL_USER")
-		mysqlDBPass := os.Getenv("SHIORI_MYSQL_PASS")
-		mysqlDBHost := os.Getenv("SHIORI_MYSQL_HOST")
-		dbType = "mysql"
-		dsn = fmt.Sprintf("%s:%s@%s/%s?charset=utf8mb4&parseTime=True&loc=Local", mysqlDBUser, mysqlDBPass, mysqlDBHost, mysqlDBName)
-	}
-
-	// check and use postgresql if env values set
-	if postgresqlDBName := os.Getenv("SHIORI_POSTGRESQL_DBNAME"); postgresqlDBName != "" {
-		postgresqlDBUser := os.Getenv("SHIORI_POSTGRESQL_USER")
-		postgresqlDBPass := os.Getenv("SHIORI_POSTGRESQL_PASS")
-		postgresqlDBHost := os.Getenv("SHIORI_POSTGRESQL_HOST")
-		dbType = "postgres"
-		dsn = fmt.Sprintf("user=%s password=%s host=%s dbname=%s sslmode=disable", postgresqlDBUser, postgresqlDBPass, postgresqlDBHost, postgresqlDBName)
-	}
-
-	xormDB, err := dt.OpenXormDatabase(dsn, dbType)
-	checkError(err)
-
-	// Start cmd
-	shioriCmd := cmd.NewShioriCmd(xormDB, dataDir)
-	if err := shioriCmd.Execute(); err != nil {
-		logrus.Fatalln(err)
+	err := app.Run(os.Args)
+	if err != nil {
+		logrus.Errorf("%s: %v", os.Args, err)
 	}
 }
 
-func checkError(err error) {
-	if err != nil {
-		panic(err)
+func getDataDir() string {
+	// Try to use platform specific app path
+	userScope := apppaths.NewScope(apppaths.User, "shiori", "shiori")
+	dataDir, err := userScope.DataDir()
+	if err == nil {
+		return dataDir
 	}
+
+	// When all else fails, use current working directory
+	return "."
+}
+
+func formatBuiltWith(Tags string) string {
+	if len(Tags) == 0 {
+		return " built with " + runtime.Version()
+	}
+
+	return " built with " + runtime.Version() + " : " + strings.Replace(Tags, " ", ", ", -1)
 }

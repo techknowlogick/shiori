@@ -39,6 +39,7 @@ steps:
   - GO111MODULE=auto go get -u github.com/gobuffalo/packr/v2/packr2
   - go mod download
   - packr2 build -o shiori
+  - ./shiori
   - ./shiori add https://example.com
   - ./shiori print
   - ./shiori delete 1

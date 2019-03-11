@@ -2,11 +2,13 @@ package cmd
 
 import (
 	"errors"
+	"fmt"
 	"io"
 	"net/http"
 	nurl "net/url"
 	"os"
 	"os/exec"
+	"path/filepath"
 	fp "path/filepath"
 	"runtime"
 	"strconv"
@@ -14,7 +16,11 @@ import (
 	"time"
 	"unicode/utf8"
 
+	"src.techknowlogick.com/shiori/database"
+	"src.techknowlogick.com/shiori/model"
+
 	"github.com/fatih/color"
+	"github.com/urfave/cli"
 	"golang.org/x/crypto/ssh/terminal"
 )
 
@@ -27,6 +33,15 @@ var (
 	cError    = color.New(color.FgHiRed)
 	cExcerpt  = color.New(color.FgHiWhite)
 	cTag      = color.New(color.FgHiBlue)
+
+	cIndexSprint    = cIndex.SprintFunc()
+	cSymbolSprint   = cSymbol.SprintFunc()
+	cTitleSprint    = cTitle.SprintFunc()
+	cReadTimeSprint = cReadTime.SprintFunc()
+	cURLSprint      = cURL.SprintFunc()
+	cErrorSprint    = cError.SprintFunc()
+	cExcerptSprint  = cExcerpt.SprintFunc()
+	cTagSprint      = cTag.SprintFunc()
 
 	errInvalidIndex = errors.New("Index is not valid")
 )
@@ -142,4 +157,66 @@ func fixUtf(r rune) rune {
 		return -1
 	}
 	return r
+}
+
+func getDbConnection(c *cli.Context) (database.Database, error) {
+	dbType := c.GlobalString("db-type")
+	dbDsn := c.GlobalString("db-dsn")
+	dataDir := c.GlobalString("data-dir")
+
+	if dbType == "sqlite3" && dbDsn == "shiori.db" {
+		dbDsn = filepath.Join(dataDir, dbDsn)
+	}
+
+	db, err := database.OpenXormDatabase(dbDsn, dbType)
+	return db, err
+
+}
+
+func printBookmarks(bookmarks ...model.Bookmark) {
+	for _, bookmark := range bookmarks {
+		// Create bookmark index
+		strBookmarkIndex := fmt.Sprintf("%d. ", bookmark.ID)
+		strSpace := strings.Repeat(" ", len(strBookmarkIndex))
+
+		// Print bookmark title
+		cIndex.Print(strBookmarkIndex)
+		cTitle.Print(bookmark.Title)
+
+		// Print read time
+		if bookmark.MinReadTime > 0 {
+			readTime := fmt.Sprintf(" (%d-%d minutes)", bookmark.MinReadTime, bookmark.MaxReadTime)
+			if bookmark.MinReadTime == bookmark.MaxReadTime {
+				readTime = fmt.Sprintf(" (%d minutes)", bookmark.MinReadTime)
+			}
+			cReadTime.Println(readTime)
+		} else {
+			fmt.Println()
+		}
+
+		// Print bookmark URL
+		cSymbol.Print(strSpace + "> ")
+		cURL.Println(bookmark.URL)
+
+		// Print bookmark excerpt
+		if bookmark.Excerpt != "" {
+			cSymbol.Print(strSpace + "+ ")
+			cExcerpt.Println(bookmark.Excerpt)
+		}
+
+		// Print bookmark tags
+		if len(bookmark.Tags) > 0 {
+			cSymbol.Print(strSpace + "# ")
+			for i, tag := range bookmark.Tags {
+				if i == len(bookmark.Tags)-1 {
+					cTag.Println(tag.Name)
+				} else {
+					cTag.Print(tag.Name + ", ")
+				}
+			}
+		}
+
+		// Append new line
+		fmt.Println()
+	}
 }
