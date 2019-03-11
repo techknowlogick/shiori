@@ -26,6 +26,7 @@ var (
 				Usage: "Auto generate tag from bookmark's category",
 			},
 		},
+		Action: runImportBookmarks,
 	}
 )
 
