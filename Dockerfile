@@ -21,7 +21,7 @@ RUN go mod download && go mod vendor
 FROM golang:1.12-alpine as gobuilder
 
 RUN apk update \
-  && apk --no-cache add git build-base
+  && apk --no-cache add git build-base make
 
 WORKDIR /go/src/src.techknowlogick.com/shiori
 ENV GO111MODULE=auto
@@ -30,7 +30,7 @@ COPY --from=gobase /go/src/src.techknowlogick.com/shiori/vendor /go/src/src.tech
 COPY --from=nodebuilder /app/dist /go/src/src.techknowlogick.com/shiori/dist/
 RUN go get -u github.com/gobuffalo/packr/v2/packr2
 ENV GO111MODULE=on
-RUN packr2 build -mod vendor -o shiori
+RUN make build
 
 FROM alpine:3.9
 
