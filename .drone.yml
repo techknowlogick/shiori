@@ -22,8 +22,6 @@ steps:
   settings:
     repo: techknowlogick/shiori
     dry_run: true
-    build_args:
-      - SHIORI_VERSION=${DRONE_COMMIT}
   when:
     event:
     - pull_request
@@ -58,8 +56,6 @@ steps:
       from_secret: docker_password
     repo: techknowlogick/shiori
     tags: latest, nightly
-    build_args:
-      - SHIORI_VERSION=${DRONE_COMMIT}
   when:
     event: push
     branch: master
@@ -74,8 +70,6 @@ steps:
     repo: techknowlogick/shiori
     auto_tag: true
     default_tags: true
-    build_args:
-      - DRONE_TAG=${DRONE_TAG}
   when:
     event: tag
 
