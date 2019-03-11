@@ -13,11 +13,10 @@ RUN apk update \
   && apk --no-cache add git build-base make bash
 
 WORKDIR /go/src/src.techknowlogick.com/shiori
-ENV GO111MODULE=auto
 COPY . .
 RUN go mod download && go mod vendor
 COPY --from=nodebuilder /app/dist /go/src/src.techknowlogick.com/shiori/dist/
-RUN go get -u github.com/gobuffalo/packr/v2/packr2
+RUN GO111MODULE=auto go get -u github.com/gobuffalo/packr/v2/packr2
 ENV GO111MODULE=on
 RUN make build
 
