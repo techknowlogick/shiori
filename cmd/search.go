@@ -11,7 +11,7 @@ import (
 var (
 	CmdSearch = cli.Command{
 		Name:  "search",
-		Usage: "search [keyword]",
+		Usage: "Search bookmarks by submitted keyword",
 		Description: "Search bookmarks by looking for matching keyword in bookmark's title and content. " +
 			"If no keyword submitted, print all saved bookmarks. ",
 		Flags: []cli.Flag{

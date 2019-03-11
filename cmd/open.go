@@ -11,7 +11,7 @@ import (
 var (
 	CmdOpen = cli.Command{
 		Name:  "open",
-		Usage: "open [indices]",
+		Usage: "Open the saved bookmarks",
 		Description: "Open bookmarks in browser. " +
 			"Accepts space-separated list of indices (e.g. 5 6 23 4 110 45), hyphenated range (e.g. 100-200) or both (e.g. 1-3 7 9). " +
 			"If no arguments, ALL bookmarks will be opened.",
