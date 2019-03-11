@@ -27,8 +27,8 @@ type Bookmark struct {
 	MinReadTime int       `xorm:"'min_read_time' DEFAULT 0"   json:"minReadTime"`
 	MaxReadTime int       `xorm:"'max_read_time' DEFAULT 0"   json:"maxReadTime"`
 	Modified    time.Time `xorm:"modified"    json:"modified"`
-	Content     string    `xorm:"content" json:"content"`
-	HTML        string    `xorm:"html" json:"html,omitempty"`
+	Content     string    `xorm:"TEXT 'content'" json:"content"`
+	HTML        string    `xorm:"TEXT 'html'" json:"html,omitempty"`
 	HasContent  bool      `xorm:"has_content" json:"hasContent"`
 	Tags        []Tag     `xorm:"-"           json:"tags"`
 	Created     time.Time `xorm:"created"`
