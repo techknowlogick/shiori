@@ -45,6 +45,7 @@ steps:
   - ./shiori print
   - ./shiori delete 1
   - ./shiori add https://src.techknowlogick.com
+  - ./shiori add https://www.thestar.com/news/gta/2019/02/13/woman-accused-of-throwing-a-chair-off-downtown-toronto-balcony-turns-herself-in.html
   - ./shiori print
 
 - name: docker-publish-nightly
