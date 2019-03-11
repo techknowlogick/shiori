@@ -30,7 +30,7 @@ COPY --from=gobase /go/src/src.techknowlogick.com/shiori/vendor /go/src/src.tech
 COPY --from=nodebuilder /app/dist /go/src/src.techknowlogick.com/shiori/dist/
 RUN go get -u github.com/gobuffalo/packr/v2/packr2
 ENV GO111MODULE=on
-RUN make build
+RUN env && make build
 
 FROM alpine:3.9
 
