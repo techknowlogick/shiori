@@ -18,9 +18,8 @@ import (
 
 var (
 	CmdImport = cli.Command{
-		Name:        "import",
-		Usage:       "import source-file",
-		Description: "Import bookmarks from HTML file in Netscape Bookmark format",
+		Name:  "import",
+		Usage: "Import bookmarks from HTML file in Netscape Bookmark format",
 		Flags: []cli.Flag{
 			cli.BoolFlag{
 				Name:  "generate-tag, t",

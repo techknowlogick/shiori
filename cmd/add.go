@@ -18,8 +18,8 @@ import (
 
 var (
 	CmdAdd = cli.Command{
-		Name:        "add",
-		Description: "Bookmark the specified URL",
+		Name:  "add",
+		Usage: "Bookmark the specified URL",
 		Flags: []cli.Flag{
 			cli.StringFlag{
 				Name:  "title, i",

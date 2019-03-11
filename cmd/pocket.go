@@ -17,10 +17,9 @@ import (
 
 var (
 	CmdPocket = cli.Command{
-		Name:        "pocket",
-		Usage:       "pocket source-file",
-		Description: "Import bookmarks from Pocket's exported HTML file",
-		Action:      runImportPocket,
+		Name:   "pocket",
+		Usage:  "Import bookmarks from Pocket's exported HTML file",
+		Action: runImportPocket,
 	}
 )
 

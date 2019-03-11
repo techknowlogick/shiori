@@ -11,8 +11,8 @@ import (
 
 var (
 	CmdAccount = cli.Command{
-		Name:        "account",
-		Description: "Manage account for accessing web interface",
+		Name:  "account",
+		Usage: "Manage account for accessing web interface",
 		Subcommands: []cli.Command{
 			subcmdAddAccount,
 			subcmdPrintAccounts,
@@ -21,15 +21,15 @@ var (
 	}
 
 	subcmdAddAccount = cli.Command{
-		Name:        "add",
-		Description: "Create new account",
-		Action:      runAddAccount,
+		Name:   "add",
+		Usage:  "Create new account",
+		Action: runAddAccount,
 	}
 
 	subcmdPrintAccounts = cli.Command{
-		Name:        "print",
-		Description: "List all accounts",
-		Aliases:     []string{"list", "ls"},
+		Name:    "print",
+		Usage:   "List all accounts",
+		Aliases: []string{"list", "ls"},
 		Flags: []cli.Flag{
 			cli.StringFlag{
 				Name:  "search, s",

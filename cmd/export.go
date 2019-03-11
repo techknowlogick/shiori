@@ -16,10 +16,9 @@ import (
 
 var (
 	CmdExport = cli.Command{
-		Name:        "export",
-		Usage:       "export target-file",
-		Description: "Export bookmarks into HTML file in Netscape Bookmark format",
-		Action:      runExportBookmarks,
+		Name:   "export",
+		Usage:  "Export bookmarks into HTML file in Netscape Bookmark format",
+		Action: runExportBookmarks,
 	}
 )
 
