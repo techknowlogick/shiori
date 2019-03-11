@@ -1,33 +1,51 @@
 package serve
 
 import (
-	"database/sql"
+	"errors"
 	"fmt"
 	"net/http"
+	"path/filepath"
 	"time"
 
+	"src.techknowlogick.com/shiori/database"
+
+	"github.com/fatih/color"
 	"github.com/julienschmidt/httprouter"
 	"github.com/sirupsen/logrus"
-	"github.com/spf13/cobra"
-	dt "src.techknowlogick.com/shiori/database"
+	"github.com/urfave/cli"
 )
 
-// NewServeCmd creates new command for serving web page
-func NewServeCmd(db dt.Database, dataDir string) *cobra.Command {
-	// Create handler
-	hdl, err := newWebHandler(db, dataDir)
-	checkError(err)
+var (
+	cError       = color.New(color.FgHiRed)
+	cErrorSprint = cError.SprintFunc()
 
-	// Create root command
-	rootCmd := &cobra.Command{
-		Use:   "serve",
-		Short: "Serve web app for managing bookmarks",
-		Long: "Run a simple annd performant web server which serves the site for managing bookmarks." +
+	CmdServe = cli.Command{
+		Name:  "serve",
+		Usage: "Serve web app for managing bookmarks",
+		Description: "Run a simple annd performant web server which serves the site for managing bookmarks." +
 			"If --port flag is not used, it will use port 8080 by default.",
-		Run: func(cmd *cobra.Command, args []string) {
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "listen, l",
+				Usage: "Address the server listens to",
+			},
+			cli.IntFlag{
+				Name:  "port, p",
+				Value: 8080,
+				Usage: "Port that used by server",
+			},
+		},
+		Action: func(c *cli.Context) error {
+			db, err := getDbConnection(c)
+
+			if err != nil {
+				return errors.New(cErrorSprint(err))
+			}
+			dataDir := c.GlobalString("data-dir")
+			hdl, err := newWebHandler(db, dataDir)
 			// Parse flags
-			listenAddress, _ := cmd.Flags().GetString("listen")
-			port, _ := cmd.Flags().GetInt("port")
+			listenAddress := c.String("listen")
+			port := c.Int("port")
 
 			// Create router
 			router := httprouter.New()
@@ -67,18 +85,27 @@ func NewServeCmd(db dt.Database, dataDir string) *cobra.Command {
 			// Serve app
 			logrus.Infoln("Serve shiori in", url)
 			logrus.Fatalln(svr.ListenAndServe())
+			return nil
 		},
 	}
-
-	// Set flags for root command
-	rootCmd.Flags().StringP("listen", "l", "", "Address the server listens to")
-	rootCmd.Flags().IntP("port", "p", 8080, "Port that used by server")
-
-	return rootCmd
-}
+)
 
 func checkError(err error) {
-	if err != nil && err != sql.ErrNoRows {
+	if err != nil {
 		panic(err)
 	}
+}
+
+func getDbConnection(c *cli.Context) (database.Database, error) {
+	dbType := c.GlobalString("db-type")
+	dbDsn := c.GlobalString("db-dsn")
+	dataDir := c.GlobalString("data-dir")
+
+	if dbType == "sqlite3" && dbDsn == "shiori.db" {
+		dbDsn = filepath.Join(dataDir, dbDsn)
+	}
+
+	db, err := database.OpenXormDatabase(dbDsn, dbType)
+	return db, err
+
 }

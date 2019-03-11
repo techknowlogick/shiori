@@ -246,7 +246,7 @@ func (db *XormDatabase) DeleteAccounts(usernames ...string) error {
 	var account model.Account
 	var err error
 	if len(usernames) > 0 {
-		_, err = db.Where("username in (?)", usernames).Delete(&account)
+		_, err = db.In("username", usernames).Delete(&account)
 	} else {
 		_, err = db.Delete(&account)
 	}
