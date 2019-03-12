@@ -48,7 +48,7 @@ var (
 			}
 
 			demoUser, _ := db.GetAccount("demo")
-			if demoUser.ID == 0 {
+			if demoUser.ID == 0 && c.Bool("insecure-default-user") {
 				db.CreateAccount("demo", "demo")
 			}
 
