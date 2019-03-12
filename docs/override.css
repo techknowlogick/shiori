@@ -1,0 +1,11 @@
+.menu-toggle::before {
+content: ">"!important;
+}
+.footer-nav .left a::before {
+content: ""!important;
+margin-right: 0!important;
+}
+.footer-nav .right a::after {
+content: ""!important;
+margin-left: 0!important;
+}

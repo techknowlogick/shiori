@@ -17,5 +17,10 @@
     "vue": "./node_modules/vue/dist/vue.common.js",
     "axios": "./node_modules/axios/dist/axios.min.js",
     "cookies": "./node_modules/js-cookie/src/js.cookie.js"
+  },
+  "docpress": {
+    "css": [
+      "docs/override.css"
+    ]
   }
 }

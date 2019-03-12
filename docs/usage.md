@@ -1,4 +1,4 @@
-Before using `shiori`, make sure it has been installed on your system. By default, `shiori` will store its data in directory `$HOME/.local/share/shiori`. If you want to set the data directory to another location, you can set the environment variable `ENV_SHIORI_DIR` to your desired path.
+Before using `shiori`, make sure it has been installed on your system. By default, `shiori` will store its data in directory `$HOME/.local/share/shiori`. If you want to set the data directory to another location, you can set the environment variable `SHIORI_DIR` to your desired path.
 
 - [Running Docker Container](#running-docker-container)
 - [Using Command Line Interface](#using-command-line-interface)

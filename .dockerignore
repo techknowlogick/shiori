@@ -9,3 +9,4 @@ shiori.db
 vendor/*
 dist/*
 node_modules/*
+_docpress/*
