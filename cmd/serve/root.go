@@ -34,6 +34,11 @@ var (
 				Value: 8080,
 				Usage: "Port that used by server",
 			},
+			cli.BoolFlag{
+				Name:   "insecure-default-user",
+				Usage:  "For demo service this creates a temporary default user. Very insecure, do not use this flag.",
+				Hidden: true,
+			},
 		},
 		Action: func(c *cli.Context) error {
 			db, err := getDbConnection(c)
@@ -41,6 +46,12 @@ var (
 			if err != nil {
 				return errors.New(cErrorSprint(err))
 			}
+
+			demoUser, _ := db.GetAccount("demo")
+			if demoUser.ID == 0 {
+				db.CreateAccount("demo", "demo")
+			}
+
 			dataDir := c.GlobalString("data-dir")
 			hdl, err := newWebHandler(db, dataDir)
 			// Parse flags
