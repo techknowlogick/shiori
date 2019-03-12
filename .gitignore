@@ -16,3 +16,4 @@ release/*
 
 # Exclude nodejs packages
 node_modules/*
+_docpress/*

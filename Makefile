@@ -46,6 +46,15 @@ fmt-check:
 		exit 1; \
 	fi;
 
+.PHONY: build-clean
+build-clean:
+	rm -rf ./_docpress
+
+.PHONY: build-docs
+build-docs: build-clean
+	npx docpress@0.7.6 build .
+	npx replace-x 'https?://[^"]+' '#not-remote-font' ./_docpress/ --include="*.css" -q -r
+
 .PHONY: build
 build: $(EXECUTABLE)
 
