@@ -35,8 +35,8 @@ var (
 				Usage: "Port that used by server",
 			},
 			cli.BoolFlag{
-				Name:  "insecure-default-user",
-				Usage: "For demo service this creates a temporary default user. Very insecure, do not use this flag.",
+				Name:   "insecure-default-user",
+				Usage:  "For demo service this creates a temporary default user. Very insecure, do not use this flag.",
 				Hidden: true,
 			},
 		},
