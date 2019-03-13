@@ -26,10 +26,12 @@ On Windows, you can simply set the `PATH` by using the advanced system settings.
 
 ## Building From Source
 
-Make sure you have `go >= 1.11` installed, then run :
+Make sure you have `go >= 1.12` installed, then run :
 
 ```
-go get -u src.techknowlogick.com/shiori
+go get -u -d src.techknowlogick.com/shiori
+cd $GOPATH/src/src.techknowlogick.com/shiori
+GO111MODULE=on make dep build
 ```
 
 ## Using Docker Image
