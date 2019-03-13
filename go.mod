@@ -26,6 +26,6 @@ require (
 	github.com/sirupsen/logrus v1.4.0
 	github.com/urfave/cli v1.20.0
 	golang.org/x/crypto v0.0.0-20190313024708-a1f597ede03a
-	golang.org/x/net v0.0.0-20190311194944-d8887717615a // indirect
+	golang.org/x/net v0.0.0-20190313152715-5c2c250b6a70 // indirect
 	golang.org/x/sys v0.0.0-20190312065639-fead79001313 // indirect
 )
