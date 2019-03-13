@@ -4,7 +4,7 @@ require (
 	cloud.google.com/go v0.37.0
 	github.com/PuerkitoBio/goquery v1.5.0
 	github.com/asaskevich/govalidator v0.0.0-20190207205813-f9ffefc3facf
-	github.com/denisenkom/go-mssqldb v0.0.0-20190210074043-df6d76eb9289
+	github.com/denisenkom/go-mssqldb v0.0.0-20190313045723-041949b8d268
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/fatih/color v1.7.0
 	github.com/go-shiori/go-readability v0.0.0-20190301152547-7e14b711edd4
