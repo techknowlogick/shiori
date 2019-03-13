@@ -1,5 +1,5 @@
 FROM node:lts-alpine as nodebuilder
-RUN apk --no-cache add python2 make bash
+RUN apk --no-cache add python2 make bash git
 
 WORKDIR /app
 
