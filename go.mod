@@ -27,7 +27,7 @@ require (
 	github.com/sirupsen/logrus v1.4.0
 	github.com/spf13/cobra v0.0.3
 	github.com/urfave/cli v1.20.0
-	golang.org/x/crypto v0.0.0-20190308224606-c2843e01d9a2
+	golang.org/x/crypto v0.0.0-20190313024708-a1f597ede03a
 	golang.org/x/net v0.0.0-20190311194944-d8887717615a // indirect
 	golang.org/x/sys v0.0.0-20190312065639-fead79001313 // indirect
 	google.golang.org/genproto v0.0.0-20190310165556-5fe7a883aa19 // indirect
