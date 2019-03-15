@@ -29,6 +29,12 @@ var (
 				Name:  "listen, l",
 				Usage: "Address the server listens to",
 			},
+			cli.StringFlag{
+				Name:   "jwt-secret",
+				Usage:  "JWT Secret fof session protection (Default: Randon each start)",
+				EnvVar: "SHIORI_JWT_SECRET",
+				Hidden: true,
+			},
 			cli.IntFlag{
 				Name:  "port, p",
 				Value: 8080,
@@ -53,7 +59,7 @@ var (
 			}
 
 			dataDir := c.GlobalString("data-dir")
-			hdl, err := newWebHandler(db, dataDir)
+			hdl, err := newWebHandler(db, dataDir, c.String("jwt-secret"))
 			// Parse flags
 			listenAddress := c.String("listen")
 			port := c.Int("port")
