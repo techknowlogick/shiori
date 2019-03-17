@@ -26,8 +26,9 @@ var (
 			"If --port flag is not used, it will use port 8080 by default.",
 		Flags: []cli.Flag{
 			cli.StringFlag{
-				Name:  "listen, l",
-				Usage: "Address the server listens to",
+				Name:   "listen, l",
+				Usage:  "Address the server listens to",
+				EnvVar: "SHIORI_LISTEN_ADDRESS",
 			},
 			cli.StringFlag{
 				Name:   "jwt-secret",
@@ -36,14 +37,16 @@ var (
 				Hidden: true,
 			},
 			cli.IntFlag{
-				Name:  "port, p",
-				Value: 8080,
-				Usage: "Port that used by server",
+				Name:   "port, p",
+				Value:  8080,
+				Usage:  "Port that used by server",
+				EnvVar: "SHIORI_PORT,PORT",
 			},
 			cli.BoolFlag{
 				Name:   "insecure-default-user",
 				Usage:  "For demo service this creates a temporary default user. Very insecure, do not use this flag.",
 				Hidden: true,
+				EnvVar: "SHIORI_INSECURE_DEMO_USER",
 			},
 		},
 		Action: func(c *cli.Context) error {
