@@ -12,6 +12,7 @@ require (
 	github.com/go-xorm/builder v0.3.4
 	github.com/go-xorm/xorm v0.7.1
 	github.com/gobuffalo/buffalo-plugins v1.13.1 // indirect
+	github.com/gobuffalo/flect v0.1.0 // indirect
 	github.com/gobuffalo/packr/v2 v2.0.6
 	github.com/gofrs/uuid v3.2.0+incompatible
 	github.com/gosuri/uilive v0.0.0-20170323041506-ac356e6e42cd // indirect
@@ -24,8 +25,10 @@ require (
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
 	github.com/muesli/go-app-paths v0.0.0-20190207224558-913f7f7ac60f
 	github.com/sirupsen/logrus v1.4.0
+	github.com/spf13/afero v1.2.0 // indirect
 	github.com/urfave/cli v1.20.0
 	golang.org/x/crypto v0.0.0-20190313024708-a1f597ede03a
 	golang.org/x/net v0.0.0-20190313225941-9f648a60d977 // indirect
 	golang.org/x/sys v0.0.0-20190312065639-fead79001313 // indirect
+	google.golang.org/appengine v1.4.0 // indirect
 )

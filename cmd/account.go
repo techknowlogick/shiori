@@ -40,7 +40,8 @@ var (
 	}
 
 	subcmdDeleteAccounts = cli.Command{
-		Name: "delete",
+		Name:    "delete",
+		Aliases: []string{"rm"},
 		Description: "Delete accounts. " +
 			"Accepts space-separated list of usernames. " +
 			"If no arguments, all records will be deleted.",
