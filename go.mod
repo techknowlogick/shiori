@@ -1,7 +1,7 @@
 module src.techknowlogick.com/shiori
 
 require (
-	cloud.google.com/go v0.37.0 // indirect
+	cloud.google.com/go v0.37.1 // indirect
 	github.com/PuerkitoBio/goquery v1.5.0
 	github.com/asaskevich/govalidator v0.0.0-20190207205813-f9ffefc3facf
 	github.com/denisenkom/go-mssqldb v0.0.0-20190315225735-a8ed825ac853
