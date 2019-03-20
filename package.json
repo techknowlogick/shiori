@@ -10,8 +10,8 @@
     "typeface-source-sans-pro": "0.0.54",
     "typeface-source-serif-pro": "0.0.73",
     "typeface-ubuntu-mono": "0.0.72",
-    "vue": "2.6.9",
-    "vue-template-compiler": "2.6.9"
+    "vue": "2.6.10",
+    "vue-template-compiler": "2.6.10"
   },
   "alias": {
     "vue": "./node_modules/vue/dist/vue.common.js",
