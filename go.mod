@@ -11,7 +11,7 @@ require (
 	github.com/go-sql-driver/mysql v1.4.1
 	github.com/go-xorm/builder v0.3.4
 	github.com/go-xorm/xorm v0.7.1
-	github.com/gobuffalo/buffalo-plugins v1.13.1 // indirect
+	github.com/gobuffalo/buffalo-plugins v1.14.0 // indirect
 	github.com/gobuffalo/flect v0.1.1 // indirect
 	github.com/gobuffalo/packr/v2 v2.0.7
 	github.com/gofrs/uuid v3.2.0+incompatible
