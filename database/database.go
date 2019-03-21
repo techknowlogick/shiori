@@ -1,8 +1,6 @@
 package database
 
 import (
-	"database/sql"
-
 	"src.techknowlogick.com/shiori/model"
 )
 
@@ -40,10 +38,4 @@ type Database interface {
 
 	// GetBookmarkID fetchs bookmark ID based by its url
 	GetBookmarkID(url string) int
-}
-
-func checkError(err error) {
-	if err != nil && err != sql.ErrNoRows {
-		panic(err)
-	}
 }
