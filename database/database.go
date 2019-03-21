@@ -1,8 +1,6 @@
 package database
 
 import (
-	"database/sql"
-
 	"src.techknowlogick.com/shiori/model"
 )
 
