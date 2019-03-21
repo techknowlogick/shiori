@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"src.techknowlogick.com/shiori/model"
+	"src.techknowlogick.com/xormigrate"
 
 	_ "github.com/denisenkom/go-mssqldb"
 	_ "github.com/go-sql-driver/mysql"
@@ -30,10 +31,11 @@ func OpenXormDatabase(dsn, dbType string) (*XormDatabase, error) {
 	if err != nil {
 		return &XormDatabase{}, err
 	}
-	err = db.Sync2(new(model.Tag), new(model.Bookmark), new(model.BookmarkTag), new(model.Account))
-	if err != nil {
-		return &XormDatabase{}, err
+	m := xormigrate.New(db, migrations)
+	if err = m.Migrate(); err != nil {
+		return &XormDatabase{}, fmt.Errorf("Could not migrate: %v", err)
 	}
+
 	return &XormDatabase{db, dbType}, nil
 }
 

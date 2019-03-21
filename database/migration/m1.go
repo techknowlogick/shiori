@@ -1,22 +1,27 @@
-package model
+package migration
 
 import (
 	"time"
+
+	"src.techknowlogick.com/xormigrate"
+
+	"github.com/go-xorm/xorm"
 )
 
-// Tag is tag for the bookmark
-type Tag struct {
-	ID        int         `xorm:"'id' pk autoincr" json:"id"`
-	Name      string      `json:"name"`
-	Deleted   bool        `json:"-"`
-	NBookmark int         `xorm:"n_bookmarks" json:"nBookmarks"`
-	Bookmarks []*Bookmark `xorm:"-"`
-	Created   time.Time   `xorm:"created"`
-	Updated   time.Time   `xorm:"updated"`
+type M1Tag struct {
+	ID        int       `xorm:"'id' pk autoincr" json:"id"`
+	Name      string    `json:"name"`
+	Deleted   bool      `json:"-"`
+	NBookmark int       `xorm:"n_bookmarks" json:"nBookmarks"`
+	Created   time.Time `xorm:"created"`
+	Updated   time.Time `xorm:"updated"`
 }
 
-// Bookmark is record of a specified URL
-type Bookmark struct {
+func (m M1Tag) TableName() string {
+	return "tag"
+}
+
+type M1Bookmark struct {
 	ID          int       `xorm:"'id' pk autoincr" json:"id"`
 	URL         string    `xorm:"url" json:"url"`
 	Title       string    `xorm:"'title' NOT NULL" json:"title"`
@@ -29,18 +34,24 @@ type Bookmark struct {
 	Content     string    `xorm:"TEXT 'content'" json:"content"`
 	HTML        string    `xorm:"TEXT 'html'" json:"html,omitempty"`
 	HasContent  bool      `xorm:"has_content" json:"hasContent"`
-	Tags        []Tag     `xorm:"-"           json:"tags"`
 	Created     time.Time `xorm:"created"`
 	Updated     time.Time `xorm:"updated"`
 }
 
-type BookmarkTag struct {
+func (m M1Bookmark) TableName() string {
+	return "bookmark"
+}
+
+type M1BookmarkTag struct {
 	BookmarkID int `xorm:"bookmark_id"`
 	TagID      int `xorm:"tag_id"`
 }
 
-// Account is account for accessing bookmarks from web interface
-type Account struct {
+func (m M1BookmarkTag) TableName() string {
+	return "bookmark_tag"
+}
+
+type M1Account struct {
 	ID       int       `xorm:"'id' pk autoincr" json:"id"`
 	Username string    `json:"username"`
 	Password string    `json:"password"`
@@ -48,9 +59,19 @@ type Account struct {
 	Updated  time.Time `xorm:"updated"`
 }
 
-// LoginRequest is login request
-type LoginRequest struct {
-	Username string `json:"username"`
-	Password string `json:"password"`
-	Remember bool   `json:"remember"`
+func (m M1Account) TableName() string {
+	return "account"
 }
+
+var (
+	M1 = &xormigrate.Migration{
+		ID:          "initial-migration",
+		Description: "[M1] Create base set of tables",
+		Migrate: func(tx *xorm.Engine) error {
+			return tx.Sync2(new(M1Tag), new(M1Bookmark), new(M1BookmarkTag), new(M1Account))
+		},
+		Rollback: func(tx *xorm.Engine) error {
+			return tx.DropTables(new(M1Tag), new(M1Bookmark), new(M1BookmarkTag), new(M1Account))
+		},
+	}
+)

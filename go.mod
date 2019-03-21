@@ -12,7 +12,6 @@ require (
 	github.com/go-xorm/builder v0.3.4
 	github.com/go-xorm/xorm v0.7.1
 	github.com/gobuffalo/buffalo-plugins v1.14.0 // indirect
-	github.com/gobuffalo/flect v0.1.1 // indirect
 	github.com/gobuffalo/packr/v2 v2.0.7
 	github.com/gofrs/uuid v3.2.0+incompatible
 	github.com/gosuri/uilive v0.0.0-20170323041506-ac356e6e42cd // indirect
@@ -31,4 +30,5 @@ require (
 	golang.org/x/net v0.0.0-20190321003840-1272bf9dcd53 // indirect
 	golang.org/x/sys v0.0.0-20190321012225-6c81ef8f67ca // indirect
 	google.golang.org/appengine v1.5.0 // indirect
+	src.techknowlogick.com/xormigrate v0.0.0-20190321151057-24497c23c09c
 )
