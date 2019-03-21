@@ -29,6 +29,6 @@ require (
 	github.com/urfave/cli v1.20.0
 	golang.org/x/crypto v0.0.0-20190320225911-b7391e95e576
 	golang.org/x/net v0.0.0-20190321003840-1272bf9dcd53 // indirect
-	golang.org/x/sys v0.0.0-20190321012225-6c81ef8f67ca // indirect
+	golang.org/x/sys v0.0.0-20190321065401-f7bb7a8bee54 // indirect
 	google.golang.org/appengine v1.5.0 // indirect
 )
