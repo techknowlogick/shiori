@@ -1,0 +1,1 @@
+web: ./shiori serve
