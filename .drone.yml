@@ -51,7 +51,7 @@ steps:
 - name: bluemix-demo
   image: ibmclouddevops/drone-bluemix-cloudfoundry
   settings:
-    api: cloud.ibm.com
+    api: api.ng.bluemix.net
     region:
       from_secret: bmx-region
     org:
@@ -64,6 +64,7 @@ steps:
     password:
       from_secret: bmx-password
     memory: 64M
+    stack: cflinuxfs3
     buildpack: https://github.com/cloudfoundry/binary-buildpack.git
     instances: 1
   when:
