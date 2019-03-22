@@ -1,7 +1,6 @@
 package model
 
 import (
-	//	"database/sql"
 	"time"
 )
 
