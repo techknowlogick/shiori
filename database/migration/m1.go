@@ -68,6 +68,7 @@ var (
 		ID:          "initial-migration",
 		Description: "[M1] Create base set of tables",
 		Migrate: func(tx *xorm.Engine) error {
+			// Sync2 instead of CreateTables because tables may already exist
 			return tx.Sync2(new(M1Tag), new(M1Bookmark), new(M1BookmarkTag), new(M1Account))
 		},
 		Rollback: func(tx *xorm.Engine) error {
