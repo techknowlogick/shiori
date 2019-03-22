@@ -1,0 +1,15 @@
+cmd/*
+database/*
+dist/*
+docs/*
+packrd/*
+model/*
+node_modules/*
+src/*
+.cache/*
+_docpress/*
+go.mod
+go.sum
+main.go
+package.json
+package-lock.json

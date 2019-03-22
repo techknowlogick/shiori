@@ -24,6 +24,6 @@
     ]
   },
   "scripts": {
-    "build":"make dep-node" 
+    "build": "make dep-node"
   }
 }

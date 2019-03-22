@@ -20,22 +20,28 @@ type webHandler struct {
 	tplCache *template.Template
 }
 
+type handlerOptions struct {
+	db        dt.Database
+	dataDir   string
+	jwtSecret string
+}
+
 // newWebHandler returns new webHandler
-func newWebHandler(db dt.Database, dataDir string, jwtSecret string) (*webHandler, error) {
+func newWebHandler(options *handlerOptions) (*webHandler, error) {
 	// Create JWT key
 	jwtKey := make([]byte, 32)
 	_, err := rand.Read(jwtKey)
 	if err != nil {
 		return nil, err
 	}
-	if len(jwtSecret) != 0 {
-		jwtKey = []byte(jwtSecret)
+	if len(options.jwtSecret) != 0 {
+		jwtKey = []byte(options.jwtSecret)
 	}
 
 	// Create handler
 	handler := &webHandler{
-		db:      db,
-		dataDir: dataDir,
+		db:      options.db,
+		dataDir: options.dataDir,
 		jwtKey:  jwtKey,
 	}
 
