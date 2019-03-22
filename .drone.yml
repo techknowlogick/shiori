@@ -48,6 +48,26 @@ steps:
   - ./shiori add https://www.thestar.com/news/gta/2019/02/13/woman-accused-of-throwing-a-chair-off-downtown-toronto-balcony-turns-herself-in.html
   - ./shiori print
 
+- name: bluemix-demo
+  image: ibmclouddevops/drone-bluemix-cloudfoundry
+  settings:
+    region:
+      from_secret: bmx-region
+    org:
+      from_secret: bmx-org
+    space:
+      from_secret: bmx-space
+    name: shiori-demo
+    user:
+      from_secret: bmx-user
+    password:
+      from_secret: bmx-password
+    memory: 64M
+    buildpack: https://github.com/cloudfoundry/binary-buildpack.git
+  when:
+    event:
+      exclude: pull_request
+
 - name: docker-publish-nightly
   image: plugins/docker
   settings:

@@ -21,8 +21,8 @@ type webHandler struct {
 }
 
 type handlerOptions struct {
-	db dt.Database
-	dataDir string
+	db        dt.Database
+	dataDir   string
 	jwtSecret string
 }
 
