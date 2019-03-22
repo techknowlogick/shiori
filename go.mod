@@ -12,7 +12,7 @@ require (
 	github.com/go-xorm/builder v0.3.4
 	github.com/go-xorm/xorm v0.7.1
 	github.com/gobuffalo/buffalo-plugins v1.14.0 // indirect
-	github.com/gobuffalo/packr/v2 v2.0.7
+	github.com/gobuffalo/packr/v2 v2.0.8
 	github.com/gofrs/uuid v3.2.0+incompatible
 	github.com/gosuri/uilive v0.0.0-20170323041506-ac356e6e42cd // indirect
 	github.com/gosuri/uiprogress v0.0.0-20170224063937-d0567a9d84a1
