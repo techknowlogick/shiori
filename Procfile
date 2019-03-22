@@ -1,1 +1,1 @@
-web: ./bin/shiori serve
+web: shiori serve
