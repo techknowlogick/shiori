@@ -68,7 +68,8 @@ steps:
     instances: 1
   when:
     event:
-      exclude: pull_request
+      exclude:
+      - pull_request
 
 - name: docker-publish-nightly
   image: plugins/docker
