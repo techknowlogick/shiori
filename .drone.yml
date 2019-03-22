@@ -64,7 +64,6 @@ steps:
     password:
       from_secret: bmx-password
     memory: 64M
-    stack: cflinuxfs3
     buildpack: https://github.com/cloudfoundry/binary-buildpack.git
     instances: 1
   when:
