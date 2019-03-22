@@ -62,7 +62,7 @@ var (
 			}
 
 			dataDir := c.GlobalString("data-dir")
-			hdl, err := newWebHandler(db, dataDir, c.String("jwt-secret"))
+			hdl, err := newWebHandler(&handlerOptions{db: db, dataDir: dataDir, jwtSecret: c.String("jwt-secret")})
 			// Parse flags
 			listenAddress := c.String("listen")
 			port := c.Int("port")
