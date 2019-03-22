@@ -18,13 +18,13 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-// SQLiteDatabase is implementation of Database interface for connecting to database.
+// XormDatabase is implementation of Database interface for connecting to database.
 type XormDatabase struct {
 	*xorm.Engine
 	dbType string
 }
 
-// OpenSQLiteDatabase creates and open connection to new database.
+// OpenXormDatabase creates and open connection to new database.
 func OpenXormDatabase(dsn, dbType string) (*XormDatabase, error) {
 	// Open database and start transaction
 	db, err := xorm.NewEngine(dbType, dsn)
