@@ -22,5 +22,8 @@
     "css": [
       "docs/override.css"
     ]
+  },
+  "scripts": {
+    "build":"make dep-node" 
   }
 }
