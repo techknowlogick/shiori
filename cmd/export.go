@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"src.techknowlogick.com/shiori/model"
+	"src.techknowlogick.com/shiori/utils"
 
 	"github.com/urfave/cli"
 )
@@ -26,23 +27,23 @@ func runExportBookmarks(c *cli.Context) error {
 	args := c.Args()
 
 	if len(args) != 1 {
-		return errors.New(cErrorSprint("Please set path to target-file"))
+		return errors.New(utils.CErrorSprint("Please set path to target-file"))
 	}
 
 	db, err := getDbConnection(c)
 
 	if err != nil {
-		return errors.New(cErrorSprint(err))
+		return errors.New(utils.CErrorSprint(err))
 	}
 
 	// Fetch bookmarks from database
 	bookmarks, err := db.GetBookmarks(false)
 	if err != nil {
-		return errors.New(cErrorSprint(err))
+		return errors.New(utils.CErrorSprint(err))
 	}
 
 	if len(bookmarks) == 0 {
-		return errors.New(cErrorSprint("No saved bookmarks yet"))
+		return errors.New(utils.CErrorSprint("No saved bookmarks yet"))
 	}
 
 	// Make sure destination directory exist
@@ -52,7 +53,7 @@ func runExportBookmarks(c *cli.Context) error {
 	// Open destination file
 	dstFile, err := os.Create(args[0])
 	if err != nil {
-		return errors.New(cErrorSprint(err))
+		return errors.New(utils.CErrorSprint(err))
 	}
 	defer dstFile.Close()
 
@@ -83,13 +84,13 @@ func runExportBookmarks(c *cli.Context) error {
 
 	tpl, err := template.New("export").Funcs(funcMap).Parse(tplContent)
 	if err != nil {
-		return errors.New(cErrorSprint(err))
+		return errors.New(utils.CErrorSprint(err))
 	}
 
 	// Execute template
 	err = tpl.Execute(dstFile, &bookmarks)
 	if err != nil {
-		return errors.New(cErrorSprint(err))
+		return errors.New(utils.CErrorSprint(err))
 	}
 
 	fmt.Println("Export finished")

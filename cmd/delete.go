@@ -6,6 +6,8 @@ import (
 	"os"
 	"path/filepath"
 
+	"src.techknowlogick.com/shiori/utils"
+
 	"github.com/urfave/cli"
 )
 
@@ -36,7 +38,7 @@ func runDeleteBookmark(c *cli.Context) error {
 	db, err := getDbConnection(c)
 
 	if err != nil {
-		return errors.New(cErrorSprint(err))
+		return errors.New(utils.CErrorSprint(err))
 	}
 
 	// If no arguments (i.e all bookmarks going to be deleted),
@@ -46,20 +48,20 @@ func runDeleteBookmark(c *cli.Context) error {
 		fmt.Print("Remove ALL bookmarks? (y/n): ")
 		fmt.Scanln(&confirmDelete)
 		if confirmDelete != "y" {
-			return errors.New(cErrorSprint("No bookmarks deleted"))
+			return errors.New(utils.CErrorSprint("No bookmarks deleted"))
 		}
 	}
 
 	// Convert args to ids
 	ids, err := parseIndexList(args)
 	if err != nil {
-		return errors.New(cErrorSprint(err))
+		return errors.New(utils.CErrorSprint(err))
 	}
 
 	// Delete bookmarks from database
 	err = db.DeleteBookmarks(ids...)
 	if err != nil {
-		cError.Println(err)
+		utils.CError.Println(err)
 	}
 
 	// Delete thumbnail image from local disk

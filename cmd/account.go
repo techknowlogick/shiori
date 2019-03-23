@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"syscall"
 
+	"src.techknowlogick.com/shiori/utils"
+
 	"github.com/urfave/cli"
 	"golang.org/x/crypto/ssh/terminal"
 )
@@ -61,12 +63,12 @@ func runAddAccount(c *cli.Context) error {
 	db, err := getDbConnection(c)
 
 	if err != nil {
-		return errors.New(cErrorSprint(err))
+		return errors.New(utils.CErrorSprint(err))
 	}
 
 	username := args[0]
 	if username == "" {
-		return errors.New(cErrorSprint("Username must not be empty"))
+		return errors.New(utils.CErrorSprint("Username must not be empty"))
 	}
 
 	fmt.Println("Username: " + username)
@@ -75,19 +77,19 @@ func runAddAccount(c *cli.Context) error {
 	fmt.Print("Password: ")
 	bytePassword, err := terminal.ReadPassword(int(syscall.Stdin))
 	if err != nil {
-		return errors.New(cErrorSprint(err))
+		return errors.New(utils.CErrorSprint(err))
 	}
 
 	fmt.Println()
 	strPassword := string(bytePassword)
 	if len(strPassword) < 8 {
-		return errors.New(cErrorSprint("Password must be at least 8 characters"))
+		return errors.New(utils.CErrorSprint("Password must be at least 8 characters"))
 	}
 
 	// Save account to database
 	err = db.CreateAccount(username, strPassword)
 	if err != nil {
-		return errors.New(cErrorSprint(err))
+		return errors.New(utils.CErrorSprint(err))
 	}
 	return nil
 }
@@ -97,19 +99,19 @@ func runPrintAccount(c *cli.Context) error {
 	db, err := getDbConnection(c)
 
 	if err != nil {
-		return errors.New(cErrorSprint(err))
+		return errors.New(utils.CErrorSprint(err))
 	}
 	keyword := c.String("search")
 
 	// Fetch list accounts in database
 	accounts, err := db.GetAccounts(keyword)
 	if err != nil {
-		return errors.New(cErrorSprint(err))
+		return errors.New(utils.CErrorSprint(err))
 	}
 
 	// Show list accounts
 	for _, account := range accounts {
-		cIndex.Print("- ")
+		utils.CIndex.Print("- ")
 		fmt.Println(account.Username)
 	}
 	return nil
@@ -121,7 +123,7 @@ func runDeleteAccount(c *cli.Context) error {
 	db, err := getDbConnection(c)
 
 	if err != nil {
-		return errors.New(cErrorSprint(err))
+		return errors.New(utils.CErrorSprint(err))
 	}
 
 	// If no arguments (i.e all accounts going to be deleted),
@@ -140,7 +142,7 @@ func runDeleteAccount(c *cli.Context) error {
 	// Delete accounts in database
 	err = db.DeleteAccounts(args...)
 	if err != nil {
-		return errors.New(cErrorSprint(err))
+		return errors.New(utils.CErrorSprint(err))
 	}
 
 	fmt.Println("Account(s) have been deleted")

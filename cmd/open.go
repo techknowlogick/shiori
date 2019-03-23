@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"strings"
 
+	"src.techknowlogick.com/shiori/utils"
+
 	"github.com/urfave/cli"
 )
 
@@ -42,7 +44,7 @@ func runOpenBookmark(c *cli.Context) error {
 	db, err := getDbConnection(c)
 
 	if err != nil {
-		return errors.New(cErrorSprint(err))
+		return errors.New(utils.CErrorSprint(err))
 	}
 
 	// If no arguments (i.e all bookmarks will be opened),
@@ -60,18 +62,18 @@ func runOpenBookmark(c *cli.Context) error {
 	// Convert args to ids
 	ids, err := parseIndexList(args)
 	if err != nil {
-		return errors.New(cErrorSprint(err))
+		return errors.New(utils.CErrorSprint(err))
 	}
 	bookmarks, err := db.GetBookmarks(true, ids...)
 	if err != nil {
-		return errors.New(cErrorSprint(err))
+		return errors.New(utils.CErrorSprint(err))
 	}
 
 	if len(bookmarks) == 0 {
 		if len(args) > 0 {
-			return errors.New(cErrorSprint("No matching index found"))
+			return errors.New(utils.CErrorSprint("No matching index found"))
 		} else {
-			return errors.New(cErrorSprint("No saved bookmarks yet"))
+			return errors.New(utils.CErrorSprint("No saved bookmarks yet"))
 		}
 	}
 
@@ -80,7 +82,7 @@ func runOpenBookmark(c *cli.Context) error {
 		for _, book := range bookmarks {
 			err = openBrowser(book.URL)
 			if err != nil {
-				return errors.New(cErrorSprint("Failed to open %s: %v\n", book.URL, err))
+				return errors.New(utils.CErrorSprint("Failed to open %s: %v\n", book.URL, err))
 			}
 		}
 		return nil
@@ -97,18 +99,18 @@ func runOpenBookmark(c *cli.Context) error {
 			book.Content = strings.Join(words, " ")
 		}
 
-		cIndex.Printf("%d. ", book.ID)
-		cTitle.Println(book.Title)
+		utils.CIndex.Printf("%d. ", book.ID)
+		utils.CTitle.Println(book.Title)
 		fmt.Println()
 
 		if book.Content == "" {
-			cError.Println("This bookmark doesn't have any cached content")
+			utils.CError.Println("This bookmark doesn't have any cached content")
 		} else {
 			fmt.Println(book.Content)
 		}
 
 		fmt.Println()
-		cSymbol.Println(strings.Repeat("-", termWidth))
+		utils.CSymbol.Println(strings.Repeat("-", termWidth))
 		fmt.Println()
 	}
 

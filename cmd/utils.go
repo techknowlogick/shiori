@@ -18,31 +18,13 @@ import (
 
 	"src.techknowlogick.com/shiori/database"
 	"src.techknowlogick.com/shiori/model"
+	"src.techknowlogick.com/shiori/utils"
 
-	"github.com/fatih/color"
 	"github.com/urfave/cli"
 	"golang.org/x/crypto/ssh/terminal"
 )
 
 var (
-	cIndex    = color.New(color.FgHiCyan)
-	cSymbol   = color.New(color.FgHiMagenta)
-	cTitle    = color.New(color.FgHiGreen).Add(color.Bold)
-	cReadTime = color.New(color.FgHiMagenta)
-	cURL      = color.New(color.FgHiYellow)
-	cError    = color.New(color.FgHiRed)
-	cExcerpt  = color.New(color.FgHiWhite)
-	cTag      = color.New(color.FgHiBlue)
-
-	cIndexSprint    = cIndex.SprintFunc()
-	cSymbolSprint   = cSymbol.SprintFunc()
-	cTitleSprint    = cTitle.SprintFunc()
-	cReadTimeSprint = cReadTime.SprintFunc()
-	cURLSprint      = cURL.SprintFunc()
-	cErrorSprint    = cError.SprintFunc()
-	cExcerptSprint  = cExcerpt.SprintFunc()
-	cTagSprint      = cTag.SprintFunc()
-
 	errInvalidIndex = errors.New("Index is not valid")
 )
 
@@ -146,12 +128,6 @@ func getTerminalWidth() int {
 	return width
 }
 
-func checkError(err error) {
-	if err != nil {
-		panic(err)
-	}
-}
-
 func fixUtf(r rune) rune {
 	if r == utf8.RuneError {
 		return -1
@@ -180,8 +156,8 @@ func printBookmarks(bookmarks ...model.Bookmark) {
 		strSpace := strings.Repeat(" ", len(strBookmarkIndex))
 
 		// Print bookmark title
-		cIndex.Print(strBookmarkIndex)
-		cTitle.Print(bookmark.Title)
+		utils.CIndex.Print(strBookmarkIndex)
+		utils.CTitle.Print(bookmark.Title)
 
 		// Print read time
 		if bookmark.MinReadTime > 0 {
@@ -189,29 +165,29 @@ func printBookmarks(bookmarks ...model.Bookmark) {
 			if bookmark.MinReadTime == bookmark.MaxReadTime {
 				readTime = fmt.Sprintf(" (%d minutes)", bookmark.MinReadTime)
 			}
-			cReadTime.Println(readTime)
+			utils.CReadTime.Println(readTime)
 		} else {
 			fmt.Println()
 		}
 
 		// Print bookmark URL
-		cSymbol.Print(strSpace + "> ")
-		cURL.Println(bookmark.URL)
+		utils.CSymbol.Print(strSpace + "> ")
+		utils.CURL.Println(bookmark.URL)
 
 		// Print bookmark excerpt
 		if bookmark.Excerpt != "" {
-			cSymbol.Print(strSpace + "+ ")
-			cExcerpt.Println(bookmark.Excerpt)
+			utils.CSymbol.Print(strSpace + "+ ")
+			utils.CExcerpt.Println(bookmark.Excerpt)
 		}
 
 		// Print bookmark tags
 		if len(bookmark.Tags) > 0 {
-			cSymbol.Print(strSpace + "# ")
+			utils.CSymbol.Print(strSpace + "# ")
 			for i, tag := range bookmark.Tags {
 				if i == len(bookmark.Tags)-1 {
-					cTag.Println(tag.Name)
+					utils.CTag.Println(tag.Name)
 				} else {
-					cTag.Print(tag.Name + ", ")
+					utils.CTag.Print(tag.Name + ", ")
 				}
 			}
 		}

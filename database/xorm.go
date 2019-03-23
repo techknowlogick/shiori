@@ -50,9 +50,7 @@ func (db *XormDatabase) InsertBookmark(bookmark *model.Bookmark) error {
 		return fmt.Errorf("Title must not be empty")
 	}
 
-	//	if bookmark.Modified == "" {
 	bookmark.Modified = time.Now()
-	//	}
 
 	session := db.NewSession()
 	defer session.Close()
