@@ -81,7 +81,7 @@ dep-node:
 .PHONY: dep-go
 dep-go:
 	@hash packr2 > /dev/null 2>&1; if [ $$? -ne 0 ]; then \
-		$(GO) get -u github.com/gobuffalo/packr/v2/packr2; \
+		GO111MODULE=off $(GO) get -u github.com/gobuffalo/packr/v2/packr2; \
 	fi
 	packr2
 
