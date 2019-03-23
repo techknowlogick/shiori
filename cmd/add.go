@@ -9,6 +9,8 @@ import (
 	"strings"
 	"time"
 
+	"src.techknowlogick.com/shiori/utils"
+
 	valid "github.com/asaskevich/govalidator"
 	"github.com/go-shiori/go-readability"
 	"github.com/gofrs/uuid"
@@ -55,13 +57,13 @@ func runAddBookmark(c *cli.Context) error {
 	db, err := getDbConnection(c)
 
 	if err != nil {
-		return errors.New(cErrorSprint(err))
+		return errors.New(utils.CErrorSprint(err))
 	}
 
 	// Make sure URL valid
 	parsedURL, err := nurl.Parse(url)
 	if err != nil || !valid.IsRequestURL(url) {
-		return errors.New(cErrorSprint("URL is not valid"))
+		return errors.New(utils.CErrorSprint("URL is not valid"))
 	}
 
 	// Clear fragment and UTM parameters from URL
@@ -107,7 +109,7 @@ func runAddBookmark(c *cli.Context) error {
 	// Save bookmark image to local disk
 	u2, err := uuid.NewV4()
 	if err != nil {
-		return errors.New(cErrorSprint(err))
+		return errors.New(utils.CErrorSprint(err))
 	}
 	imgPath := filepath.Join(dataDir, "thumb", u2.String())
 	err = downloadFile(article.Image, imgPath, 20*time.Second)
@@ -118,7 +120,7 @@ func runAddBookmark(c *cli.Context) error {
 	// Save bookmark to database
 	err = db.InsertBookmark(&book)
 	if err != nil {
-		return errors.New(cErrorSprint(err))
+		return errors.New(utils.CErrorSprint(err))
 	}
 
 	printBookmarks(book)

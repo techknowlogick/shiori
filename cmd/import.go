@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"src.techknowlogick.com/shiori/model"
+	"src.techknowlogick.com/shiori/utils"
 
 	"github.com/PuerkitoBio/goquery"
 	valid "github.com/asaskevich/govalidator"
@@ -38,7 +39,7 @@ func runImportBookmarks(c *cli.Context) error {
 	db, err := getDbConnection(c)
 
 	if err != nil {
-		return errors.New(cErrorSprint(err))
+		return errors.New(utils.CErrorSprint(err))
 	}
 
 	// If user doesn't specify, ask if tag need to be generated
@@ -53,14 +54,14 @@ func runImportBookmarks(c *cli.Context) error {
 	// Open bookmark's file
 	srcFile, err := os.Open(args[0])
 	if err != nil {
-		return errors.New(cErrorSprint(err))
+		return errors.New(utils.CErrorSprint(err))
 	}
 	defer srcFile.Close()
 
 	// Parse bookmark's file
 	doc, err := goquery.NewDocumentFromReader(srcFile)
 	if err != nil {
-		return errors.New(cErrorSprint(err))
+		return errors.New(utils.CErrorSprint(err))
 	}
 
 	bookmarks := []model.Bookmark{}
@@ -80,7 +81,7 @@ func runImportBookmarks(c *cli.Context) error {
 		// Make sure URL valid
 		parsedURL, err := nurl.Parse(url)
 		if err != nil || !valid.IsRequestURL(url) {
-			cError.Printf("%s will be skipped: URL is not valid\n\n", url)
+			utils.CError.Printf("%s will be skipped: URL is not valid\n\n", url)
 			return
 		}
 
@@ -133,7 +134,7 @@ func runImportBookmarks(c *cli.Context) error {
 		// Save book to database
 		err = db.InsertBookmark(&book)
 		if err != nil {
-			return errors.New(cErrorSprint(fmt.Sprintf("%s is skipped: %v\n\n", book.URL, err)))
+			return errors.New(utils.CErrorSprint(fmt.Sprintf("%s is skipped: %v\n\n", book.URL, err)))
 		}
 
 		printBookmarks(book)

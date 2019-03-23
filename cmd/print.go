@@ -5,6 +5,8 @@ import (
 	"errors"
 	"fmt"
 
+	"src.techknowlogick.com/shiori/utils"
+
 	"github.com/urfave/cli"
 )
 
@@ -40,26 +42,26 @@ func runPrintBookmarks(c *cli.Context) error {
 	db, err := getDbConnection(c)
 
 	if err != nil {
-		return errors.New(cErrorSprint(err))
+		return errors.New(utils.CErrorSprint(err))
 	}
 
 	// Convert args to ids
 	ids, err := parseIndexList(args)
 	if err != nil {
-		return errors.New(cErrorSprint(err))
+		return errors.New(utils.CErrorSprint(err))
 	}
 
 	// Read bookmarks from database
 	bookmarks, err := db.GetBookmarks(false, ids...)
 	if err != nil {
-		return errors.New(cErrorSprint(err))
+		return errors.New(utils.CErrorSprint(err))
 	}
 
 	if len(bookmarks) == 0 {
 		if len(args) > 0 {
-			return errors.New(cErrorSprint("No matching index found"))
+			return errors.New(utils.CErrorSprint("No matching index found"))
 		} else {
-			return errors.New(cErrorSprint("No bookmarks saved yet"))
+			return errors.New(utils.CErrorSprint("No bookmarks saved yet"))
 		}
 	}
 
@@ -67,7 +69,7 @@ func runPrintBookmarks(c *cli.Context) error {
 	if useJSON {
 		bt, err := json.MarshalIndent(&bookmarks, "", "    ")
 		if err != nil {
-			return errors.New(cErrorSprint(err))
+			return errors.New(utils.CErrorSprint(err))
 		}
 
 		fmt.Println(string(bt))

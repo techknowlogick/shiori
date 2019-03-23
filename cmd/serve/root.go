@@ -8,17 +8,14 @@ import (
 	"time"
 
 	"src.techknowlogick.com/shiori/database"
+	"src.techknowlogick.com/shiori/utils"
 
-	"github.com/fatih/color"
 	"github.com/julienschmidt/httprouter"
 	"github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
 )
 
 var (
-	cError       = color.New(color.FgHiRed)
-	cErrorSprint = cError.SprintFunc()
-
 	CmdServe = cli.Command{
 		Name:  "serve",
 		Usage: "Serve web app for managing bookmarks",
@@ -53,7 +50,7 @@ var (
 			db, err := getDbConnection(c)
 
 			if err != nil {
-				return errors.New(cErrorSprint(err))
+				return errors.New(utils.CErrorSprint(err))
 			}
 
 			demoUser, _ := db.GetAccount("demo")
@@ -104,8 +101,7 @@ var (
 
 			// Serve app
 			logrus.Infoln("Serve shiori in", url)
-			logrus.Fatalln(svr.ListenAndServe())
-			return nil
+			return svr.ListenAndServe()
 		},
 	}
 )

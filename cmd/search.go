@@ -5,6 +5,8 @@ import (
 	"errors"
 	"fmt"
 
+	"src.techknowlogick.com/shiori/utils"
+
 	"github.com/urfave/cli"
 )
 
@@ -48,24 +50,24 @@ func runSearchBookmarks(c *cli.Context) error {
 	db, err := getDbConnection(c)
 
 	if err != nil {
-		return errors.New(cErrorSprint(err))
+		return errors.New(utils.CErrorSprint(err))
 	}
 
 	// Read bookmarks from database
 	bookmarks, err := db.SearchBookmarks(false, keyword, tags...)
 	if err != nil {
-		return errors.New(cErrorSprint(err))
+		return errors.New(utils.CErrorSprint(err))
 	}
 
 	if len(bookmarks) == 0 {
-		return errors.New(cErrorSprint("No matching bookmarks found"))
+		return errors.New(utils.CErrorSprint("No matching bookmarks found"))
 	}
 
 	// Print data
 	if useJSON {
 		bt, err := json.MarshalIndent(&bookmarks, "", "    ")
 		if err != nil {
-			return errors.New(cErrorSprint(err))
+			return errors.New(utils.CErrorSprint(err))
 		}
 
 		fmt.Println(string(bt))

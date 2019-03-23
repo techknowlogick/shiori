@@ -10,6 +10,8 @@ import (
 	"sync"
 	"time"
 
+	"src.techknowlogick.com/shiori/utils"
+
 	valid "github.com/asaskevich/govalidator"
 	"github.com/go-shiori/go-readability"
 	"github.com/gofrs/uuid"
@@ -80,13 +82,13 @@ func runUpdateBookmarks(c *cli.Context) error {
 	db, err := getDbConnection(c)
 
 	if err != nil {
-		return errors.New(cErrorSprint(err))
+		return errors.New(utils.CErrorSprint(err))
 	}
 
 	// Convert args to ids
 	ids, err := parseIndexList(args)
 	if err != nil {
-		return errors.New(cErrorSprint(err))
+		return errors.New(utils.CErrorSprint(err))
 	}
 
 	// Check if --url flag is used
@@ -94,7 +96,7 @@ func runUpdateBookmarks(c *cli.Context) error {
 		// Make sure URL is valid
 		parsedURL, err := nurl.Parse(url)
 		if err != nil || !valid.IsRequestURL(url) {
-			return errors.New(cErrorSprint("URL is not valid"))
+			return errors.New(utils.CErrorSprint("URL is not valid"))
 		}
 
 		// Clear fragment and UTM parameters from URL
@@ -104,7 +106,7 @@ func runUpdateBookmarks(c *cli.Context) error {
 
 		// Make sure there is only one arguments
 		if len(ids) != 1 {
-			return errors.New(cErrorSprint("Update only accepts one index while using --url flag"))
+			return errors.New(utils.CErrorSprint("Update only accepts one index while using --url flag"))
 		}
 	}
 
@@ -116,7 +118,7 @@ func runUpdateBookmarks(c *cli.Context) error {
 		fmt.Scanln(&confirmUpdate)
 
 		if confirmUpdate != "y" {
-			return errors.New(cErrorSprint("No bookmarks updated"))
+			return errors.New(utils.CErrorSprint("No bookmarks updated"))
 		}
 	}
 
@@ -127,11 +129,11 @@ func runUpdateBookmarks(c *cli.Context) error {
 	// Fetch bookmarks from database
 	bookmarks, err := db.GetBookmarks(true, ids...)
 	if err != nil {
-		return errors.New(cErrorSprint(err))
+		return errors.New(utils.CErrorSprint(err))
 	}
 
 	if len(bookmarks) == 0 {
-		return errors.New(cErrorSprint("No matching index found"))
+		return errors.New(utils.CErrorSprint("No matching index found"))
 	}
 
 	// If not offline, fetch articles from internet
@@ -217,7 +219,7 @@ func runUpdateBookmarks(c *cli.Context) error {
 		// Print error message
 		fmt.Println()
 		for _, errorMsg := range listErrorMsg {
-			cError.Println(errorMsg + "\n")
+			utils.CError.Println(errorMsg + "\n")
 		}
 	}
 
@@ -284,7 +286,7 @@ func runUpdateBookmarks(c *cli.Context) error {
 	// Update database
 	result, err := db.UpdateBookmarks(bookmarks...)
 	if err != nil {
-		return errors.New(cErrorSprint(err))
+		return errors.New(utils.CErrorSprint(err))
 	}
 
 	// Print update result
