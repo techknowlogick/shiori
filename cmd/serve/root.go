@@ -12,6 +12,7 @@ import (
 	"src.techknowlogick.com/shiori/utils"
 
 	"github.com/gin-gonic/gin"
+	"github.com/gofrs/uuid"
 	"github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
 )
@@ -20,8 +21,7 @@ var (
 	CmdServe = cli.Command{
 		Name:  "serve",
 		Usage: "Serve web app for managing bookmarks",
-		Description: "Run a simple annd performant web server which serves the site for managing bookmarks." +
-			"If --port flag is not used, it will use port 8080 by default.",
+		Description: "Run a simple annd performant web server which serves the site for managing bookmarks.",
 		Flags: []cli.Flag{
 			cli.StringFlag{
 				Name:   "listen, l",
@@ -36,8 +36,9 @@ var (
 			},
 			cli.StringFlag{
 				Name:   "server-log-type",
-				Usage:  "Type of logs that will be output to stdout (json, plain, gin-default)",
+				Usage:  "Type of logs that will be output to stdout (json, plain, gin-default, disabled)",
 				EnvVar: "SHIORI_SERVER_LOG_TYPE",
+				Value:  "disabled",
 				Hidden: true,
 			},
 			cli.IntFlag{
@@ -83,6 +84,15 @@ var (
 			}
 
 			router := gin.New()
+
+			// Add request ID to logs (currently only shows in json)
+			router.Use(func(c *gin.Context) {
+					u, _ := uuid.NewV4()
+					requestID := u.String()
+					c.Set("request_id", requestID)
+					c.Header("X-Request-Id", requestID)
+					c.Next()
+			})
 
 			switch c.String("server-log-type") {
 			case "json":
