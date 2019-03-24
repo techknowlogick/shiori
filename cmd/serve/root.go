@@ -1,6 +1,7 @@
 package serve
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"net/http"
@@ -10,17 +11,18 @@ import (
 	"src.techknowlogick.com/shiori/database"
 	"src.techknowlogick.com/shiori/utils"
 
-	"github.com/julienschmidt/httprouter"
+	"github.com/gin-gonic/contrib/commonlog"
+	"github.com/gin-gonic/gin"
+	"github.com/gofrs/uuid"
 	"github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
 )
 
 var (
 	CmdServe = cli.Command{
-		Name:  "serve",
-		Usage: "Serve web app for managing bookmarks",
-		Description: "Run a simple annd performant web server which serves the site for managing bookmarks." +
-			"If --port flag is not used, it will use port 8080 by default.",
+		Name:        "serve",
+		Usage:       "Serve web app for managing bookmarks",
+		Description: "Run a simple annd performant web server which serves the site for managing bookmarks.",
 		Flags: []cli.Flag{
 			cli.StringFlag{
 				Name:   "listen, l",
@@ -31,6 +33,13 @@ var (
 				Name:   "jwt-secret",
 				Usage:  "JWT Secret fof session protection (Default: Randon each start)",
 				EnvVar: "SHIORI_JWT_SECRET",
+				Hidden: true,
+			},
+			cli.StringFlag{
+				Name:   "server-log-type",
+				Usage:  "Type of logs that will be output to stdout (json, plain, gin-default, disabled)",
+				EnvVar: "SHIORI_SERVER_LOG_TYPE",
+				Value:  "disabled",
 				Hidden: true,
 			},
 			cli.IntFlag{
@@ -44,6 +53,12 @@ var (
 				Usage:  "For demo service this creates a temporary default user. Very insecure, do not use this flag.",
 				Hidden: true,
 				EnvVar: "SHIORI_INSECURE_DEMO_USER",
+			},
+			cli.BoolFlag{
+				Name:   "server-debug",
+				Usage:  "Enable Gin (webserver) debug mode",
+				Hidden: true,
+				EnvVar: "SHIORI_SERVER_DEBUG",
 			},
 		},
 		Action: func(c *cli.Context) error {
@@ -65,10 +80,53 @@ var (
 			port := c.Int("port")
 
 			// Create router
-			router := httprouter.New()
+			if !c.Bool("debug") {
+				gin.SetMode(gin.ReleaseMode)
+			}
+
+			router := gin.New()
+
+			// Add request ID to logs (currently only shows in json)
+			router.Use(func(c *gin.Context) {
+				u, _ := uuid.NewV4()
+				requestID := u.String()
+				c.Set("request_id", requestID)
+				c.Header("X-Request-Id", requestID)
+				c.Next()
+			})
+
+			switch c.String("server-log-type") {
+			case "json":
+				router.Use(gin.LoggerWithConfig(gin.LoggerConfig{Formatter: func(param gin.LogFormatterParams) string {
+					logFormat := map[string]interface{}{
+						"type":          "server-request-log",
+						"timestamp":     param.TimeStamp.Format("2006/01/02 - 15:04:05"),
+						"status_code":   param.StatusCode,
+						"latency":       param.Latency,
+						"client_ip":     param.ClientIP,
+						"method":        param.Method,
+						"path":          param.Path,
+						"error_message": param.ErrorMessage,
+						"keys":          param.Keys,
+					}
+
+					bytes, err := json.Marshal(logFormat)
+					if err != nil {
+						utils.CheckError(err)
+					}
+					return fmt.Sprintf("%s\n", string(bytes))
+				}}))
+			case "gin-default":
+				router.Use(gin.Logger())
+			case "plain":
+				router.Use(commonlog.New())
+			default:
+				// disabled
+			}
+
+			router.Use(gin.Recovery())
 
 			router.GET("/dist/*filepath", hdl.serveFiles)
-			router.GET("/shiori/*filepath", hdl.serveFiles)
 
 			router.GET("/", hdl.serveIndexPage)
 			router.GET("/login", hdl.serveLoginPage)
@@ -85,11 +143,6 @@ var (
 			router.PUT("/api/bookmarks/tags", hdl.apiUpdateBookmarkTags)
 			router.DELETE("/api/bookmarks", hdl.apiDeleteBookmark)
 
-			// Route for panic
-			router.PanicHandler = func(w http.ResponseWriter, r *http.Request, arg interface{}) {
-				http.Error(w, fmt.Sprint(arg), 500)
-			}
-
 			// Create server
 			url := fmt.Sprintf("%s:%d", listenAddress, port)
 			svr := &http.Server{
@@ -105,12 +158,6 @@ var (
 		},
 	}
 )
-
-func checkError(err error) {
-	if err != nil {
-		panic(err)
-	}
-}
 
 func getDbConnection(c *cli.Context) (database.Database, error) {
 	dbType := c.GlobalString("db-type")

@@ -86,7 +86,7 @@ func runUpdateBookmarks(c *cli.Context) error {
 	}
 
 	// Convert args to ids
-	ids, err := parseIndexList(args)
+	ids, err := utils.ParseIndexList(args)
 	if err != nil {
 		return errors.New(utils.CErrorSprint(err))
 	}
@@ -101,7 +101,7 @@ func runUpdateBookmarks(c *cli.Context) error {
 
 		// Clear fragment and UTM parameters from URL
 		parsedURL.Fragment = ""
-		clearUTMParams(parsedURL)
+		utils.ClearUTMParams(parsedURL)
 		url = parsedURL.String()
 
 		// Make sure there is only one arguments
