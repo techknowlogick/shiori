@@ -11,9 +11,9 @@ import (
 	"src.techknowlogick.com/shiori/database"
 	"src.techknowlogick.com/shiori/utils"
 
+	"github.com/gin-gonic/contrib/commonlog"
 	"github.com/gin-gonic/gin"
 	"github.com/gofrs/uuid"
-	"github.com/gin-gonic/contrib/commonlog"
 	"github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
 )
