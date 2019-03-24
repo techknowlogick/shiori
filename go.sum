@@ -62,6 +62,8 @@ github.com/fsnotify/fsnotify v1.4.7/go.mod h1:jwhsz4b93w/PPRr/qN1Yymfu8t87LnFCMo
 github.com/ghodss/yaml v1.0.0/go.mod h1:4dBDuWmgqj2HViK6kFavaiC9ZROes6MMH2rRYeMEF04=
 github.com/gin-contrib/sse v0.0.0-20190301062529-5545eab6dad3 h1:t8FVkw33L+wilf2QiWkw0UV77qRpcH/JHPKGpKa2E8g=
 github.com/gin-contrib/sse v0.0.0-20190301062529-5545eab6dad3/go.mod h1:VJ0WA2NBN22VlZ2dKZQPAPnyWw5XTlK1KymzLKsr59s=
+github.com/gin-gonic/contrib v0.0.0-20190302003538-54ff787f7c73 h1:dC6mPFx+I6Kkj/NJhI/ZVGVapv0u9tIEo6vp4ogXEjQ=
+github.com/gin-gonic/contrib v0.0.0-20190302003538-54ff787f7c73/go.mod h1:iqneQ2Df3omzIVTkIfn7c1acsVnMGiSLn4XF5Blh3Yg=
 github.com/gin-gonic/gin v0.0.0-20190301062529-1d462bbe3713bc2fea40ed45c80a06ce856d379f h1:Kp8I9GlYPPY0nhZ/2ePEwTjj7EMyo1dALZZu4EEG5OE=
 github.com/gin-gonic/gin v0.0.0-20190301062529-1d462bbe3713bc2fea40ed45c80a06ce856d379f/go.mod h1:/W62MbsSEZVEVf10SqiWTuY8bNxkrS9F2ntZdV5XV4M=
 github.com/gin-gonic/gin v1.3.0 h1:kCmZyPklC0gVdL728E6Aj20uYBJV93nj/TkwBTKhFbs=

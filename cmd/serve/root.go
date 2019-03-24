@@ -13,6 +13,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/gofrs/uuid"
+	"github.com/gin-gonic/contrib/commonlog"
 	"github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
 )
@@ -117,6 +118,8 @@ var (
 				}}))
 			case "disabled":
 				// do nothing
+			case "plain":
+				router.Use(commonlog.New())
 			default:
 				router.Use(gin.Logger())
 			}
