@@ -19,8 +19,8 @@ import (
 
 var (
 	CmdServe = cli.Command{
-		Name:  "serve",
-		Usage: "Serve web app for managing bookmarks",
+		Name:        "serve",
+		Usage:       "Serve web app for managing bookmarks",
 		Description: "Run a simple annd performant web server which serves the site for managing bookmarks.",
 		Flags: []cli.Flag{
 			cli.StringFlag{
@@ -87,11 +87,11 @@ var (
 
 			// Add request ID to logs (currently only shows in json)
 			router.Use(func(c *gin.Context) {
-					u, _ := uuid.NewV4()
-					requestID := u.String()
-					c.Set("request_id", requestID)
-					c.Header("X-Request-Id", requestID)
-					c.Next()
+				u, _ := uuid.NewV4()
+				requestID := u.String()
+				c.Set("request_id", requestID)
+				c.Header("X-Request-Id", requestID)
+				c.Next()
 			})
 
 			switch c.String("server-log-type") {
