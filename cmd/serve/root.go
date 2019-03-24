@@ -116,12 +116,12 @@ var (
 					}
 					return fmt.Sprintf("%s\n", string(bytes))
 				}}))
-			case "disabled":
-				// do nothing
+			case "gin-default":
+				router.Use(gin.Logger())
 			case "plain":
 				router.Use(commonlog.New())
 			default:
-				router.Use(gin.Logger())
+				// disabled
 			}
 
 			router.Use(gin.Recovery())
