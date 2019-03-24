@@ -86,7 +86,7 @@ func getDbConnection(c *cli.Context) (database.Database, error) {
 		dbDsn = filepath.Join(dataDir, dbDsn)
 	}
 
-	db, err := database.OpenXormDatabase(dbDsn, dbType)
+	db, err := database.OpenXormDatabase(&database.XormOptions{DbDsn: dbDsn, DbType: dbType, ShowSQL: c.GlobalBool("show-sql-log")})
 	return db, err
 
 }

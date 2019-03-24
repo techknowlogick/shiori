@@ -54,6 +54,12 @@ func main() {
 			Usage:  "directory to store all files",
 			EnvVar: "SHIORI_DIR, ENV_SHIORI_DIR",
 		},
+		cli.BoolFlag{
+			Name:   "show-sql-log",
+			Usage:  "Log SQL quries to command line",
+			Hidden: true,
+			EnvVar: "SHIORI_SHOW_SQL",
+		},
 	}
 	app.Flags = append(app.Flags, globalFlags...)
 	app.Before = func(c *cli.Context) error {

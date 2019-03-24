@@ -24,19 +24,26 @@ type XormDatabase struct {
 	dbType string
 }
 
+type XormOptions struct {
+	DbDsn   string
+	DbType  string
+	ShowSQL bool
+}
+
 // OpenXormDatabase creates and open connection to new database.
-func OpenXormDatabase(dsn, dbType string) (*XormDatabase, error) {
+func OpenXormDatabase(options *XormOptions) (*XormDatabase, error) {
 	// Open database and start transaction
-	db, err := xorm.NewEngine(dbType, dsn)
+	db, err := xorm.NewEngine(options.DbType, options.DbDsn)
 	if err != nil {
 		return &XormDatabase{}, err
 	}
+	db.ShowSQL(options.ShowSQL)
 	m := xormigrate.New(db, migrations)
 	if err = m.Migrate(); err != nil {
 		return &XormDatabase{}, fmt.Errorf("Could not migrate: %v", err)
 	}
 
-	return &XormDatabase{db, dbType}, nil
+	return &XormDatabase{db, options.DbType}, nil
 }
 
 // InsertBookmark inserts new bookmark to database. Returns new ID and error if any happened.
