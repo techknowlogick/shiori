@@ -1,20 +1,16 @@
 package cmd
 
 import (
-	"errors"
 	"fmt"
 	"io"
 	"net/http"
-	nurl "net/url"
 	"os"
 	"os/exec"
 	"path/filepath"
 	fp "path/filepath"
 	"runtime"
-	"strconv"
 	"strings"
 	"time"
-	"unicode/utf8"
 
 	"src.techknowlogick.com/shiori/database"
 	"src.techknowlogick.com/shiori/model"
@@ -24,23 +20,8 @@ import (
 	"golang.org/x/crypto/ssh/terminal"
 )
 
-var (
-	errInvalidIndex = errors.New("Index is not valid")
-)
-
 func normalizeSpace(str string) string {
 	return strings.Join(strings.Fields(str), " ")
-}
-
-func clearUTMParams(url *nurl.URL) {
-	newQuery := nurl.Values{}
-	for key, value := range url.Query() {
-		if !strings.HasPrefix(key, "utm_") {
-			newQuery[key] = value
-		}
-	}
-
-	url.RawQuery = newQuery.Encode()
 }
 
 func downloadFile(url, dstPath string, timeout time.Duration) error {
@@ -91,48 +72,9 @@ func openBrowser(url string) error {
 	return cmd.Run()
 }
 
-// parseIndexList converts a list of indices to their integer values
-func parseIndexList(indices []string) ([]int, error) {
-	var listIndex []int
-	for _, strIndex := range indices {
-		if !strings.Contains(strIndex, "-") {
-			index, err := strconv.Atoi(strIndex)
-			if err != nil || index < 1 {
-				return nil, errInvalidIndex
-			}
-
-			listIndex = append(listIndex, index)
-			continue
-		}
-
-		parts := strings.Split(strIndex, "-")
-		if len(parts) != 2 {
-			return nil, errInvalidIndex
-		}
-
-		minIndex, errMin := strconv.Atoi(parts[0])
-		maxIndex, errMax := strconv.Atoi(parts[1])
-		if errMin != nil || errMax != nil || minIndex < 1 || minIndex > maxIndex {
-			return nil, errInvalidIndex
-		}
-
-		for i := minIndex; i <= maxIndex; i++ {
-			listIndex = append(listIndex, i)
-		}
-	}
-	return listIndex, nil
-}
-
 func getTerminalWidth() int {
 	width, _, _ := terminal.GetSize(int(os.Stdin.Fd()))
 	return width
-}
-
-func fixUtf(r rune) rune {
-	if r == utf8.RuneError {
-		return -1
-	}
-	return r
 }
 
 func getDbConnection(c *cli.Context) (database.Database, error) {

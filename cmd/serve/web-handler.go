@@ -6,22 +6,24 @@ import (
 	"html/template"
 	"net/http"
 
+	"src.techknowlogick.com/shiori/database"
+
 	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/dgrijalva/jwt-go/request"
+	"github.com/gin-gonic/gin"
 	"github.com/gobuffalo/packr/v2"
-	dt "src.techknowlogick.com/shiori/database"
 )
 
 // webHandler is handler for every API and routes to web page
 type webHandler struct {
-	db       dt.Database
+	db       database.Database
 	dataDir  string
 	jwtKey   []byte
 	tplCache *template.Template
 }
 
 type handlerOptions struct {
-	db        dt.Database
+	db        database.Database
 	dataDir   string
 	jwtSecret string
 }
@@ -106,9 +108,9 @@ func createTemplate(filename string, funcMap template.FuncMap) (*template.Templa
 	return template.New(filename).Delims("$|", "|$").Funcs(funcMap).Parse(string(src))
 }
 
-func redirectPage(w http.ResponseWriter, r *http.Request, url string) {
-	w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
-	w.Header().Set("Pragma", "no-cache")
-	w.Header().Set("Expires", "0")
-	http.Redirect(w, r, url, 301)
+func redirectPage(c *gin.Context, url string) {
+	c.Header("Cache-Control", "no-cache, no-store, must-revalidate")
+	c.Header("Pragma", "no-cache")
+	c.Header("Expires", "0")
+	c.Redirect(http.StatusMovedPermanently, url)
 }

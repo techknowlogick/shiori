@@ -68,7 +68,7 @@ func runAddBookmark(c *cli.Context) error {
 
 	// Clear fragment and UTM parameters from URL
 	parsedURL.Fragment = ""
-	clearUTMParams(parsedURL)
+	utils.ClearUTMParams(parsedURL)
 
 	// Create bookmark item
 	book := model.Bookmark{
@@ -98,7 +98,7 @@ func runAddBookmark(c *cli.Context) error {
 	}
 
 	if book.Excerpt == "" {
-		book.Excerpt = strings.Map(fixUtf, article.Excerpt)
+		book.Excerpt = strings.Map(utils.FixUtf, article.Excerpt)
 	}
 
 	// Make sure title is not empty

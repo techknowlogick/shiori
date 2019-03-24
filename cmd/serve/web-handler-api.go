@@ -14,25 +14,27 @@ import (
 	"time"
 	"unicode/utf8"
 
+	"src.techknowlogick.com/shiori/utils"
+
 	valid "github.com/asaskevich/govalidator"
 	jwt "github.com/dgrijalva/jwt-go"
+	"github.com/gin-gonic/gin"
 	"github.com/go-shiori/go-readability"
 	"github.com/gofrs/uuid"
-	"github.com/julienschmidt/httprouter"
 	"golang.org/x/crypto/bcrypt"
 	"src.techknowlogick.com/shiori/model"
 )
 
 // login is handler for POST /api/login
-func (h *webHandler) apiLogin(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+func (h *webHandler) apiLogin(c *gin.Context) {
 	// Decode request
 	var request model.LoginRequest
-	err := json.NewDecoder(r.Body).Decode(&request)
-	checkError(err)
+	err := json.NewDecoder(c.Request.Body).Decode(&request)
+	utils.CheckError(err)
 
 	// Get account data from database
 	account, err := h.db.GetAccount(request.Username)
-	checkError(err)
+	utils.CheckError(err)
 
 	// Compare password with database
 	err = bcrypt.CompareHashAndPassword([]byte(account.Password), []byte(request.Password))
@@ -55,21 +57,21 @@ func (h *webHandler) apiLogin(w http.ResponseWriter, r *http.Request, ps httprou
 	})
 
 	tokenString, err := token.SignedString(h.jwtKey)
-	checkError(err)
+	utils.CheckError(err)
 
-	// Return token
-	fmt.Fprint(w, tokenString)
+	// Return tokenc.Request
+	fmt.Fprint(c.Writer, tokenString)
 }
 
 // apiGetBookmarks is handler for GET /api/bookmarks
-func (h *webHandler) apiGetBookmarks(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+func (h *webHandler) apiGetBookmarks(c *gin.Context) {
 	// Check token
-	err := h.checkAPIToken(r)
-	checkError(err)
+	err := h.checkAPIToken(c.Request)
+	utils.CheckError(err)
 
 	// Get URL queries
-	keyword := r.URL.Query().Get("keyword")
-	strTags := r.URL.Query().Get("tags")
+	keyword := c.Request.URL.Query().Get("keyword")
+	strTags := c.Request.URL.Query().Get("tags")
 	tags := strings.Split(strTags, ",")
 	if len(tags) == 1 && tags[0] == "" {
 		tags = []string{}
@@ -77,41 +79,41 @@ func (h *webHandler) apiGetBookmarks(w http.ResponseWriter, r *http.Request, ps 
 
 	// Fetch all matching bookmarks
 	bookmarks, err := h.db.SearchBookmarks(true, keyword, tags...)
-	checkError(err)
+	utils.CheckError(err)
 
-	err = json.NewEncoder(w).Encode(&bookmarks)
-	checkError(err)
+	err = json.NewEncoder(c.Writer).Encode(&bookmarks)
+	utils.CheckError(err)
 }
 
 // apiGetTags is handler for GET /api/tags
-func (h *webHandler) apiGetTags(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+func (h *webHandler) apiGetTags(c *gin.Context) {
 	// Check token
-	err := h.checkAPIToken(r)
-	checkError(err)
+	err := h.checkAPIToken(c.Request)
+	utils.CheckError(err)
 
 	// Fetch all tags
 	tags, err := h.db.GetTags()
-	checkError(err)
+	utils.CheckError(err)
 
-	err = json.NewEncoder(w).Encode(&tags)
-	checkError(err)
+	err = json.NewEncoder(c.Writer).Encode(&tags)
+	utils.CheckError(err)
 }
 
 // apiInsertBookmark is handler for POST /api/bookmark
-func (h *webHandler) apiInsertBookmark(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+func (h *webHandler) apiInsertBookmark(c *gin.Context) {
 	// Enable CORS for this endpoint
-	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Set("Access-Control-Allow-Methods", "POST")
-	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+	c.Header("Access-Control-Allow-Origin", "*")
+	c.Header("Access-Control-Allow-Methods", "POST")
+	c.Header("Access-Control-Allow-Headers", "Content-Type")
 
 	// Check token
-	err := h.checkAPIToken(r)
-	checkError(err)
+	err := h.checkAPIToken(c.Request)
+	utils.CheckError(err)
 
 	// Decode request
 	book := model.Bookmark{}
-	err = json.NewDecoder(r.Body).Decode(&book)
-	checkError(err)
+	err = json.NewDecoder(c.Request.Body).Decode(&book)
+	utils.CheckError(err)
 
 	// Make sure URL valid
 	parsedURL, err := nurl.Parse(book.URL)
@@ -155,7 +157,7 @@ func (h *webHandler) apiInsertBookmark(w http.ResponseWriter, r *http.Request, p
 	// Save bookmark image to local disk
 	u2, err := uuid.NewV4()
 	if err != nil {
-		checkError(err)
+		utils.CheckError(err)
 	}
 	imgPath := fp.Join(h.dataDir, "thumb", u2.String())
 	err = downloadFile(article.Image, imgPath, 20*time.Second)
@@ -166,28 +168,28 @@ func (h *webHandler) apiInsertBookmark(w http.ResponseWriter, r *http.Request, p
 	// Save bookmark to database
 	err = h.db.InsertBookmark(&book)
 	if err != nil {
-		checkError(err)
+		utils.CheckError(err)
 	}
 
 	// Return new saved result
-	err = json.NewEncoder(w).Encode(&book)
-	checkError(err)
+	err = json.NewEncoder(c.Writer).Encode(&book)
+	utils.CheckError(err)
 }
 
 // apiDeleteBookmarks is handler for DELETE /api/bookmark
-func (h *webHandler) apiDeleteBookmark(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+func (h *webHandler) apiDeleteBookmark(c *gin.Context) {
 	// Check token
-	err := h.checkAPIToken(r)
-	checkError(err)
+	err := h.checkAPIToken(c.Request)
+	utils.CheckError(err)
 
 	// Decode request
 	ids := []int{}
-	err = json.NewDecoder(r.Body).Decode(&ids)
-	checkError(err)
+	err = json.NewDecoder(c.Request.Body).Decode(&ids)
+	utils.CheckError(err)
 
 	// Delete bookmarks
 	err = h.db.DeleteBookmarks(ids...)
-	checkError(err)
+	utils.CheckError(err)
 
 	// Delete thumbnail image from local disk
 	for _, id := range ids {
@@ -195,19 +197,19 @@ func (h *webHandler) apiDeleteBookmark(w http.ResponseWriter, r *http.Request, p
 		os.Remove(imgPath)
 	}
 
-	fmt.Fprint(w, 1)
+	fmt.Fprint(c.Writer, 1)
 }
 
 // apiUpdateBookmark is handler for PUT /api/bookmarks
-func (h *webHandler) apiUpdateBookmark(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+func (h *webHandler) apiUpdateBookmark(c *gin.Context) {
 	// Check token
-	err := h.checkAPIToken(r)
-	checkError(err)
+	err := h.checkAPIToken(c.Request)
+	utils.CheckError(err)
 
 	// Decode request
 	request := model.Bookmark{}
-	err = json.NewDecoder(r.Body).Decode(&request)
-	checkError(err)
+	err = json.NewDecoder(c.Request.Body).Decode(&request)
+	utils.CheckError(err)
 
 	// Validate input
 	if request.Title == "" {
@@ -217,7 +219,7 @@ func (h *webHandler) apiUpdateBookmark(w http.ResponseWriter, r *http.Request, p
 	// Get existing bookmark from database
 	reqID := request.ID
 	bookmarks, err := h.db.GetBookmarks(true, reqID)
-	checkError(err)
+	utils.CheckError(err)
 	if len(bookmarks) == 0 {
 		panic(fmt.Errorf("No bookmark with matching index"))
 	}
@@ -248,18 +250,18 @@ func (h *webHandler) apiUpdateBookmark(w http.ResponseWriter, r *http.Request, p
 
 	// Update database
 	res, err := h.db.UpdateBookmarks(book)
-	checkError(err)
+	utils.CheckError(err)
 
 	// Return new saved result
-	err = json.NewEncoder(w).Encode(&res[0])
-	checkError(err)
+	err = json.NewEncoder(c.Writer).Encode(&res[0])
+	utils.CheckError(err)
 }
 
 // apiUpdateBookmarkTags is handler for PUT /api/bookmarks/tags
-func (h *webHandler) apiUpdateBookmarkTags(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+func (h *webHandler) apiUpdateBookmarkTags(c *gin.Context) {
 	// Check token
-	err := h.checkAPIToken(r)
-	checkError(err)
+	err := h.checkAPIToken(c.Request)
+	utils.CheckError(err)
 
 	// Decode request
 	request := struct {
@@ -267,8 +269,8 @@ func (h *webHandler) apiUpdateBookmarkTags(w http.ResponseWriter, r *http.Reques
 		Tags []model.Tag `json:"tags"`
 	}{}
 
-	err = json.NewDecoder(r.Body).Decode(&request)
-	checkError(err)
+	err = json.NewDecoder(c.Request.Body).Decode(&request)
+	utils.CheckError(err)
 
 	// Validate input
 	if len(request.IDs) == 0 || len(request.Tags) == 0 {
@@ -277,7 +279,7 @@ func (h *webHandler) apiUpdateBookmarkTags(w http.ResponseWriter, r *http.Reques
 
 	// Get existing bookmark from database
 	bookmarks, err := h.db.GetBookmarks(true, request.IDs...)
-	checkError(err)
+	utils.CheckError(err)
 	if len(bookmarks) == 0 {
 		panic(fmt.Errorf("No bookmark with matching index"))
 	}
@@ -302,30 +304,30 @@ func (h *webHandler) apiUpdateBookmarkTags(w http.ResponseWriter, r *http.Reques
 
 	// Update database
 	res, err := h.db.UpdateBookmarks(bookmarks...)
-	checkError(err)
+	utils.CheckError(err)
 
 	// Return new saved result
-	err = json.NewEncoder(w).Encode(&res)
-	checkError(err)
+	err = json.NewEncoder(c.Writer).Encode(&res)
+	utils.CheckError(err)
 }
 
 // apiUpdateCache is handler for PUT /api/cache
-func (h *webHandler) apiUpdateCache(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+func (h *webHandler) apiUpdateCache(c *gin.Context) {
 	// Check token
-	err := h.checkAPIToken(r)
-	checkError(err)
+	err := h.checkAPIToken(c.Request)
+	utils.CheckError(err)
 
 	// Decode request
 	ids := []int{}
-	err = json.NewDecoder(r.Body).Decode(&ids)
-	checkError(err)
+	err = json.NewDecoder(c.Request.Body).Decode(&ids)
+	utils.CheckError(err)
 
 	// Prepare wait group and mutex
 	wg := sync.WaitGroup{}
 
 	// Fetch bookmarks from database
 	books, err := h.db.GetBookmarks(false, ids...)
-	checkError(err)
+	utils.CheckError(err)
 
 	// Download new cache data
 	for _, book := range books {
@@ -368,7 +370,7 @@ func (h *webHandler) apiUpdateCache(w http.ResponseWriter, r *http.Request, ps h
 			// Update bookmark image in local disk
 			u2, err := uuid.NewV4()
 			if err != nil {
-				checkError(err)
+				utils.CheckError(err)
 			}
 			imgPath := fp.Join(h.dataDir, "thumb", u2.String())
 			err = downloadFile(article.Image, imgPath, 20*time.Second)
@@ -383,11 +385,11 @@ func (h *webHandler) apiUpdateCache(w http.ResponseWriter, r *http.Request, ps h
 
 	// Update database
 	res, err := h.db.UpdateBookmarks(books...)
-	checkError(err)
+	utils.CheckError(err)
 
 	// Return new saved result
-	err = json.NewEncoder(w).Encode(&res)
-	checkError(err)
+	err = json.NewEncoder(c.Writer).Encode(&res)
+	utils.CheckError(err)
 }
 
 func downloadFile(url, dstPath string, timeout time.Duration) error {

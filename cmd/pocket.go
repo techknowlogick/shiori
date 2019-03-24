@@ -69,7 +69,7 @@ func runImportPocket(c *cli.Context) error {
 
 		// Clear fragment and UTM parameters from URL
 		parsedURL.Fragment = ""
-		clearUTMParams(parsedURL)
+		utils.ClearUTMParams(parsedURL)
 
 		// Get bookmark tags
 		tags := []model.Tag{}

@@ -53,7 +53,7 @@ func runDeleteBookmark(c *cli.Context) error {
 	}
 
 	// Convert args to ids
-	ids, err := parseIndexList(args)
+	ids, err := utils.ParseIndexList(args)
 	if err != nil {
 		return errors.New(utils.CErrorSprint(err))
 	}
