@@ -4,17 +4,17 @@ To use another Database there are two options. You can use parameters while call
 
 ### Using command parameters
 
-| Parameter | Values | Description |
-|-----------|--------|---|
-| --db-type   | mssql, odbc, mysql, mymysql, postgres, pgx, sqlite3, oci8, goracle | since this Shiori fork uses xorm as database layer, you can use several Databases. Check out the xorm docs for more informations |
-| --db-dsn | user:password@(localhost)/dbname?charset=utf8&parseTime=True&loc=Local | Your Database Connection string |
-| --show-sql-log | - | Bool, if set, Shiori will output all SQL Queries to the CLI |
+| Parameter | Default | Values | Description |
+|----------|--------|-------|---|
+| --db-type  | sqlite3 | sqlite3, mssql, mysql, postgres | since this Shiori fork uses xorm as database layer, you can use several Databases. Check out the xorm docs for more informations |
+| --db-dsn | shiori.db | user:password@(localhost)/dbname?charset=utf8&parseTime=True&loc=Local | Your Database Connection string |
+| --show-sql-log | false | - | Bool, if set, Shiori will output all SQL Queries to the CLI |
 
 ### Using environment Variables
 
-| Variable | Values | Description |
-|-----------|--------|---|
-| SHIORI_DBTYPE   | mssql, odbc, mysql, mymysql, postgres, pgx, sqlite3, oci8, goracle | since this Shiori fork uses xorm as database layer, you can use several Databases. Check out the xorm docs for more informations |
-| SHIORI_DSN | user:password@(localhost)/dbname?charset=utf8&parseTime=True&loc=Local | Your Database Connection string |
-| SHIORI_SHOW_SQL | - | Bool, if set, Shiori will output all SQL Queries to the CLI |
+| Variable | Default | Values | Description |
+|----------|--------|-------|---|
+| SHIORI_DBTYPE | sqlite3  | sqlite3, mssql, mysql, postgres | since this Shiori fork uses xorm as database layer, you can use several Databases. Check out the xorm docs for more informations |
+| SHIORI_DSN | shiori.db | user:password@(localhost)/dbname?charset=utf8&parseTime=True&loc=Local | Your Database Connection string |
+| SHIORI_SHOW_SQL | false | - | Bool, if set, Shiori will output all SQL Queries to the CLI |
 
