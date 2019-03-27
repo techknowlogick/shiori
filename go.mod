@@ -26,7 +26,7 @@ require (
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
 	github.com/muesli/go-app-paths v0.0.0-20190207224558-913f7f7ac60f
 	github.com/sirupsen/logrus v1.4.0
-	github.com/spf13/afero v1.2.1 // indirect
+	github.com/spf13/afero v1.2.2 // indirect
 	github.com/urfave/cli v1.20.0
 	golang.org/x/crypto v0.0.0-20190320225911-b7391e95e576
 	golang.org/x/net v0.0.0-20190321003840-1272bf9dcd53 // indirect
