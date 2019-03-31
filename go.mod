@@ -29,7 +29,7 @@ require (
 	github.com/spf13/afero v1.2.2 // indirect
 	github.com/urfave/cli v1.20.0
 	golang.org/x/crypto v0.0.0-20190325175500-a5d413f7728c
-	golang.org/x/net v0.0.0-20190321003840-1272bf9dcd53 // indirect
+	golang.org/x/net v0.0.0-20190331034059-74de082e2cca // indirect
 	golang.org/x/sys v0.0.0-20190329054551-9eb1bfa1ce65 // indirect
 	google.golang.org/appengine v1.5.0 // indirect
 	src.techknowlogick.com/xormigrate v0.0.0-20190321151057-24497c23c09c
