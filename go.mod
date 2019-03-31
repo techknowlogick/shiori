@@ -28,7 +28,7 @@ require (
 	github.com/sirupsen/logrus v1.4.0
 	github.com/spf13/afero v1.2.2 // indirect
 	github.com/urfave/cli v1.20.0
-	golang.org/x/crypto v0.0.0-20190320225911-b7391e95e576
+	golang.org/x/crypto v0.0.0-20190325175500-a5d413f7728c
 	golang.org/x/net v0.0.0-20190321003840-1272bf9dcd53 // indirect
 	golang.org/x/sys v0.0.0-20190329054551-9eb1bfa1ce65 // indirect
 	google.golang.org/appengine v1.5.0 // indirect
