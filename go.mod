@@ -32,5 +32,5 @@ require (
 	golang.org/x/net v0.0.0-20190331034059-74de082e2cca // indirect
 	golang.org/x/sys v0.0.0-20190329054551-9eb1bfa1ce65 // indirect
 	google.golang.org/appengine v1.5.0 // indirect
-	src.techknowlogick.com/xormigrate v0.0.0-20190321151057-24497c23c09c
+	src.techknowlogick.com/xormigrate v0.0.0-20190331164533-824aaec7f68c
 )
