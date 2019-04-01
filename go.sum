@@ -56,6 +56,7 @@ github.com/denisenkom/go-mssqldb v0.0.0-20190315225735-a8ed825ac853/go.mod h1:xN
 github.com/denisenkom/go-mssqldb v0.0.0-20190328043727-2183450503ad/go.mod h1:xN/JuLBIz4bjkxNmByTiV1IbhfnYb6oo99phBn4Eqhc=
 github.com/denisenkom/go-mssqldb v0.0.0-20190328054434-2183450503ad h1:OdnSQl5Nnb/fmUiL+02xjD5r8/lAEx4dOVYxgOF1iyM=
 github.com/denisenkom/go-mssqldb v0.0.0-20190328054434-2183450503ad/go.mod h1:xN/JuLBIz4bjkxNmByTiV1IbhfnYb6oo99phBn4Eqhc=
+github.com/denisenkom/go-mssqldb v0.0.0-20190401165549-ce35bd87d4b3/go.mod h1:EcO5fNtMZHCMjAvj8LE6T+5bphSdR6LQ75n+m1TtsFI=
 github.com/denisenkom/go-mssqldb v0.0.0-20190401174741-ce35bd87d4b3 h1:lnMyL2gOSC3VZ0/V+2FwXd1CFECd0FSEkqTkgSBgq3s=
 github.com/denisenkom/go-mssqldb v0.0.0-20190401174741-ce35bd87d4b3/go.mod h1:EcO5fNtMZHCMjAvj8LE6T+5bphSdR6LQ75n+m1TtsFI=
 github.com/dgrijalva/jwt-go v3.2.0+incompatible h1:7qlOGliEKZXTDg6OTjfoBKDXWrumCAMpl/TFQ4/5kLM=
@@ -841,3 +842,5 @@ src.techknowlogick.com/xormigrate v0.0.0-20190321151057-24497c23c09c h1:fTwL7EZ3
 src.techknowlogick.com/xormigrate v0.0.0-20190321151057-24497c23c09c/go.mod h1:B2NutmcRaDDw4EGe7DoCwyWCELA8W+KxXPhLtgqFUaU=
 src.techknowlogick.com/xormigrate v0.0.0-20190331164533-824aaec7f68c h1:M+fyE8yAc91qDL1nGa6905+iu/86aBE+hqECBuysiYo=
 src.techknowlogick.com/xormigrate v0.0.0-20190331164533-824aaec7f68c/go.mod h1:TGDdL54fSnuR+gvVBS8RjcpM4KlBM4Bqs8kkh15jAmE=
+src.techknowlogick.com/xormigrate v0.0.0-20190401202936-1e17bbc337bb h1:+DiIEVvzqexW6rwBsTwSQBZr5LzCW+8G2lvib3ZGP/0=
+src.techknowlogick.com/xormigrate v0.0.0-20190401202936-1e17bbc337bb/go.mod h1:mSA6NV7r61HNVeI7TskiCxjx/yoHmy2JD/WFOybbEvA=
