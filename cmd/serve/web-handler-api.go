@@ -12,7 +12,6 @@ import (
 	"strings"
 	"sync"
 	"time"
-	"unicode/utf8"
 
 	"src.techknowlogick.com/shiori/utils"
 
@@ -123,7 +122,7 @@ func (h *webHandler) apiInsertBookmark(c *gin.Context) {
 
 	// Clear fragment and UTM parameters from URL
 	parsedURL.Fragment = ""
-	clearUTMParams(parsedURL)
+	utils.ClearUTMParams(parsedURL)
 	book.URL = parsedURL.String()
 
 	// Fetch data from internet
@@ -141,7 +140,7 @@ func (h *webHandler) apiInsertBookmark(c *gin.Context) {
 	}
 
 	if book.Excerpt == "" {
-		book.Excerpt = strings.Map(fixUtf, article.Excerpt)
+		book.Excerpt = strings.Map(utils.FixUtf, article.Excerpt)
 	}
 
 	// Make sure title is not empty
@@ -334,7 +333,6 @@ func (h *webHandler) apiUpdateCache(c *gin.Context) {
 		wg.Add(1)
 
 		go func(book *model.Bookmark) {
-			fmt.Println(book.ID)
 			// Make sure to stop wait group
 			defer wg.Done()
 
@@ -421,22 +419,4 @@ func downloadFile(url, dstPath string, timeout time.Duration) error {
 	}
 
 	return nil
-}
-
-func clearUTMParams(url *nurl.URL) {
-	newQuery := nurl.Values{}
-	for key, value := range url.Query() {
-		if !strings.HasPrefix(key, "utm_") {
-			newQuery[key] = value
-		}
-	}
-
-	url.RawQuery = newQuery.Encode()
-}
-
-func fixUtf(r rune) rune {
-	if r == utf8.RuneError {
-		return -1
-	}
-	return r
 }

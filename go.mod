@@ -1,7 +1,6 @@
 module src.techknowlogick.com/shiori
 
 require (
-	cloud.google.com/go v0.37.2 // indirect
 	github.com/PuerkitoBio/goquery v1.5.0
 	github.com/asaskevich/govalidator v0.0.0-20190207205813-f9ffefc3facf
 	github.com/denisenkom/go-mssqldb v0.0.0-20190401174741-ce35bd87d4b3
@@ -13,24 +12,21 @@ require (
 	github.com/go-sql-driver/mysql v1.4.1
 	github.com/go-xorm/builder v0.3.4
 	github.com/go-xorm/xorm v0.7.1
-	github.com/gobuffalo/buffalo-plugins v1.14.0 // indirect
-	github.com/gobuffalo/packr/v2 v2.1.0
+	github.com/gobuffalo/packr/v2 v2.0.9
 	github.com/gofrs/uuid v3.2.0+incompatible
 	github.com/gosuri/uilive v0.0.0-20170323041506-ac356e6e42cd // indirect
 	github.com/gosuri/uiprogress v0.0.0-20170224063937-d0567a9d84a1
-	github.com/julienschmidt/httprouter v1.2.0
 	github.com/lib/pq v1.0.0
 	github.com/mattn/go-colorable v0.1.1 // indirect
 	github.com/mattn/go-isatty v0.0.7 // indirect
 	github.com/mattn/go-sqlite3 v1.10.0
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
 	github.com/muesli/go-app-paths v0.0.0-20190207224558-913f7f7ac60f
-	github.com/sirupsen/logrus v1.4.1
-	github.com/spf13/afero v1.2.2 // indirect
+	github.com/sergi/go-diff v1.0.0 // indirect
+	github.com/sirupsen/logrus v1.4.0
 	github.com/urfave/cli v1.20.0
 	golang.org/x/crypto v0.0.0-20190325175500-a5d413f7728c
 	golang.org/x/net v0.0.0-20190331034059-74de082e2cca // indirect
-	golang.org/x/sys v0.0.0-20190405155124-4b34438f7a67 // indirect
-	google.golang.org/appengine v1.5.0 // indirect
-	src.techknowlogick.com/xormigrate v0.0.0-20190401202936-1e17bbc337bb
+	golang.org/x/sys v0.0.0-20190329054551-9eb1bfa1ce65 // indirect
+	src.techknowlogick.com/xormigrate v0.0.0-20190331164533-824aaec7f68c
 )
