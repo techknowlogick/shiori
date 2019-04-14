@@ -99,6 +99,8 @@ steps:
 
 - name: cross
   image: techknowlogick/xgo
+  environment:
+    GO111MODULE: on
   commands:
   - make cross
   when:
