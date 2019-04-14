@@ -111,7 +111,7 @@ steps:
   commands:
   - make release
   - ls dist/release
-  - cat dist/release/shiori-darwin-386.sha256
+  - cat dist/release/shiori-darwin-10.6-386.sha256
   when:
     event:
       exclude:
