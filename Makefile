@@ -101,10 +101,6 @@ release-windows:
 	@hash xgo > /dev/null 2>&1; if [ $$? -ne 0 ]; then \
 		$(GO) get -u github.com/techknowlogick/xgo; \
 	fi
-	go get -u github.com/mattn/go-isatty # needed for progress bar in windows
-	go get -u github.com/inconshreveable/mousetrap # needed for windows builds
-	mkdir -p "$(GOPATH)/src/github.com/konsorten"
-	git clone https://github.com/konsorten/go-windows-terminal-sequences.git "$(GOPATH)/src/github.com/konsorten/go-windows-terminal-sequences"
 	xgo -dest $(DIST) -tags 'netgo $(TAGS)' -ldflags '-linkmode external -extldflags "-static" $(LDFLAGS)' -targets 'windows/*' -out shiori .
 ifeq ($(CI),drone)
 	cp /build/* $(DIST)/binaries
