@@ -14,7 +14,7 @@ require (
 	github.com/go-xorm/xorm v0.7.1
 	github.com/gobuffalo/packr/v2 v2.0.9
 	github.com/gofrs/uuid v3.2.0+incompatible
-	github.com/gosuri/uilive v0.0.2 // indirect
+	github.com/gosuri/uilive v0.0.0-20170323041506-ac356e6e42cd // indirect
 	github.com/gosuri/uiprogress v0.0.0-20170224063937-d0567a9d84a1
 	github.com/lib/pq v1.0.0
 	github.com/mattn/go-colorable v0.1.1 // indirect
@@ -27,6 +27,5 @@ require (
 	github.com/urfave/cli v1.20.0
 	golang.org/x/crypto v0.0.0-20190409041206-38d8ce5564a5
 	golang.org/x/net v0.0.0-20190409040650-eb5bcb51f2a3 // indirect
-	golang.org/x/sys v0.0.0-20190329054551-9eb1bfa1ce65 // indirect
 	src.techknowlogick.com/xormigrate v0.0.0-20190331164533-824aaec7f68c
 )
