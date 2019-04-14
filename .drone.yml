@@ -110,8 +110,6 @@ steps:
   image: golang:1.12
   commands:
   - make release
-  - ls dist/release
-  - cat dist/release/shiori-darwin-10.6-386.sha256
   when:
     event:
       exclude:
