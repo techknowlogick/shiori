@@ -6,6 +6,8 @@ GOFILES := $(shell find . -name "*.go" -type f ! -path "./vendor/*" ! -path "*/*
 GOFMT ?= gofmt -s
 SHASUM := shasum -a 256
 
+GO111MODULE ?= on
+
 TAGS ?=
 
 ifneq ($(DRONE_TAG),)
