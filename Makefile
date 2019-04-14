@@ -85,7 +85,7 @@ dep-go:
 	packr2
 
 .PHONY: cross
-cross: release-dirs release-darwin release-copy
+cross: release-dirs release-windows release-darwin release-linux release-copy
 
 .PHONY: release
 release: release-compress release-check
