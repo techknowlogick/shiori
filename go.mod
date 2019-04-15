@@ -27,6 +27,5 @@ require (
 	github.com/urfave/cli v1.20.0
 	golang.org/x/crypto v0.0.0-20190409041206-38d8ce5564a5
 	golang.org/x/net v0.0.0-20190409040650-eb5bcb51f2a3 // indirect
-	golang.org/x/sys v0.0.0-20190329054551-9eb1bfa1ce65 // indirect
 	src.techknowlogick.com/xormigrate v0.0.0-20190331164533-824aaec7f68c
 )

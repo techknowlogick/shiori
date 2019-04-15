@@ -99,7 +99,11 @@ steps:
 
 - name: cross
   image: techknowlogick/xgo
+  environment:
+    GO111MODULE: on
   commands:
+  - rm -rf /source
+  - ln -s $CI_WORKSPACE /source
   - make cross
   when:
     event:
