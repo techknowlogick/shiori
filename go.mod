@@ -25,7 +25,7 @@ require (
 	github.com/sergi/go-diff v1.0.0 // indirect
 	github.com/sirupsen/logrus v1.4.0
 	github.com/urfave/cli v1.20.0
-	golang.org/x/crypto v0.0.0-20190409041206-38d8ce5564a5
+	golang.org/x/crypto v0.0.0-20190415012251-88737f569e3a
 	golang.org/x/net v0.0.0-20190409040650-eb5bcb51f2a3 // indirect
 	src.techknowlogick.com/xormigrate v0.0.0-20190331164533-824aaec7f68c
 )
