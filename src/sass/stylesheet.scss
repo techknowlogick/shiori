@@ -3,10 +3,13 @@
 @import '../../node_modules/nord/src/sass/nord.scss';
 @import '../../node_modules/nord/src/sass/template-css.scss';
 $primary-color: $nord10;
+$body-font-color: $nord1;
+$link-color: $nord8;
 @import '../../node_modules/spectre.css/src/variables.scss';
 
 body {
 	background-color: $bg-color !important;
+	color: $body-font-color !important;
 }
 
 @import '../../node_modules/spectre.css/src/mixins.scss';
@@ -50,4 +53,18 @@ body {
 	background: #fafafa !important;
 	border-radius: .2em !important;
 	border-color: #dbdde1 !important;
+}
+
+.night {
+	background-color: $nord1;
+	color: $nord5;
+	height:100vh;
+	#login-box {
+		background-color: $nord2;
+	}
+	.form-input {
+		color: $nord4 !important;
+		background-color: $nord3 !important;
+		border-color: $nord0 !important;
+	}
 }
