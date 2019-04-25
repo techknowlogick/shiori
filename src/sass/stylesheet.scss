@@ -21,12 +21,8 @@ body {
 
 // Elements
 @import "../../node_modules/spectre.css/src/typography";
-@import "../../node_modules/spectre.css/src/asian";
-@import "../../node_modules/spectre.css/src/tables";
 @import "../../node_modules/spectre.css/src/buttons";
 @import "../../node_modules/spectre.css/src/forms";
-@import "../../node_modules/spectre.css/src/labels";
-@import "../../node_modules/spectre.css/src/codes";
 @import "../../node_modules/spectre.css/src/media";
 
 // Layout
@@ -58,7 +54,7 @@ body {
 .night {
 	background-color: $nord1;
 	color: $nord5;
-	height:100vh;
+	min-height:100vh;
 	#login-box {
 		background-color: $nord2;
 	}
@@ -66,5 +62,8 @@ body {
 		color: $nord4 !important;
 		background-color: $nord3 !important;
 		border-color: $nord0 !important;
+	}
+	.form-icon {
+		background-color: $nord3;
 	}
 }
