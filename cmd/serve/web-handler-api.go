@@ -13,6 +13,7 @@ import (
 	"sync"
 	"time"
 
+	"src.techknowlogick.com/shiori/model"
 	"src.techknowlogick.com/shiori/utils"
 
 	valid "github.com/asaskevich/govalidator"
@@ -21,7 +22,6 @@ import (
 	"github.com/go-shiori/go-readability"
 	"github.com/gofrs/uuid"
 	"golang.org/x/crypto/bcrypt"
-	"src.techknowlogick.com/shiori/model"
 )
 
 // login is handler for POST /api/login
@@ -33,12 +33,16 @@ func (h *webHandler) apiLogin(c *gin.Context) {
 
 	// Get account data from database
 	account, err := h.db.GetAccount(request.Username)
-	utils.CheckError(err)
+	if err != nil {
+		c.String(http.StatusBadRequest, "Username or Password incorrect")
+		return
+	}
 
 	// Compare password with database
 	err = bcrypt.CompareHashAndPassword([]byte(account.Password), []byte(request.Password))
 	if err != nil {
-		panic(fmt.Errorf("Username and password don't match"))
+		c.String(http.StatusBadRequest, "Username or Password incorrect")
+		return
 	}
 
 	// Calculate expiration time

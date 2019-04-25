@@ -2,9 +2,8 @@ import Vue from 'vue'
 import axios from 'axios'
 import * as Cookies from 'js-cookie';
 
-import './less/stylesheet.less'
-import 'typeface-source-sans-pro'
-import '@fortawesome/fontawesome-free/css/all.css'
+import './sass/stylesheet.scss'
+import '../node_modules/spectre.css/dist/spectre.css'
 
 new Vue({
   el: '#login-page',
@@ -21,6 +20,7 @@ new Vue({
             this.rememberMe = !this.rememberMe;
         },
         login: function () {
+            var self = this;
             // Validate input
             if (this.username === '') {
                 this.error = 'Username must not empty';
@@ -53,10 +53,10 @@ new Vue({
                     }
                 })
                 .catch(function (error) {
-                    var errorMsg = (error.response ? error.response.data : error.message).trim();
-                    app.password = '';
-                    app.loading = false;
-                    app.error = errorMsg;
+                    var errorMsg = (error.response ? error.response.data : error.message);
+                    self.password = '';
+                    self.loading = false;
+                    self.error = errorMsg;
                 });
         }
     },

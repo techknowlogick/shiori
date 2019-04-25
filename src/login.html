@@ -12,36 +12,38 @@
     <title>Login - Shiori - Bookmarks Manager</title>
 </head>
 
-<body>
-    <div id="login-page" :class="{night: nightMode}">
-        <p class="error-message" v-if="error !== ''">{{error}}</p>
-        <div id="login-box">
-            <div id="logo-area">
-                <p id="logo">
-                    <span>栞</span>shiori
-                </p>
-                <p id="tagline">simple bookmark manager</p>
-            </div>
-            <div id="input-area">
-                <div class="input-field">
-                    <p>Username: </p>
-                    <input type="text" name="username" v-model.trim="username" placeholder="Username" tabindex="1">
+<body class="pt-5">
+    <div id="login-page" :class="{night: nightMode}" class="container" style="padding-top: 30px;">
+        <div class="columns">
+            <div class="col-4 col-md-8 col-sm-10 col-xs-12 col-mx-auto">
+                <h2 class="text-center">栞 shiori</h2>
+                <p class="text-center">simple bookmark manager</p>
+                <div class="toast toast-error" v-if="error !== ''">{{error}}</div>
+                <div id="login-box" class="mt-2">
+                    <div class="form-group">
+                        <label class="form-label" for="username">Username</label>
+                        <input class="form-input" type="text" id="username" name="username" v-model.trim="username" tabindex="1">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="user_password">Password</label>
+                        <input class="form-input" type="password" id="user_password" name="password" v-model.trim="password" tabindex="2" @keyup.enter="login">
+                    </div>
+                    <div class="columns">
+                        <div class="column col-6">
+                            <div class="form-group">
+                                <label class="form-checkbox" @click="toggleRemember" @keyup.enter="toggleRemember" tabindex="3">
+                                    <input type="checkbox">
+                                    <i class="form-icon"></i> Remember me
+                                </label>
+                            </div>
+                        </div>
+                        <div class="column col-6">
+                            <div class="form-group float-right" style="width: 75%">
+                                <a :class="{loading: loading}" class="btn btn-primary" tabindex="4" @click="login" @keyup.enter="login" style="width: 100%">Login</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="input-field">
-                    <p>Password: </p>
-                    <input type="password" name="password" v-model.trim="password" placeholder="Password" tabindex="2" @keyup.enter="login">
-                </div>
-                <div class="input-field">
-                    <a @click="toggleRemember" @keyup.enter="toggleRemember" tabindex="3">
-                        <i class="fa-fw" :class="rememberMe ? 'fas fa-check-square' : 'far fa-square'"></i>Remember me
-                    </a>
-                </div>
-            </div>
-            <div id="button-area">
-                <a v-if="loading">
-                    <i class="fas fa-fw fa-spinner fa-spin"></i>
-                </a>
-                <a v-else class="button" tabindex="4" @click="login" @keyup.enter="login">Login</a>
             </div>
         </div>
     </div>

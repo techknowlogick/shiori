@@ -232,7 +232,10 @@ func (db *XormDatabase) CreateAccount(username, password string) error {
 // GetAccount fetch account with matching username
 func (db *XormDatabase) GetAccount(username string) (model.Account, error) {
 	var account model.Account
-	_, err := db.Where("username = ?", username).Get(&account)
+	has, err := db.Where("username = ?", username).Get(&account)
+	if !has && err == nil {
+		err = fmt.Errorf("user doesn't exist")
+	}
 	return account, err
 }
 
