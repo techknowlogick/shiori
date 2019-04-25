@@ -1,6 +1,44 @@
 
+// Variables and mixins
+@import '../../node_modules/nord/src/sass/nord.scss';
+@import '../../node_modules/nord/src/sass/template-css.scss';
+$primary-color: $nord10;
+@import '../../node_modules/spectre.css/src/variables.scss';
+
+body {
+	background-color: $bg-color !important;
+}
+
+@import '../../node_modules/spectre.css/src/mixins.scss';
+
+/*! Spectre.css v#{$version} | MIT License | github.com/picturepan2/spectre */
+// Reset and dependencies
+@import "../../node_modules/spectre.css/src/normalize";
+@import "../../node_modules/spectre.css/src/base";
+
+// Elements
+@import "../../node_modules/spectre.css/src/typography";
+@import "../../node_modules/spectre.css/src/asian";
+@import "../../node_modules/spectre.css/src/tables";
+@import "../../node_modules/spectre.css/src/buttons";
+@import "../../node_modules/spectre.css/src/forms";
+@import "../../node_modules/spectre.css/src/labels";
+@import "../../node_modules/spectre.css/src/codes";
+@import "../../node_modules/spectre.css/src/media";
+
+// Layout
+@import "../../node_modules/spectre.css/src/layout";
+@import "../../node_modules/spectre.css/src/hero";
+@import "../../node_modules/spectre.css/src/navbar";
+
+// Components
+@import "../../node_modules/spectre.css/src/toasts";
+
+// Utility classes
+@import "../../node_modules/spectre.css/src/utilities";
+
 #login-box {
-	background: var(--color-box-bg);
+	background: #fff;
 	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
 	box-shadow: 0 1px 2px rgba(0,0,0,.05);
 	border-radius: .1em;

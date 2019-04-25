@@ -3,7 +3,6 @@ import axios from 'axios'
 import * as Cookies from 'js-cookie';
 
 import './sass/stylesheet.scss'
-import '../node_modules/spectre.css/dist/spectre.css'
 
 new Vue({
   el: '#login-page',
