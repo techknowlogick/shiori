@@ -3,11 +3,7 @@ import axios from 'axios'
 import * as Cookies from 'js-cookie';
 
 import { Base } from './page/base';
-import { YlaDialog } from './component/yla-dialog';
-
-import './less/stylesheet.less'
-import 'typeface-source-sans-pro'
-import '@fortawesome/fontawesome-free/css/all.css'
+import './sass/stylesheet.scss'
 
 // Create private function
 function _inIframe() {
@@ -17,9 +13,6 @@ function _inIframe() {
         return true;
     }
 }
-
-// Register Vue component
-Vue.component('yla-dialog', new YlaDialog());
 
 // Prepare axios instance
 var token = Cookies.get('token'),

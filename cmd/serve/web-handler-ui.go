@@ -1,7 +1,6 @@
 package serve
 
 import (
-	"encoding/json"
 	"fmt"
 	"html/template"
 	"io"
@@ -89,12 +88,7 @@ func (h *webHandler) serveBookmarkCache(c *gin.Context) {
 	tplCache, err := createTemplate("cache.html", funcMap)
 	utils.CheckError(err)
 
-	bt, err := json.Marshal(&bookmarks[0])
-	utils.CheckError(err)
-
-	// Execute template
-	strBt := string(bt)
-	err = tplCache.Execute(c.Writer, &strBt)
+	err = tplCache.Execute(c.Writer, &bookmarks[0])
 	utils.CheckError(err)
 }
 

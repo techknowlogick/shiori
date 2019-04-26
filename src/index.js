@@ -3,12 +3,7 @@ import axios from 'axios'
 import * as Cookies from 'js-cookie';
 
 import { Base } from './page/base';
-import { YlaDialog } from './component/yla-dialog';
-import { YlaTooltip } from './component/yla-tooltip';
-
-import './less/stylesheet.less'
-import 'typeface-source-sans-pro'
-import '@fortawesome/fontawesome-free/css/all.css'
+import './sass/stylesheet.scss'
 
 // Define global variable
 var pageSize = 30;
@@ -19,10 +14,6 @@ var token = Cookies.get('token'),
 
 rest.defaults.timeout = 60000;
 rest.defaults.headers.common['Authorization'] = 'Bearer ' + token;
-
-// Register Vue component
-Vue.component('yla-dialog', new YlaDialog());
-Vue.component('yla-tooltip', new YlaTooltip());
 
 new Vue({
     el: '#index-page',

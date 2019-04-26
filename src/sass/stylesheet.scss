@@ -50,6 +50,34 @@ body {
 	border-radius: .2em !important;
 	border-color: #dbdde1 !important;
 }
+.left {
+	background-color: darken($bg-color, 10%);
+	display: flex;
+	flex-flow: column nowrap;
+	min-width: 0;
+	position: fixed;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	flex-shrink: 0;
+	min-height: 0;
+	z-index: 10;
+	overflow: auto;
+	width: 60px;
+}
+.right {
+	margin-left: 60px;
+}
+@media only screen and (max-width: 600px) {
+	.left {
+		position: static;
+		flex-flow: row nowrap;
+		width: 100%;
+	}
+	.right {
+		margin-left: 0;
+	}
+}
 
 .night {
 	background-color: $nord0;
@@ -66,5 +94,8 @@ body {
 	.form-icon {
 		border-color: $nord0;
 		background-color: $nord3;
+	}
+	.left {
+		background-color: darken($nord0, 10%);
 	}
 }
