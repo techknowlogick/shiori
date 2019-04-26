@@ -32,6 +32,7 @@ body {
 
 // Components
 @import "../../node_modules/spectre.css/src/toasts";
+@import "../../node_modules/spectre.css/src/tooltips";
 
 // Utility classes
 @import "../../node_modules/spectre.css/src/utilities";
@@ -62,8 +63,11 @@ body {
 	flex-shrink: 0;
 	min-height: 0;
 	z-index: 10;
-	overflow: auto;
+	overflow: visible;
 	width: 60px;
+	.icons {
+		margin-top: 10px;
+	}
 }
 .right {
 	margin-left: 60px;
@@ -73,13 +77,30 @@ body {
 		position: static;
 		flex-flow: row nowrap;
 		width: 100%;
+		.icons {
+			margin-top: 15px;
+			margin-left: 30px;
+		}
 	}
 	.right {
 		margin-left: 0;
 	}
 }
-
+.adjust {
+	background-color: $body-font-color;
+    -webkit-mask: url(../res/adjust.svg) no-repeat center;
+    mask: url(../res/adjust.svg) no-repeat center;
+}
 .night {
+	.tooltip {
+		&::after {
+			background-color: $bg-color;
+			color: $nord1; 
+		}
+	}
+	.adjust {
+		background-color: $nord6;
+	}
 	background-color: $nord0;
 	color: $nord6;
 	min-height:100vh;

@@ -16,15 +16,12 @@
     <div id="cache-page" :class="{night: nightMode}" class="page container">
         <div class="columns">
             <div class="column col-1 col-sm-12 left">
-                <div class="columns">
-                    <div class="column col-12" style="width: 60px;line-height: 60px;text-align: center;flex-shrink: 0;font-size: 2em;" title="Shiori">栞</div>
-                    <div class="column col-12" style="width: 60px;line-height: 60px;text-align: center;flex-shrink: 0;font-size: 2em;"><a @click="toggleNightMode">
-                        {{ nightMode ? 'S' : 'N'}}
-                    </a></div>
+                <div style="line-height: 60px;text-align: center;flex-shrink: 0;font-size: 2em;" title="Shiori">栞</div>
+                <div class="text-center icons">
+                    <a @click="toggleNightMode" class="tooltip tooltip-right" data-tooltip="Toggle Night Mode">
+                        <div class="adjust" style="height:30px;width: 30px;margin: 0 auto;" />
+                    </a>
                 </div>
-                <yla-tooltip placement="right" content="Toggle night mode">
-                    
-                </yla-tooltip>
             </div>
             <div class="column col-11 col-sm-12 right">
                 <div id="header">
