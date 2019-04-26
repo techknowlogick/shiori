@@ -144,7 +144,7 @@ new Vue({
                             });
                         })
                         .catch((error) => {
-                            var errorMsg = (error.response ? error.response.data : error.message).trim();
+                            var errorMsg = (error.response ? error.response.data : error.message);
                             if (errorMsg.startsWith('Token error:')) {
                                 this.showDialogLogin();
                                 return;

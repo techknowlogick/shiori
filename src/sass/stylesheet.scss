@@ -52,18 +52,19 @@ body {
 }
 
 .night {
-	background-color: $nord1;
-	color: $nord5;
+	background-color: $nord0;
+	color: $nord6;
 	min-height:100vh;
 	#login-box {
-		background-color: $nord2;
+		background-color: $nord1;
 	}
 	.form-input {
-		color: $nord4 !important;
+		color: $nord6 !important;
 		background-color: $nord3 !important;
 		border-color: $nord0 !important;
 	}
 	.form-icon {
+		border-color: $nord0;
 		background-color: $nord3;
 	}
 }
