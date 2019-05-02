@@ -13,175 +13,82 @@
 </head>
 
 <body>
-    <div id="index-page" class="page" :class="{night: options.nightMode}">
-        <div id="sidebar">
-            <p id="logo">栞</p>
-            <yla-tooltip placement="right" content="Reload data">
-                <a @click="reloadData" v-show="!editMode">
-                    <i class="fas fa-sync-alt fa-fw" :class="loading && 'fa-spin'"></i>
-                </a>
-            </yla-tooltip>
-            <yla-tooltip placement="right" content="Add new bookmark">
-                <a @click="showDialogAdd" v-show="!editMode && !loading">
-                    <span>+Shiori</span>
-                    <i class="fas fa-plus fa-fw"></i>
-                </a>
-            </yla-tooltip>
-            <yla-tooltip placement="right" :content="editMode ? 'Cancel batch edit' : 'Batch edit'">
-                <a @click="toggleEditMode" v-show="!loading">
-                    <i class="fas fa-fw" :class="editMode ? 'fa-times' : 'fa-pencil-alt'"></i>
-                </a>
-            </yla-tooltip>
-            <yla-tooltip placement="right" content="Show tags">
-                <a @click="showDialogTags" v-show="!editMode && !loading">
-                    <i class="fas fa-fw fa-tags"></i>
-                </a>
-            </yla-tooltip>
-            <div class="spacer"></div>
-            <yla-tooltip placement="right" content="About">
-                <a @click="showDialogAbout">
-                    <i class="fas fa-fw fa-info-circle"></i>
-                </a>
-            </yla-tooltip>
-            <yla-tooltip placement="right" content="Options">
-                <a @click="showDialogOptions">
-                    <i class="fas fa-fw fa-cog"></i>
-                </a>
-            </yla-tooltip>
-            <yla-tooltip placement="right" content="Log out">
-                <a @click="showDialogLogout">
-                    <i class="fas fa-sign-out-alt fa-fw"></i>
-                </a>
-            </yla-tooltip>
-        </div>
-        <div id="body">
-            <div id="header" class="header" v-if="!editMode">
-                <input type="text" v-model.trim="search" placeholder="Search bookmarks by url, tags, title or content" @focus="$event.target.select()" @keyup.enter="loadData">
-                <a title="Search" @click="loadData">
-                    <i class="fas fa-search fa-fw"></i>
-                </a>
-            </div>
-            <div id="batch-edit" class="header" v-if="editMode">
-                <p>{{selected.length}} Items selected</p>
-                <a :class="{disabled: selected.length === 0}" @click="showDialogDelete(selected)">
-                    <i class="fas fa-fw fa-trash-alt"></i>
-                    <span>Delete</span>
-                </a>
-                <a :class="{disabled: selected.length === 0}" @click="showDialogAddTags(selected)">
-                    <i class="fas fa-fw fa-tags"></i>
-                    <span>Add tags</span>
-                </a>
-                <a :class="{disabled: selected.length === 0}" @click="showDialogUpdateCache(selected)">
-                    <i class="fas fa-fw fa-cloud-download-alt"></i>
-                    <span>Update cache</span>
-                </a>
-                <a id="cancel-edit" @click="toggleEditMode">
-                    <i class="fas fa-fw fa-times"></i>
-                </a>
-            </div>
-            <div id="grid" :class="{list: options.listView}">
-                <div class="pagination-box" v-if="maxPage > 0">
-                    <p>Page</p>
-                    <input type="text" placeholder="1" :value="page+1" @focus="$event.target.select()" @keyup.enter="changePage($event.target.value-1)" :disabled="editMode">
-                    <p>{{maxPage+1}}</p>
-                    <div class="spacer"></div>
-                    <template v-if="!editMode">
-                        <a v-if="page > 1" title="Go to first page" @click="changePage(0)">
-                            <i class="fas fa-fw fa-angle-double-left"></i>
-                        </a>
-                        <a v-if="page > 0" title="Go to previous page" @click="changePage(page-1)">
-                            <i class="fa fa-fw fa-angle-left"></i>
-                        </a>
-                        <a v-if="page < maxPage" title="Go to next page" @click="changePage(page+1)">
-                            <i class="fa fa-fw fa-angle-right"></i>
-                        </a>
-                        <a v-if="page < maxPage - 1" title="Go to last page" @click="changePage(maxPage)">
-                            <i class="fas fa-fw fa-angle-double-right"></i>
-                        </a>
-                    </template>
-                </div>
-                <div class="bookmark" v-for="(book, idx) in visibleBookmarks" :class="{selected: isSelected(idx)}">
-                    <a class="bookmark-selector" v-if="editMode" @click="toggleSelection(idx)"></a>
-                    <a class="bookmark-link" :href="getBookLink(book, true)" :title="getBookLinkTitle(book, true)" rel="noopener noreferrer nofollow" target="_blank">
-                        <img v-if="book.imageURL !== ''" :src="book.imageURL">
-                        <p class="title">{{book.title}}</p>
-                        <p class="excerpt" v-if="book.imageURL === ''">{{book.excerpt}}</p>
-                        <p v-show="options.showBookmarkID" class="id">{{book.id}}</p>
+    <div id="index-page" :class="{night: options.nightMode}" class="page container">
+        <div class="columns">
+            <div class="column col-1 col-sm-12 left">
+                <div class="logo" title="Shiori">栞</div>
+                <div class="text-center icons">
+                    <a @click="toggleNightMode" class="tooltip tooltip-right" data-tooltip="Toggle Night Mode">
+                        <div class="adjust" style="height:30px;width: 30px;margin: 0 auto;" />
                     </a>
-                    <div class="bookmark-tags" v-if="book.tags && book.tags.length > 0">
-                        <a v-for="tag in book.tags" @click="filterTag(tag.name)">{{tag.name}}</a>
-                    </div>
+                    <!--yla-tooltip placement="right" content="Reload data">
+                        <a @click="reloadData" v-show="!editMode">
+                            <i class="fas fa-sync-alt fa-fw" :class="loading && 'fa-spin'"></i>
+                        </a>
+                    </yla-tooltip>
+                    <yla-tooltip placement="right" content="Add new bookmark">
+                        <a @click="showDialogAdd" v-show="!editMode && !loading">
+                            <span>+Shiori</span>
+                            <i class="fas fa-plus fa-fw"></i>
+                        </a>
+                    </yla-tooltip>
+                    <yla-tooltip placement="right" :content="editMode ? 'Cancel batch edit' : 'Batch edit'">
+                        <a @click="toggleEditMode" v-show="!loading">
+                            <i class="fas fa-fw" :class="editMode ? 'fa-times' : 'fa-pencil-alt'"></i>
+                        </a>
+                    </yla-tooltip>
+                    <yla-tooltip placement="right" content="Show tags">
+                        <a @click="showDialogTags" v-show="!editMode && !loading">
+                            <i class="fas fa-fw fa-tags"></i>
+                        </a>
+                    </yla-tooltip>
                     <div class="spacer"></div>
-                    <div class="bookmark-menu">
-                        <a class="url" :href="getBookLink(book, false)" :title="getBookLinkTitle(book, false)" rel="noopener noreferrer nofollow" target="_blank">
-                            {{getHostname(book.url)}}
+                    <yla-tooltip placement="right" content="About">
+                        <a @click="showDialogAbout">
+                            <i class="fas fa-fw fa-info-circle"></i>
                         </a>
-                        <a title="Edit bookmark" @click="showDialogEdit(idx)">
-                            <i class="fas fa-pencil-alt"></i>
+                    </yla-tooltip>
+                    <yla-tooltip placement="right" content="Options">
+                        <a @click="showDialogOptions">
+                            <i class="fas fa-fw fa-cog"></i>
                         </a>
-                        <a title="Delete bookmark" @click="showDialogDelete([idx])">
-                            <i class="fas fa-trash-alt"></i>
+                    </yla-tooltip>
+                    <yla-tooltip placement="right" content="Log out">
+                        <a @click="showDialogLogout">
+                            <i class="fas fa-sign-out-alt fa-fw"></i>
                         </a>
-                        <a title="Update cache" @click="showDialogUpdateCache([idx])">
-                            <i class="fas fa-cloud-download-alt"></i>
-                        </a>
-                    </div>
+                    </yla-tooltip-->
                 </div>
-                <div class="pagination-box" v-if="maxPage > 0">
-                    <p>Page</p>
-                    <input type="text" placeholder="1" :value="page+1" @focus="$event.target.select()" @keyup.enter="changePage($event.target.value-1)" :disabled="editMode">
-                    <p>{{maxPage+1}}</p>
-                    <div class="spacer"></div>
-                    <template v-if="!editMode">
-                        <a v-if="page > 1" title="Go to first page" @click="changePage(0)">
-                            <i class="fas fa-fw fa-angle-double-left"></i>
-                        </a>
-                        <a v-if="page > 0" title="Go to previous page" @click="changePage(page-1)">
-                            <i class="fa fa-fw fa-angle-left"></i>
-                        </a>
-                        <a v-if="page < maxPage" title="Go to next page" @click="changePage(page+1)">
-                            <i class="fa fa-fw fa-angle-right"></i>
-                        </a>
-                        <a v-if="page < maxPage - 1" title="Go to last page" @click="changePage(maxPage)">
-                            <i class="fas fa-fw fa-angle-double-right"></i>
-                        </a>
-                    </template>
-                </div>
-                <div id="grid-padding"></div>
             </div>
-        </div>
-        <yla-dialog id="dialog-about" v-bind="dialogAbout">
-            <p>
-                Shiori is a simple bookmarks manager written in Go language, developed by
-                <a rel="noopener noreferrer nofollow" target="_blank" href="https://github.com/RadhiFadlillah">Radhi Fadlillah</a> and other
-                <a rel="noopener noreferrer nofollow" target="_blank" href="https://github.com/RadhiFadlillah/shiori/graphs/contributors">contributors</a>. The source code is available on
-                <a rel="noopener noreferrer nofollow" target="_blank" href="https://github.com/RadhiFadlillah/shiori">GitHub</a> and released under MIT license.
-            </p>
-            <p>For ease of use, you can install the Shiori Bookmarklet by dragging this link (
-                <a :href="bookmarklet" onclick="event.preventDefault()">+Shiori</a>) to your bookmark bar.
-            </p>
-        </yla-dialog>
-        <yla-dialog id="dialog-tags" v-bind="dialogTags">
-            <a v-for="tag in tags" @click="filterTag(tag.name)">
-                <span>{{tag.name}}</span>
-                <span>{{tag.nBookmarks}}</span>
-            </a>
-        </yla-dialog>
-        <yla-dialog id="dialog-options" v-bind="dialogOptions">
-            <a @click="toggleListView">
-                <i class="fa-fw" :class="options.listView ? 'fas fa-check-square' : 'far fa-square'"></i>Use list view
-            </a>
-            <a @click="toggleNightMode">
-                <i class="fa-fw" :class="options.nightMode ? 'fas fa-check-square' : 'far fa-square'"></i>Use night mode
-            </a>
-            <a @click="toggleBookmarkID">
-                <i class="fa-fw" :class="options.showBookmarkID ? 'fas fa-check-square' : 'far fa-square'"></i>Show bookmark's ID
-            </a>
-            <a @click="toggleBookmarkMainLink">
-                <i class="fa-fw" :class="options.mainOpenOriginal ? 'fas fa-check-square' : 'far fa-square'"></i>Bookmark's title open original webpage instead of the cache
-            </a>
-        </yla-dialog>
-        <yla-dialog v-bind="dialog"></yla-dialog>
+            <div class="column col-11 col-sm-12 right">
+                <!-- TODO: PUT SEARCH ACROSS TOP HERE -->
+                <div id="header" class="header" v-if="!editMode">
+                    <input type="text" v-model.trim="search" placeholder="Search bookmarks by url, tags, title or content" @focus="$event.target.select()" @keyup.enter="loadData">
+                    <a title="Search" @click="loadData">
+                        <div class="search-icon" style="height:30px;width: 30px;margin: 0 auto;margin-left: 15px;margin-right: 15px;" />
+                    </a>
+                </div>
+                <div id="batch-edit" class="header" v-if="editMode">
+                    <p>{{selected.length}} Items selected</p>
+                    <a :class="{disabled: selected.length === 0}" @click="showDialogDelete(selected)">
+                        <i class="fas fa-fw fa-trash-alt"></i>
+                        <span>Delete</span>
+                    </a>
+                    <a :class="{disabled: selected.length === 0}" @click="showDialogAddTags(selected)">
+                        <i class="fas fa-fw fa-tags"></i>
+                        <span>Add tags</span>
+                    </a>
+                    <a :class="{disabled: selected.length === 0}" @click="showDialogUpdateCache(selected)">
+                        <i class="fas fa-fw fa-cloud-download-alt"></i>
+                        <span>Update cache</span>
+                    </a>
+                    <a id="cancel-edit" @click="toggleEditMode">
+                        <i class="fas fa-fw fa-times"></i>
+                    </a>
+                </div>
+                <!-- TODO: PUT ARTICLES AND PAGINATION HERE -->
+            </div>
+        </div><!-- /.columns -->
     </div>
     <script src="./index.js"></script>
 </body>

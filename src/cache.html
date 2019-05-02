@@ -16,7 +16,7 @@
     <div id="cache-page" :class="{night: nightMode}" class="page container">
         <div class="columns">
             <div class="column col-1 col-sm-12 left">
-                <div style="line-height: 60px;text-align: center;flex-shrink: 0;font-size: 2em;" title="Shiori">栞</div>
+                <div class="logo" title="Shiori">栞</div>
                 <div class="text-center icons">
                     <a @click="toggleNightMode" class="tooltip tooltip-right" data-tooltip="Toggle Night Mode">
                         <div class="adjust" style="height:30px;width: 30px;margin: 0 auto;" />
@@ -24,14 +24,14 @@
                 </div>
             </div>
             <div class="column col-11 col-sm-12 right">
-                <div id="header">
+                <div id="article-header">
                     <h1 id="title">{{title}}</h1>
                     <p id="time">Added
                         <strong> $|.Modified.UTC|$</strong>
                     </p>
-                    <a id="url" :href="url" target="_blank">$|.URL|hostname|$</a>
+                    <a :href="url" target="_blank" rel="noopener noreferrer nofollow">$|.URL|hostname|$</a>
                 </div>
-                <div id="content" sandbox v-html="html"></div>
+                <div id="content" v-html="html"></div>
             </div>
         </div><!-- /.columns -->
     </div>

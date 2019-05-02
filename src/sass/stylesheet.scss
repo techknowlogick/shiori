@@ -10,6 +10,9 @@ $link-color: $nord8;
 body {
 	background-color: $bg-color !important;
 	color: $body-font-color !important;
+	a {
+		color: darken($nord8, 20%)!important;
+	}
 }
 
 @import '../../node_modules/spectre.css/src/mixins.scss';
@@ -52,7 +55,7 @@ body {
 	border-color: #dbdde1 !important;
 }
 .left {
-	background-color: darken($bg-color, 10%);
+	background-color: darken($bg-color, 20%);
 	display: flex;
 	flex-flow: column nowrap;
 	min-width: 0;
@@ -65,25 +68,69 @@ body {
 	z-index: 10;
 	overflow: visible;
 	width: 60px;
+	// line-height: 60px;
 	.icons {
 		margin-top: 10px;
+		a {
+			cursor: pointer;
+		}
 	}
 }
 .right {
 	margin-left: 60px;
 }
+#header {
+	background-color: darken($bg-color, 20%);
+	display: flex;
+	flex-flow: row nowrap;
+	align-items: center;
+	min-height: 0;
+	overflow: hidden;
+	flex-shrink: 0;
+	position: fixed;
+	left: 60px;
+	top: 0;
+	right: 0;
+	border-bottom: 1px solid #dbdde1;
+	input {
+		flex: 1 0;
+		line-height: 60px;
+		padding: 0 16px;
+		font-size: 1em;
+		border:none;
+		border-right: 1px solid #dbdde1;
+		background: darken($bg-color, 10%) !important;
+	}
+	a {
+		cursor: pointer;
+	}
+}
+.logo {
+	line-height: 60px;
+	text-align: center;
+	flex-shrink: 0;
+	font-size: 2em;
+	margin-bottom: 10px;
+}
 @media only screen and (max-width: 600px) {
+	.logo {
+		display: none;
+	}
+	#header {
+		position:static;
+	}
 	.left {
 		position: static;
 		flex-flow: row nowrap;
 		width: 100%;
 		.icons {
-			margin-top: 15px;
-			margin-left: 30px;
+			margin: 15px;
 		}
 	}
 	.right {
 		margin-left: 0;
+		padding-left: 0;
+		padding-right: 0;
 	}
 }
 .adjust {
@@ -91,7 +138,24 @@ body {
     -webkit-mask: url(../res/adjust.svg) no-repeat center;
     mask: url(../res/adjust.svg) no-repeat center;
 }
+.search-icon {
+	background-color: $body-font-color;
+    -webkit-mask: url(../res/search.svg) no-repeat center;
+    mask: url(../res/search.svg) no-repeat center;	
+}
 .night {
+	a {
+		color: $nord8 !important;
+	}
+	#header {
+		background-color: darken($nord0, 10%);
+		border-bottom: 1px solid $nord0 !important;
+		input {
+			color: $nord6 !important;
+			border-right: 1px solid $nord0 !important;
+			background-color: $nord3 !important;
+		}
+	}
 	.tooltip {
 		&::after {
 			background-color: $bg-color;
@@ -100,6 +164,9 @@ body {
 	}
 	.adjust {
 		background-color: $nord6;
+	}
+	.search-icon {
+		background-color: $nord6;	
 	}
 	background-color: $nord0;
 	color: $nord6;
