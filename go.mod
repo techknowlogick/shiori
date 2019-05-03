@@ -3,7 +3,7 @@ module src.techknowlogick.com/shiori
 require (
 	github.com/PuerkitoBio/goquery v1.5.0
 	github.com/asaskevich/govalidator v0.0.0-20190207205813-f9ffefc3facf
-	github.com/denisenkom/go-mssqldb v0.0.0-20190401174741-ce35bd87d4b3
+	github.com/denisenkom/go-mssqldb v0.0.0-20190423194141-731ef375ac02
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/fatih/color v1.7.0
 	github.com/gin-gonic/contrib v0.0.0-20190409040859-b5986969cb50
@@ -16,6 +16,7 @@ require (
 	github.com/gofrs/uuid v3.2.0+incompatible
 	github.com/gosuri/uilive v0.0.0-20170323041506-ac356e6e42cd // indirect
 	github.com/gosuri/uiprogress v0.0.0-20170224063937-d0567a9d84a1
+	github.com/kr/pty v1.1.3 // indirect
 	github.com/lib/pq v1.1.0
 	github.com/mattn/go-colorable v0.1.1 // indirect
 	github.com/mattn/go-isatty v0.0.7 // indirect
@@ -25,7 +26,7 @@ require (
 	github.com/sergi/go-diff v1.0.0 // indirect
 	github.com/sirupsen/logrus v1.4.0
 	github.com/urfave/cli v1.20.0
-	golang.org/x/crypto v0.0.0-20190415012251-88737f569e3a
+	golang.org/x/crypto v0.0.0-20190428033426-a29dc8fdc734
 	golang.org/x/net v0.0.0-20190409040650-eb5bcb51f2a3 // indirect
-	src.techknowlogick.com/xormigrate v0.0.0-20190331164533-824aaec7f68c
+	src.techknowlogick.com/xormigrate v0.0.0-20190503154325-e8c10a2a647c
 )
