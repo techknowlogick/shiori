@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 
+	"src.techknowlogick.com/shiori/database"
 	"src.techknowlogick.com/shiori/utils"
 
 	"github.com/urfave/cli"
@@ -52,7 +53,7 @@ func runPrintBookmarks(c *cli.Context) error {
 	}
 
 	// Read bookmarks from database
-	bookmarks, err := db.GetBookmarks(false, ids...)
+	bookmarks, err := db.GetBookmarks(database.BookmarkOptions{}, ids...)
 	if err != nil {
 		return errors.New(utils.CErrorSprint(err))
 	}

@@ -1,6 +1,7 @@
 package serve
 
 import (
+	"encoding/json"
 	"fmt"
 	"html/template"
 	"io"
@@ -11,6 +12,7 @@ import (
 	fp "path/filepath"
 	"strconv"
 
+	"src.techknowlogick.com/shiori/database"
 	"src.techknowlogick.com/shiori/utils"
 
 	"github.com/gin-gonic/gin"
@@ -32,8 +34,35 @@ func (h *webHandler) serveIndexPage(c *gin.Context) {
 		return
 	}
 
-	err = serveFile(c, "index.html")
+	bookmarks, err := h.db.GetBookmarks(database.BookmarkOptions{})
 	utils.CheckError(err)
+
+	// Create template
+	funcMap := template.FuncMap{
+		"html": func(s string) template.HTML {
+			return template.HTML(s)
+		},
+		"hostname": func(s string) string {
+			parsed, err := nurl.ParseRequestURI(s)
+			if err != nil || len(parsed.Scheme) == 0 {
+				return s
+			}
+
+			return parsed.Hostname()
+		},
+	}
+
+	tplCache, err := createTemplate("index.html", funcMap)
+	utils.CheckError(err)
+
+	bt, err := json.Marshal(&bookmarks)
+	utils.CheckError(err)
+
+	// Execute template
+	strBt := string(bt)
+	err = tplCache.Execute(c.Writer, &strBt)
+	utils.CheckError(err)
+
 }
 
 // serveSubmitPage is handler for GET /submit
@@ -63,7 +92,7 @@ func (h *webHandler) serveBookmarkCache(c *gin.Context) {
 	utils.CheckError(err)
 
 	// Get bookmarks in database
-	bookmarks, err := h.db.GetBookmarks(true, id)
+	bookmarks, err := h.db.GetBookmarks(database.BookmarkOptions{}, id)
 	utils.CheckError(err)
 
 	if len(bookmarks) == 0 {

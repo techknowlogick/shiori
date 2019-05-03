@@ -13,6 +13,7 @@ import (
 	"sync"
 	"time"
 
+	"src.techknowlogick.com/shiori/database"
 	"src.techknowlogick.com/shiori/model"
 	"src.techknowlogick.com/shiori/utils"
 
@@ -81,7 +82,7 @@ func (h *webHandler) apiGetBookmarks(c *gin.Context) {
 	}
 
 	// Fetch all matching bookmarks
-	bookmarks, err := h.db.SearchBookmarks(true, keyword, tags...)
+	bookmarks, err := h.db.SearchBookmarks(database.BookmarkOptions{Keyword: keyword}, tags...)
 	utils.CheckError(err)
 
 	err = json.NewEncoder(c.Writer).Encode(&bookmarks)
@@ -221,7 +222,7 @@ func (h *webHandler) apiUpdateBookmark(c *gin.Context) {
 
 	// Get existing bookmark from database
 	reqID := request.ID
-	bookmarks, err := h.db.GetBookmarks(true, reqID)
+	bookmarks, err := h.db.GetBookmarks(database.BookmarkOptions{}, reqID)
 	utils.CheckError(err)
 	if len(bookmarks) == 0 {
 		panic(fmt.Errorf("No bookmark with matching index"))
@@ -281,7 +282,7 @@ func (h *webHandler) apiUpdateBookmarkTags(c *gin.Context) {
 	}
 
 	// Get existing bookmark from database
-	bookmarks, err := h.db.GetBookmarks(true, request.IDs...)
+	bookmarks, err := h.db.GetBookmarks(database.BookmarkOptions{}, request.IDs...)
 	utils.CheckError(err)
 	if len(bookmarks) == 0 {
 		panic(fmt.Errorf("No bookmark with matching index"))
@@ -329,7 +330,7 @@ func (h *webHandler) apiUpdateCache(c *gin.Context) {
 	wg := sync.WaitGroup{}
 
 	// Fetch bookmarks from database
-	books, err := h.db.GetBookmarks(false, ids...)
+	books, err := h.db.GetBookmarks(database.BookmarkOptions{}, ids...)
 	utils.CheckError(err)
 
 	// Download new cache data

@@ -34,11 +34,25 @@ body {
 @import "../../node_modules/spectre.css/src/navbar";
 
 // Components
+@import "../../node_modules/spectre.css/src/badges";
+@import "../../node_modules/spectre.css/src/cards";
 @import "../../node_modules/spectre.css/src/toasts";
 @import "../../node_modules/spectre.css/src/tooltips";
 
 // Utility classes
 @import "../../node_modules/spectre.css/src/utilities";
+
+.badge {
+	&.card {
+	    &::after {
+	      position: absolute;
+	      top: 0;
+	      right: 0;
+	      transform: translate(50%, -50%);
+	      overflow: auto;
+	    }
+	}
+}
 
 #login-box {
 	background: #fff;
@@ -167,6 +181,9 @@ body {
 	}
 	.search-icon {
 		background-color: $nord6;	
+	}
+	.card {
+		background-color: $nord3 !important;
 	}
 	background-color: $nord0;
 	color: $nord6;

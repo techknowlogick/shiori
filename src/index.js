@@ -22,7 +22,7 @@ new Vue({
         return {
             loading: false,
             tags: [],
-            bookmarks: [],
+            bookmarks: window.__INIT__.Bookmarks || [],
             search: '',
             page: 0,
             maxPage: 0,
@@ -591,8 +591,5 @@ new Vue({
         this.bookmarklet = 'javascript:' + baseBookmarklet
             .replace('$SHIORI_URL', shioriURL)
             .replace(/\s+/gm, ' ');
-
-        // Load data
-        this.loadData();
     }
 });
