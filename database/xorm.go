@@ -199,7 +199,7 @@ func (db *XormDatabase) UpdateBookmarks(bookmarks ...model.Bookmark) (result []m
 	}
 	for _, bookmark := range bookmarks {
 		// create bookmark & get ID
-		session.Where("bookmark_id = ?", bookmark.ID).Update(&bookmark)
+		session.Where("id = ?", bookmark.ID).Update(&bookmark)
 		// clear existing tag assignments
 		session.Where("bookmark_id = ?", bookmark.ID).Delete(&model.BookmarkTag{})
 		// insert & assign tag assignments
