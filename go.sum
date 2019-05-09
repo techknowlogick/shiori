@@ -38,6 +38,8 @@ github.com/denisenkom/go-mssqldb v0.0.0-20190401174741-ce35bd87d4b3 h1:lnMyL2gOS
 github.com/denisenkom/go-mssqldb v0.0.0-20190401174741-ce35bd87d4b3/go.mod h1:EcO5fNtMZHCMjAvj8LE6T+5bphSdR6LQ75n+m1TtsFI=
 github.com/denisenkom/go-mssqldb v0.0.0-20190415012022-3b1d194e553a h1:3rpEPVjxv0iZwaS8rRxjFL7jXrZCKINbgj1NpO95hTM=
 github.com/denisenkom/go-mssqldb v0.0.0-20190415012022-3b1d194e553a/go.mod h1:zAg7JM8CkOJ43xKXIj7eRO9kmWm/TW578qo+oDO6tuM=
+github.com/denisenkom/go-mssqldb v0.0.0-20190423194141-731ef375ac02 h1:xp5w1VhqgHCL61dgK7T0FQul+Wfm94JAi2mygacE9+4=
+github.com/denisenkom/go-mssqldb v0.0.0-20190423194141-731ef375ac02/go.mod h1:zAg7JM8CkOJ43xKXIj7eRO9kmWm/TW578qo+oDO6tuM=
 github.com/dgrijalva/jwt-go v3.2.0+incompatible h1:7qlOGliEKZXTDg6OTjfoBKDXWrumCAMpl/TFQ4/5kLM=
 github.com/dgrijalva/jwt-go v3.2.0+incompatible/go.mod h1:E3ru+11k8xSBh+hMPgOLZmtrrCbhqsmaPHjLKYnJCaQ=
 github.com/eapache/go-resiliency v1.1.0/go.mod h1:kFI+JgMyC7bLPUVY133qvEBtVayf5mFgVsvEsIPBvNs=
@@ -257,6 +259,8 @@ golang.org/x/crypto v0.0.0-20190409041206-38d8ce5564a5 h1:qrK99pIR7WVe8H2ZLSCz9Q
 golang.org/x/crypto v0.0.0-20190409041206-38d8ce5564a5/go.mod h1:WFFai1msRO1wXaEeE5yQxYXgSfI8pQAWXbQop6sCtWE=
 golang.org/x/crypto v0.0.0-20190415012251-88737f569e3a h1:/1Aw7xaMVqbvzAgtlFhEryX9IpAG5tWtecREhC/Gg4g=
 golang.org/x/crypto v0.0.0-20190415012251-88737f569e3a/go.mod h1:WFFai1msRO1wXaEeE5yQxYXgSfI8pQAWXbQop6sCtWE=
+golang.org/x/crypto v0.0.0-20190428033426-a29dc8fdc734 h1:P4p0ILMt5MoWrmZypJKGekWDrwSfrpjERM3tLMkeB9w=
+golang.org/x/crypto v0.0.0-20190428033426-a29dc8fdc734/go.mod h1:yigFU9vqHzYiE8UmvKecakEJjdnWj3jj499lnFckfCI=
 golang.org/x/exp v0.0.0-20190121172915-509febef88a4/go.mod h1:CJ0aWSM057203Lf6IL+f9T1iT9GByDxfZKAQTCR3kQA=
 golang.org/x/lint v0.0.0-20180702182130-06c8688daad7/go.mod h1:UVdnD1Gm6xHRNCYTkRU2/jEulfH38KcIWyp/GAMgvoE=
 golang.org/x/lint v0.0.0-20181026193005-c67002cb31c3/go.mod h1:UVdnD1Gm6xHRNCYTkRU2/jEulfH38KcIWyp/GAMgvoE=
@@ -278,6 +282,7 @@ golang.org/x/net v0.0.0-20190301231341-16b79f2e4e95/go.mod h1:mL1N/T3taQHkDXs73r
 golang.org/x/net v0.0.0-20190311183353-d8887717615a/go.mod h1:t9HGtf8HONx5eT2rtn7q6eTqICYqUVnKs3thJo3Qplg=
 golang.org/x/net v0.0.0-20190331034059-74de082e2cca h1:FI9MpbOc3RuUPrhRLYXORlp214eapXwtRtgAwoVhtwA=
 golang.org/x/net v0.0.0-20190331034059-74de082e2cca/go.mod h1:t9HGtf8HONx5eT2rtn7q6eTqICYqUVnKs3thJo3Qplg=
+golang.org/x/net v0.0.0-20190404232315-eb5bcb51f2a3/go.mod h1:t9HGtf8HONx5eT2rtn7q6eTqICYqUVnKs3thJo3Qplg=
 golang.org/x/net v0.0.0-20190409040650-eb5bcb51f2a3 h1:FZw4Uia0gte0WaHnu+5FTqPtwgyR7uWE6ABHOsf4HbI=
 golang.org/x/net v0.0.0-20190409040650-eb5bcb51f2a3/go.mod h1:t9HGtf8HONx5eT2rtn7q6eTqICYqUVnKs3thJo3Qplg=
 golang.org/x/oauth2 v0.0.0-20180821212333-d2e6202438be/go.mod h1:N/0e6XlmueqKjAGxoOufVs8QHGRruUQn6yWY3a++T0U=
@@ -306,6 +311,8 @@ golang.org/x/sys v0.0.0-20190329054551-9eb1bfa1ce65 h1:bOfI+/IXwGeO+N89gL34fP+bj
 golang.org/x/sys v0.0.0-20190329054551-9eb1bfa1ce65/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
 golang.org/x/sys v0.0.0-20190403152447-81d4e9dc473e h1:nFYrTHrdrAOpShe27kaFHjsqYSEQ0KWqdWLu3xuZJts=
 golang.org/x/sys v0.0.0-20190403152447-81d4e9dc473e/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
+golang.org/x/sys v0.0.0-20190412213103-97732733099d h1:+R4KGOnez64A81RvjARKc4UT5/tI9ujCIVX+P5KiHuI=
+golang.org/x/sys v0.0.0-20190412213103-97732733099d/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
 golang.org/x/text v0.3.0 h1:g61tztE5qeGQ89tm6NTjjM9VPIm088od1l6aSorWRWg=
 golang.org/x/text v0.3.0/go.mod h1:NqM8EUOU14njkJ3fqMW+pc6Ldnwhi/IjpwHt7yyuwOQ=
 golang.org/x/text v0.3.1-0.20180807135948-17ff2d5776d2/go.mod h1:NqM8EUOU14njkJ3fqMW+pc6Ldnwhi/IjpwHt7yyuwOQ=
@@ -369,3 +376,5 @@ honnef.co/go/tools v0.0.0-20190102054323-c2f93a96b099/go.mod h1:rf3lG4BRIbNafJWh
 honnef.co/go/tools v0.0.0-20190106161140-3f1c8253044a/go.mod h1:rf3lG4BRIbNafJWhAfAdb/ePZxsR/4RtNHQocxwk9r4=
 src.techknowlogick.com/xormigrate v0.0.0-20190331164533-824aaec7f68c h1:M+fyE8yAc91qDL1nGa6905+iu/86aBE+hqECBuysiYo=
 src.techknowlogick.com/xormigrate v0.0.0-20190331164533-824aaec7f68c/go.mod h1:TGDdL54fSnuR+gvVBS8RjcpM4KlBM4Bqs8kkh15jAmE=
+src.techknowlogick.com/xormigrate v1.0.0 h1:3xIAU0PO9vuzd4f/09NuzE6p+Cj910oMPMxh5Ev0jsI=
+src.techknowlogick.com/xormigrate v1.0.0/go.mod h1:VzRKZOeVV/Gmj+GNPu/6YVOGU60iY/kzJ/8TNyNJ0Vw=
