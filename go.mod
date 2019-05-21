@@ -8,7 +8,7 @@ require (
 	github.com/fatih/color v1.7.0
 	github.com/gin-gonic/contrib v0.0.0-20190409040859-b5986969cb50
 	github.com/gin-gonic/gin v0.0.0-20190301062529-1d462bbe3713bc2fea40ed45c80a06ce856d379f
-	github.com/go-shiori/go-readability v0.0.0-20190324165855-2beec02f3f1e
+	github.com/go-shiori/go-readability v1.0.0
 	github.com/go-sql-driver/mysql v1.4.1
 	github.com/go-xorm/builder v0.3.4
 	github.com/go-xorm/xorm v0.7.1
@@ -21,12 +21,9 @@ require (
 	github.com/mattn/go-colorable v0.1.1 // indirect
 	github.com/mattn/go-isatty v0.0.7 // indirect
 	github.com/mattn/go-sqlite3 v1.10.0
-	github.com/mitchellh/go-homedir v1.1.0 // indirect
 	github.com/muesli/go-app-paths v0.0.0-20190207224558-913f7f7ac60f
-	github.com/sergi/go-diff v1.0.0 // indirect
-	github.com/sirupsen/logrus v1.4.0
+	github.com/sirupsen/logrus v1.4.2
 	github.com/urfave/cli v1.20.0
 	golang.org/x/crypto v0.0.0-20190428033426-a29dc8fdc734
-	golang.org/x/net v0.0.0-20190409040650-eb5bcb51f2a3 // indirect
 	src.techknowlogick.com/xormigrate v1.0.0
 )
