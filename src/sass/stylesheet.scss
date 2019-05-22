@@ -88,6 +88,9 @@ body {
 		a {
 			cursor: pointer;
 		}
+		.icon {
+			margin-top: 10px;
+		}
 	}
 }
 .right {
@@ -126,7 +129,34 @@ body {
 	font-size: 2em;
 	margin-bottom: 10px;
 }
+
+.icon {
+	background-color: $body-font-color;
+}
+.adjust-icon {
+    -webkit-mask: url(../res/adjust.svg) no-repeat center;
+    mask: url(../res/adjust.svg) no-repeat center;
+    height:30px;width: 30px;margin: 0 auto;
+}
+.search-icon {
+    -webkit-mask: url(../res/search.svg) no-repeat center;
+    mask: url(../res/search.svg) no-repeat center;
+}
+.sync-icon {
+    -webkit-mask: url(../res/sync.svg) no-repeat center;
+    mask: url(../res/sync.svg) no-repeat center;
+    height:30px;width: 30px;margin: 0 auto;
+}
+
+.bookmarks {
+	margin: 0;
+	margin-top: 75px;
+}
+
 @media only screen and (max-width: 600px) {
+	.bookmarks {
+		margin: 0;
+	}
 	.logo {
 		display: none;
 	}
@@ -139,6 +169,9 @@ body {
 		width: 100%;
 		.icons {
 			margin: 15px;
+			.icon {
+				margin-top: 2px !important;
+			}
 		}
 	}
 	.right {
@@ -146,17 +179,16 @@ body {
 		padding-left: 0;
 		padding-right: 0;
 	}
+	.sync-icon{
+		margin-top: 2px;
+		margin-left: 5px;
+		margin-bottom: -2px;
+	}
+	.left .icons a {
+		float: left;
+	}
 }
-.adjust {
-	background-color: $body-font-color;
-    -webkit-mask: url(../res/adjust.svg) no-repeat center;
-    mask: url(../res/adjust.svg) no-repeat center;
-}
-.search-icon {
-	background-color: $body-font-color;
-    -webkit-mask: url(../res/search.svg) no-repeat center;
-    mask: url(../res/search.svg) no-repeat center;	
-}
+
 .night {
 	a {
 		color: $nord8 !important;
@@ -176,11 +208,8 @@ body {
 			color: $nord1; 
 		}
 	}
-	.adjust {
+	.icon {
 		background-color: $nord6;
-	}
-	.search-icon {
-		background-color: $nord6;	
 	}
 	.card {
 		background-color: $nord3 !important;

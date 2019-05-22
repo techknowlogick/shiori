@@ -19,19 +19,15 @@
                 <div class="logo" title="Shiori">栞</div>
                 <div class="text-center icons">
                     <a @click="toggleNightMode" class="tooltip tooltip-right" data-tooltip="Toggle Night Mode">
-                        <div class="adjust" style="height:30px;width: 30px;margin: 0 auto;" />
+                        <div class="adjust-icon icon" style="height:30px;width: 30px;margin: 0 auto;" />
                     </a>
-                    <!--yla-tooltip placement="right" content="Reload data">
-                        <a @click="reloadData" v-show="!editMode">
-                            <i class="fas fa-sync-alt fa-fw" :class="loading && 'fa-spin'"></i>
-                        </a>
-                    </yla-tooltip>
-                    <yla-tooltip placement="right" content="Add new bookmark">
-                        <a @click="showDialogAdd" v-show="!editMode && !loading">
-                            <span>+Shiori</span>
-                            <i class="fas fa-plus fa-fw"></i>
-                        </a>
-                    </yla-tooltip>
+                    <a @click="reloadData" v-show="!editMode" class="tooltip tooltip-right" data-tooltip="Reload data">
+                        <div class="sync-icon icon" />
+                    </a>
+                    <a @click="showDialogAdd" v-show="!editMode && !loading" class="tooltip tooltip-right" data-tooltip="Add new bookmark">
+                        &#10133;
+                    </a>
+                    <!--
                     <yla-tooltip placement="right" :content="editMode ? 'Cancel batch edit' : 'Batch edit'">
                         <a @click="toggleEditMode" v-show="!loading">
                             <i class="fas fa-fw" :class="editMode ? 'fa-times' : 'fa-pencil-alt'"></i>
@@ -53,19 +49,14 @@
                             <i class="fas fa-fw fa-cog"></i>
                         </a>
                     </yla-tooltip>
-                    <yla-tooltip placement="right" content="Log out">
-                        <a @click="showDialogLogout">
-                            <i class="fas fa-sign-out-alt fa-fw"></i>
-                        </a>
-                    </yla-tooltip-->
+                -->
                 </div>
             </div>
             <div class="column col-11 col-sm-12 right">
-                <!-- TODO: PUT SEARCH ACROSS TOP HERE -->
                 <div id="header" class="header" v-if="!editMode">
                     <input type="text" v-model.trim="search" placeholder="Search bookmarks by url, tags, title or content" @focus="$event.target.select()" @keyup.enter="loadData">
                     <a title="Search" @click="loadData">
-                        <div class="search-icon" style="height:30px;width: 30px;margin: 0 auto;margin-left: 15px;margin-right: 15px;" />
+                        <div class="search-icon icon" style="height:30px;width: 30px;margin: 0 auto;margin-left: 15px;margin-right: 15px;" />
                     </a>
                 </div>
                 <!--div id="batch-edit" class="header" v-if="editMode">
@@ -87,8 +78,8 @@
                     </a>
                 </div-->
                 <!-- TODO: PUT ARTICLES AND LOAD MORE HERE -->
-                <div class="columns bookmarks" style="margin: 0;margin-top: 75px">
-                    <div class="bookmark card col-3" :class="{badge: options.showBookmarkID}" v-for="(book, idx) in bookmarks" :data-badge="book.id">
+                <div class="columns bookmarks">
+                    <div class="bookmark card col-3 col-sm-12 col-md-6" :class="{badge: options.showBookmarkID}" v-for="(book, idx) in bookmarks" :data-badge="book.id">
                         <div class="card-image" v-if="book.imageURL !== ''">
                             <img :src="book.imageURL" class="img-responsive">
                         </div>
