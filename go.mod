@@ -6,7 +6,7 @@ require (
 	github.com/denisenkom/go-mssqldb v0.0.0-20190423194141-731ef375ac02
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/fatih/color v1.7.0
-	github.com/gin-gonic/contrib v0.0.0-20190409040859-b5986969cb50
+	github.com/gin-gonic/contrib v0.0.0-20190526022736-7fb7810ed2a0
 	github.com/gin-gonic/gin v0.0.0-20190301062529-1d462bbe3713bc2fea40ed45c80a06ce856d379f
 	github.com/go-shiori/go-readability v0.0.0-20190324165855-2beec02f3f1e
 	github.com/go-sql-driver/mysql v1.4.1
