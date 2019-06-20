@@ -27,6 +27,6 @@ require (
 	github.com/sirupsen/logrus v1.4.0
 	github.com/urfave/cli v1.20.0
 	golang.org/x/crypto v0.0.0-20190428033426-a29dc8fdc734
-	golang.org/x/net v0.0.0-20190409040650-eb5bcb51f2a3 // indirect
+	golang.org/x/net v0.0.0-20190620205000-3b0461eec859 // indirect
 	src.techknowlogick.com/xormigrate v1.0.0
 )
