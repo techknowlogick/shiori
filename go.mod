@@ -3,7 +3,7 @@ module src.techknowlogick.com/shiori
 require (
 	github.com/PuerkitoBio/goquery v1.5.0
 	github.com/asaskevich/govalidator v0.0.0-20190207205813-f9ffefc3facf
-	github.com/denisenkom/go-mssqldb v0.0.0-20190423194141-731ef375ac02
+	github.com/denisenkom/go-mssqldb v0.0.0-20190707035753-2be1aa521ff4
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/fatih/color v1.7.0
 	github.com/gin-gonic/contrib v0.0.0-20190409040859-b5986969cb50
@@ -11,7 +11,7 @@ require (
 	github.com/go-shiori/go-readability v0.0.0-20190324165855-2beec02f3f1e
 	github.com/go-sql-driver/mysql v1.4.1
 	github.com/go-xorm/builder v0.3.4
-	github.com/go-xorm/xorm v0.7.1
+	github.com/go-xorm/xorm v0.7.4
 	github.com/gobuffalo/packr/v2 v2.0.9
 	github.com/gofrs/uuid v3.2.0+incompatible
 	github.com/gosuri/uilive v0.0.0-20170323041506-ac356e6e42cd // indirect
