@@ -14,7 +14,7 @@ require (
 	github.com/go-xorm/xorm v0.7.1
 	github.com/gobuffalo/packr/v2 v2.0.9
 	github.com/gofrs/uuid v3.2.0+incompatible
-	github.com/gosuri/uilive v0.0.0-20170323041506-ac356e6e42cd // indirect
+	github.com/gosuri/uilive v0.0.3 // indirect
 	github.com/gosuri/uiprogress v0.0.0-20170224063937-d0567a9d84a1
 	github.com/kr/pty v1.1.3 // indirect
 	github.com/lib/pq v1.1.0
