@@ -1,7 +1,7 @@
 {
   "name": "shiori",
   "devDependencies": {
-    "@fortawesome/fontawesome-free": "5.8.1",
+    "@fortawesome/fontawesome-free": "5.10.1",
     "@vue/component-compiler-utils": "3.0.0",
     "axios": "0.19.0",
     "js-cookie": "2.2.0",
