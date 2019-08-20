@@ -12,7 +12,7 @@ require (
 	github.com/go-sql-driver/mysql v1.4.1
 	github.com/go-xorm/builder v0.3.4
 	github.com/go-xorm/xorm v0.7.1
-	github.com/gobuffalo/packr/v2 v2.0.9
+	github.com/gobuffalo/packr/v2 v2.5.2
 	github.com/gofrs/uuid v3.2.0+incompatible
 	github.com/gosuri/uilive v0.0.0-20170323041506-ac356e6e42cd // indirect
 	github.com/gosuri/uiprogress v0.0.0-20170224063937-d0567a9d84a1
@@ -21,12 +21,11 @@ require (
 	github.com/mattn/go-colorable v0.1.1 // indirect
 	github.com/mattn/go-isatty v0.0.7 // indirect
 	github.com/mattn/go-sqlite3 v1.10.0
-	github.com/mitchellh/go-homedir v1.1.0 // indirect
 	github.com/muesli/go-app-paths v0.0.0-20190207224558-913f7f7ac60f
 	github.com/sergi/go-diff v1.0.0 // indirect
-	github.com/sirupsen/logrus v1.4.0
+	github.com/sirupsen/logrus v1.4.2
 	github.com/urfave/cli v1.20.0
-	golang.org/x/crypto v0.0.0-20190428033426-a29dc8fdc734
+	golang.org/x/crypto v0.0.0-20190621222207-cc06ce4a13d4
 	golang.org/x/net v0.0.0-20190409040650-eb5bcb51f2a3 // indirect
 	src.techknowlogick.com/xormigrate v1.0.0
 )
