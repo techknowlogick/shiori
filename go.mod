@@ -17,7 +17,7 @@ require (
 	github.com/gosuri/uilive v0.0.3 // indirect
 	github.com/gosuri/uiprogress v0.0.1
 	github.com/lib/pq v1.2.0
-	github.com/mattn/go-colorable v0.1.1 // indirect
+	github.com/mattn/go-colorable v0.1.2 // indirect
 	github.com/mattn/go-isatty v0.0.9 // indirect
 	github.com/mattn/go-sqlite3 v1.10.0
 	github.com/muesli/go-app-paths v0.0.0-20190820232823-d2c0b0de0ab1
