@@ -16,7 +16,6 @@ require (
 	github.com/gofrs/uuid v3.2.0+incompatible
 	github.com/gosuri/uilive v0.0.0-20170323041506-ac356e6e42cd // indirect
 	github.com/gosuri/uiprogress v0.0.1
-	github.com/kr/pty v1.1.3 // indirect
 	github.com/lib/pq v1.2.0
 	github.com/mattn/go-colorable v0.1.1 // indirect
 	github.com/mattn/go-isatty v0.0.7 // indirect
