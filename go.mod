@@ -11,7 +11,7 @@ require (
 	github.com/go-shiori/go-readability v0.0.0-20190820231805-5413e9c4ec86
 	github.com/go-sql-driver/mysql v1.4.1
 	github.com/go-xorm/builder v0.3.4
-	github.com/go-xorm/xorm v0.7.1
+	github.com/go-xorm/xorm v0.7.6
 	github.com/gobuffalo/packr/v2 v2.5.2
 	github.com/gofrs/uuid v3.2.0+incompatible
 	github.com/gosuri/uilive v0.0.0-20170323041506-ac356e6e42cd // indirect
