@@ -24,6 +24,6 @@ require (
 	github.com/muesli/go-app-paths v0.0.0-20190820232823-d2c0b0de0ab1
 	github.com/sirupsen/logrus v1.4.2
 	github.com/urfave/cli v1.21.0
-	golang.org/x/crypto v0.0.0-20190621222207-cc06ce4a13d4
+	golang.org/x/crypto v0.0.0-20190820233724-60c769a6c586
 	src.techknowlogick.com/xormigrate v1.0.0
 )
