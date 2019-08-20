@@ -45,6 +45,8 @@ github.com/denisenkom/go-mssqldb v0.0.0-20190415012022-3b1d194e553a h1:3rpEPVjxv
 github.com/denisenkom/go-mssqldb v0.0.0-20190415012022-3b1d194e553a/go.mod h1:zAg7JM8CkOJ43xKXIj7eRO9kmWm/TW578qo+oDO6tuM=
 github.com/denisenkom/go-mssqldb v0.0.0-20190423194141-731ef375ac02 h1:xp5w1VhqgHCL61dgK7T0FQul+Wfm94JAi2mygacE9+4=
 github.com/denisenkom/go-mssqldb v0.0.0-20190423194141-731ef375ac02/go.mod h1:zAg7JM8CkOJ43xKXIj7eRO9kmWm/TW578qo+oDO6tuM=
+github.com/denisenkom/go-mssqldb v0.0.0-20190820225102-44cdfe8d8ba9 h1:jvFfV7yynSvfsDxrykaZK1lg0lHOH0xNQdyAFX7muoQ=
+github.com/denisenkom/go-mssqldb v0.0.0-20190820225102-44cdfe8d8ba9/go.mod h1:uU0N10vx1abI4qeVe79CxepBP6PPREVTgMS5Gx6/mOk=
 github.com/dgrijalva/jwt-go v3.2.0+incompatible h1:7qlOGliEKZXTDg6OTjfoBKDXWrumCAMpl/TFQ4/5kLM=
 github.com/dgrijalva/jwt-go v3.2.0+incompatible/go.mod h1:E3ru+11k8xSBh+hMPgOLZmtrrCbhqsmaPHjLKYnJCaQ=
 github.com/eapache/go-resiliency v1.1.0/go.mod h1:kFI+JgMyC7bLPUVY133qvEBtVayf5mFgVsvEsIPBvNs=
