@@ -23,7 +23,7 @@ require (
 	github.com/mattn/go-sqlite3 v1.10.0
 	github.com/muesli/go-app-paths v0.0.0-20190207224558-913f7f7ac60f
 	github.com/sirupsen/logrus v1.4.2
-	github.com/urfave/cli v1.20.0
+	github.com/urfave/cli v1.21.0
 	golang.org/x/crypto v0.0.0-20190621222207-cc06ce4a13d4
 	src.techknowlogick.com/xormigrate v1.0.0
 )
