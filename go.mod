@@ -14,7 +14,7 @@ require (
 	github.com/go-xorm/xorm v0.7.6
 	github.com/gobuffalo/packr/v2 v2.5.2
 	github.com/gofrs/uuid v3.2.0+incompatible
-	github.com/gosuri/uilive v0.0.0-20170323041506-ac356e6e42cd // indirect
+	github.com/gosuri/uilive v0.0.3 // indirect
 	github.com/gosuri/uiprogress v0.0.1
 	github.com/lib/pq v1.2.0
 	github.com/mattn/go-colorable v0.1.1 // indirect
