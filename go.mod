@@ -8,7 +8,7 @@ require (
 	github.com/fatih/color v1.7.0
 	github.com/gin-gonic/contrib v0.0.0-20190526022736-7fb7810ed2a0
 	github.com/gin-gonic/gin v0.0.0-20190301062529-1d462bbe3713bc2fea40ed45c80a06ce856d379f
-	github.com/go-shiori/go-readability v0.0.0-20190820231805-5413e9c4ec86
+	github.com/go-shiori/go-readability v0.0.0-20190829113304-8630e8f6e148
 	github.com/go-sql-driver/mysql v1.4.1
 	github.com/go-xorm/builder v0.3.4
 	github.com/go-xorm/xorm v0.7.6

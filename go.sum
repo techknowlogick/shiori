@@ -54,6 +54,8 @@ github.com/go-kit/kit v0.8.0/go.mod h1:xBxKIO96dXMWWy0MnWVtmwkA9/13aqxPnvrjFYMA2
 github.com/go-logfmt/logfmt v0.3.0/go.mod h1:Qt1PoO58o5twSAckw1HlFXLmHsOX5/0LbT9GBnD5lWE=
 github.com/go-shiori/go-readability v0.0.0-20190820231805-5413e9c4ec86 h1:84NDZE74ss6in+m4d5YUYBXVrisZN0+Trk0OUrS6q+8=
 github.com/go-shiori/go-readability v0.0.0-20190820231805-5413e9c4ec86/go.mod h1:1tFV9uTM/xnAKQw5EgPs+ip50udKhCjaP0nYdkSDXcU=
+github.com/go-shiori/go-readability v0.0.0-20190829113304-8630e8f6e148 h1:fv8CHMcb1aQalT0Ms8g+MgIje1LgO6dm83Xek1jEn2s=
+github.com/go-shiori/go-readability v0.0.0-20190829113304-8630e8f6e148/go.mod h1:1tFV9uTM/xnAKQw5EgPs+ip50udKhCjaP0nYdkSDXcU=
 github.com/go-sql-driver/mysql v1.4.0 h1:7LxgVwFb2hIQtMm87NdgAVfXjnt4OePseqT1tKx+opk=
 github.com/go-sql-driver/mysql v1.4.0/go.mod h1:zAC/RDZ24gD3HViQzih4MyKcchzm+sOG5ZlKdlhCg5w=
 github.com/go-sql-driver/mysql v1.4.1 h1:g24URVg0OFbNUTx9qqY1IRZ9D9z3iPyi5zKhQZpNwpA=
