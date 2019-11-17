@@ -3,7 +3,7 @@ module src.techknowlogick.com/shiori
 require (
 	github.com/PuerkitoBio/goquery v1.5.0
 	github.com/asaskevich/govalidator v0.0.0-20190207205813-f9ffefc3facf
-	github.com/denisenkom/go-mssqldb v0.0.0-20190820225102-44cdfe8d8ba9
+	github.com/denisenkom/go-mssqldb cfbb681360f0
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/fatih/color v1.7.0
 	github.com/gin-gonic/contrib 35076c1b2bea
