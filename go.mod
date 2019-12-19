@@ -19,7 +19,7 @@ require (
 	github.com/lib/pq v1.2.0
 	github.com/mattn/go-colorable v0.1.2 // indirect
 	github.com/mattn/go-isatty v0.0.9 // indirect
-	github.com/mattn/go-sqlite3/v2/v2 v2.0.2
+	github.com/mattn/go-sqlite3 v2.0.2
 	github.com/muesli/go-app-paths v0.0.0-20190820232823-d2c0b0de0ab1
 	github.com/sirupsen/logrus v1.4.2
 	github.com/urfave/cli v1.22.1
