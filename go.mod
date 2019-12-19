@@ -24,5 +24,5 @@ require (
 	github.com/sirupsen/logrus v1.4.2
 	github.com/urfave/cli v1.22.1
 	golang.org/x/crypto 497ca9f6d64f
-	src.techknowlogick.com/xormigrate v1.0.0
+	src.techknowlogick.com/xormigrate v1.0.1
 )
