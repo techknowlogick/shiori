@@ -20,7 +20,7 @@ COPY --from=nodebuilder /app/dist /go/src/src.techknowlogick.com/shiori/dist/
 RUN GO111MODULE=auto go get -u github.com/gobuffalo/packr/v2/packr2
 RUN packr2 && make build
 
-FROM alpine:3.10
+FROM alpine:3.11
 
 ENV ENV_SHIORI_DIR /srv/shiori/
 
