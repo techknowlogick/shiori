@@ -8,7 +8,7 @@
     "less": "3.10.3",
     "parcel-bundler": "1.12.4",
     "typeface-source-sans-pro": "0.0.75",
-    "typeface-source-serif-pro": "0.0.75",
+    "typeface-source-serif-pro": "1.1.3",
     "typeface-ubuntu-mono": "0.0.72",
     "vue": "2.6.11",
     "vue-template-compiler": "2.6.11"
