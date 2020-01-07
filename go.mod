@@ -5,7 +5,7 @@ require (
 	github.com/asaskevich/govalidator v0.0.0-20190207205813-f9ffefc3facf
 	github.com/denisenkom/go-mssqldb cfbb681360f0
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
-	github.com/fatih/color v1.7.0
+	github.com/fatih/color v1.9.0
 	github.com/gin-gonic/contrib 35076c1b2bea
 	github.com/gin-gonic/gin v0.0.0-20190301062529-1d462bbe3713bc2fea40ed45c80a06ce856d379f
 	github.com/go-shiori/go-readability 9a7f6996b6cc
