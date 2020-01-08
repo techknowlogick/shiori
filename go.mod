@@ -2,7 +2,7 @@ module src.techknowlogick.com/shiori
 
 require (
 	github.com/PuerkitoBio/goquery v1.5.0
-	github.com/asaskevich/govalidator v0.0.0-20190207205813-f9ffefc3facf
+	github.com/asaskevich/govalidator 475eaeb16496
 	github.com/denisenkom/go-mssqldb cfbb681360f0
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/fatih/color v1.9.0
