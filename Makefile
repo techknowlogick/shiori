@@ -82,9 +82,9 @@ dep-node:
 .PHONY: dep-go
 dep-go:
 	@hash packr2 > /dev/null 2>&1; if [ $$? -ne 0 ]; then \
-		$(GO) get -u github.com/gobuffalo/packr/v2/packr2; \
+		$(GO) get -u github.com/markbates/pkger/cmd/pkger; \
 	fi
-	packr2
+	pkger
 
 .PHONY: cross
 cross: release-dirs release-windows release-darwin release-linux release-copy
