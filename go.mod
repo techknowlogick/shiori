@@ -28,15 +28,13 @@ require (
 	github.com/mattn/go-sqlite3 v2.0.2+incompatible
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.1 // indirect
-	github.com/muesli/go-app-paths v0.0.0-20190820232823-d2c0b0de0ab1
+	github.com/muesli/go-app-paths v0.0.0-20190807044811-d2c0b0de0ab1
 	github.com/rogpeppe/go-internal v1.5.1 // indirect
 	github.com/sirupsen/logrus v1.4.2
-	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/urfave/cli v1.22.2
 	golang.org/x/crypto v0.0.0-20200109152110-61a87790db17
 	golang.org/x/net v0.0.0-20191209160850-c0dbc17a3553 // indirect
 	golang.org/x/sys v0.0.0-20200113162924-86b910548bc1 // indirect
-	golang.org/x/tools v0.0.0-20200113154838-30cae5f2fb06 // indirect
 	gopkg.in/go-playground/validator.v9 v9.31.0 // indirect
 	gopkg.in/yaml.v2 v2.2.7 // indirect
 	src.techknowlogick.com/xormigrate v1.0.2
