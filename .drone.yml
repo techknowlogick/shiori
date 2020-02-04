@@ -97,24 +97,24 @@ steps:
       exclude:
         - pull_request
 
-- name: docs-check
-  image: node:10
-  commands:
-  - make build-docs
+#- name: docs-check
+#  image: node:10
+#  commands:
+#  - make build-docs
 
-- name: publish-documentation
-  image: lucap/drone-netlify
-  settings:
-    path: ./_docpress
-    token:
-      from_secret: netlify_token
-    site_id:
-      from_secret: netlify_site_id
-  when:
-    event:
-    - push
-    branch:
-    - master
+#- name: publish-documentation
+#  image: techknowlogick/drone-netlify
+#  settings:
+#    path: ./_docpress
+#    token:
+#      from_secret: netlify_token
+#    site_id:
+#      from_secret: netlify_site_id
+#  when:
+#    event:
+#    - push
+#    branch:
+#    - master
 
 - name: publish
   image: plugins/github-release
