@@ -13,7 +13,7 @@ platform:
 
 steps:
 - name: check
-  image: golang:1.13
+  image: golang:1.14
   commands:
   - make fmt-check
 
@@ -32,7 +32,7 @@ steps:
   - make dep-node
 
 - name: build-go
-  image: golang:1.13
+  image: golang:1.14
   environment:
     GO111MODULE: on
   commands:
@@ -89,7 +89,7 @@ steps:
         - pull_request
 
 - name: compress-and-checksum
-  image: golang:1.13
+  image: golang:1.14
   commands:
   - make release
   when:
