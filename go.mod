@@ -1,8 +1,7 @@
 module src.techknowlogick.com/shiori
 
 require (
-	github.com/PuerkitoBio/goquery v1.5.0
-	github.com/andybalholm/cascadia v1.1.0 // indirect
+	github.com/PuerkitoBio/goquery v1.5.1
 	github.com/asaskevich/govalidator v0.0.0-20200108200545-475eaeb16496
 	github.com/cpuguy83/go-md2man/v2 v2.0.0 // indirect
 	github.com/denisenkom/go-mssqldb v0.0.0-20200206145737-bbfc9a55622e
@@ -33,7 +32,6 @@ require (
 	github.com/sirupsen/logrus v1.4.2
 	github.com/urfave/cli v1.22.3
 	golang.org/x/crypto v0.0.0-20200109152110-61a87790db17
-	golang.org/x/net v0.0.0-20191209160850-c0dbc17a3553 // indirect
 	golang.org/x/sys v0.0.0-20200113162924-86b910548bc1 // indirect
 	gopkg.in/go-playground/validator.v9 v9.31.0 // indirect
 	gopkg.in/yaml.v2 v2.2.7 // indirect
