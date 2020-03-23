@@ -8,7 +8,7 @@ require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/fatih/color v1.9.0
 	github.com/gin-gonic/contrib v0.0.0-20191209060500-d6e26eeaa607
-	github.com/gin-gonic/gin v1.5.0
+	github.com/gin-gonic/gin v1.6.1
 	github.com/go-playground/universal-translator v0.17.0 // indirect
 	github.com/go-shiori/dom v0.0.0-20191003095357-6867c1fcf154 // indirect
 	github.com/go-shiori/go-readability v0.0.0-20191021230327-9a7f6996b6cc
@@ -32,9 +32,7 @@ require (
 	github.com/sirupsen/logrus v1.4.2
 	github.com/urfave/cli v1.22.3
 	golang.org/x/crypto v0.0.0-20200302210943-78000ba7a073
-	golang.org/x/sys v0.0.0-20200113162924-86b910548bc1 // indirect
 	gopkg.in/go-playground/validator.v9 v9.31.0 // indirect
-	gopkg.in/yaml.v2 v2.2.7 // indirect
 	src.techknowlogick.com/xormigrate v1.1.0
 )
 
