@@ -29,7 +29,7 @@ require (
 	github.com/modern-go/reflect2 v1.0.1 // indirect
 	github.com/muesli/go-app-paths v0.1.0
 	github.com/rogpeppe/go-internal v1.5.1 // indirect
-	github.com/sirupsen/logrus v1.4.2
+	github.com/sirupsen/logrus v1.5.0
 	github.com/urfave/cli v1.22.3
 	golang.org/x/crypto v0.0.0-20200302210943-78000ba7a073
 	gopkg.in/go-playground/validator.v9 v9.31.0 // indirect
