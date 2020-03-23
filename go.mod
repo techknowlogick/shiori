@@ -31,7 +31,7 @@ require (
 	github.com/rogpeppe/go-internal v1.5.1 // indirect
 	github.com/sirupsen/logrus v1.5.0
 	github.com/urfave/cli v1.22.3
-	golang.org/x/crypto v0.0.0-20200302210943-78000ba7a073
+	golang.org/x/crypto v0.0.0-20200320181102-891825fb96df
 	gopkg.in/go-playground/validator.v9 v9.31.0 // indirect
 	src.techknowlogick.com/xormigrate v1.1.0
 )
