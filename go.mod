@@ -11,7 +11,7 @@ require (
 	github.com/gin-gonic/gin v1.6.1
 	github.com/go-playground/universal-translator v0.17.0 // indirect
 	github.com/go-shiori/dom v0.0.0-20191003095357-6867c1fcf154 // indirect
-	github.com/go-shiori/go-readability v0.0.0-20191021230327-9a7f6996b6cc
+	github.com/go-shiori/go-readability v0.0.0-20200322103830-a580e05d8df9
 	github.com/go-sql-driver/mysql v1.5.0
 	github.com/go-xorm/builder v0.3.4
 	github.com/go-xorm/xorm v0.7.9
