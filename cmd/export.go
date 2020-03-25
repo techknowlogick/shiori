@@ -9,6 +9,7 @@ import (
 	"strings"
 	"time"
 
+	"src.techknowlogick.com/shiori/database"
 	"src.techknowlogick.com/shiori/model"
 	"src.techknowlogick.com/shiori/utils"
 
@@ -37,7 +38,7 @@ func runExportBookmarks(c *cli.Context) error {
 	}
 
 	// Fetch bookmarks from database
-	bookmarks, err := db.GetBookmarks(false)
+	bookmarks, err := db.GetBookmarks(database.BookmarkOptions{})
 	if err != nil {
 		return errors.New(utils.CErrorSprint(err))
 	}

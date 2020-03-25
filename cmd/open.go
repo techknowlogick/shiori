@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"strings"
 
+	"src.techknowlogick.com/shiori/database"
 	"src.techknowlogick.com/shiori/utils"
 
 	"github.com/urfave/cli"
@@ -64,7 +65,7 @@ func runOpenBookmark(c *cli.Context) error {
 	if err != nil {
 		return errors.New(utils.CErrorSprint(err))
 	}
-	bookmarks, err := db.GetBookmarks(true, ids...)
+	bookmarks, err := db.GetBookmarks(database.BookmarkOptions{}, ids...)
 	if err != nil {
 		return errors.New(utils.CErrorSprint(err))
 	}

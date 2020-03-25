@@ -10,6 +10,7 @@ import (
 	"sync"
 	"time"
 
+	"src.techknowlogick.com/shiori/database"
 	"src.techknowlogick.com/shiori/utils"
 
 	valid "github.com/asaskevich/govalidator"
@@ -127,7 +128,7 @@ func runUpdateBookmarks(c *cli.Context) error {
 	wg := sync.WaitGroup{}
 
 	// Fetch bookmarks from database
-	bookmarks, err := db.GetBookmarks(true, ids...)
+	bookmarks, err := db.GetBookmarks(database.BookmarkOptions{}, ids...)
 	if err != nil {
 		return errors.New(utils.CErrorSprint(err))
 	}

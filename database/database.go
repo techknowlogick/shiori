@@ -10,7 +10,7 @@ type Database interface {
 	InsertBookmark(bookmark *model.Bookmark) error
 
 	// GetBookmarks fetch list of bookmarks based on submitted ids.
-	GetBookmarks(withContent bool, ids ...int) ([]model.Bookmark, error)
+	GetBookmarks(options BookmarkOptions, ids ...int) ([]model.Bookmark, error)
 
 	// GetTags fetch list of tags and their frequency
 	GetTags() ([]model.Tag, error)
@@ -19,7 +19,7 @@ type Database interface {
 	DeleteBookmarks(ids ...int) error
 
 	// SearchBookmarks search bookmarks by the keyword or tags.
-	SearchBookmarks(orderLatest bool, keyword string, tags ...string) ([]model.Bookmark, error)
+	SearchBookmarks(options BookmarkOptions, tags ...string) ([]model.Bookmark, error)
 
 	// UpdateBookmarks updates the saved bookmark in database.
 	UpdateBookmarks(bookmarks ...model.Bookmark) ([]model.Bookmark, error)

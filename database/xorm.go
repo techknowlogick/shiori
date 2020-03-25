@@ -92,13 +92,21 @@ func (db *XormDatabase) InsertBookmark(bookmark *model.Bookmark) error {
 }
 
 // GetBookmarks fetch list of bookmarks based on submitted ids.
-func (db *XormDatabase) GetBookmarks(withContent bool, ids ...int) ([]model.Bookmark, error) {
+func (db *XormDatabase) GetBookmarks(options BookmarkOptions, ids ...int) ([]model.Bookmark, error) {
 	bookmarks := make([]model.Bookmark, 0)
 	var err error
 	if len(ids) > 0 {
 		err = db.In("id", ids).Find(&bookmarks)
 	} else {
-		err = db.Find(&bookmarks)
+		searchCond := builder.NewCond()
+		if options.MaxID != 0 {
+			searchCond.And(builder.Lt{"id": options.MaxID})
+		}
+		limit := 30
+		if options.PerPage > 0 {
+			limit = options.PerPage
+		}
+		err = db.Where(searchCond).Limit(limit).Find(&bookmarks)
 	}
 	for i := 0; i < len(bookmarks); i++ {
 		bookmarks[i].Tags = make([]model.Tag, 0)
@@ -141,13 +149,13 @@ func (db *XormDatabase) deleteBookmarks(ids ...int) error {
 }
 
 // SearchBookmarks search bookmarks by the keyword or tags.
-func (db *XormDatabase) SearchBookmarks(orderLatest bool, keyword string, tags ...string) ([]model.Bookmark, error) {
+func (db *XormDatabase) SearchBookmarks(options BookmarkOptions, tags ...string) ([]model.Bookmark, error) {
 	//var bookmarks []model.Bookmark
 	bookmarks := make([]model.Bookmark, 0)
 	searchCond := builder.NewCond()
 
-	if len(keyword) > 0 {
-		keyword = strings.TrimSpace(keyword)
+	if len(options.Keyword) > 0 {
+		keyword := strings.TrimSpace(options.Keyword)
 		lowerKeyword := strings.ToLower(keyword)
 		exprCond := builder.Or(
 			builder.Like{"title", lowerKeyword},
@@ -232,7 +240,10 @@ func (db *XormDatabase) CreateAccount(username, password string) error {
 // GetAccount fetch account with matching username
 func (db *XormDatabase) GetAccount(username string) (model.Account, error) {
 	var account model.Account
-	_, err := db.Where("username = ?", username).Get(&account)
+	has, err := db.Where("username = ?", username).Get(&account)
+	if !has && err == nil {
+		err = fmt.Errorf("user doesn't exist")
+	}
 	return account, err
 }
 
