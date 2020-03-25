@@ -2,11 +2,6 @@
 kind: pipeline
 name: default
 
-
-workspace:
-  base: /go
-  path: src/src.techknowlogick.com/shiori
-
 platform:
   os: linux
   arch: amd64
@@ -77,7 +72,9 @@ steps:
 - name: cross
   image: techknowlogick/xgo
   environment:
-    GO111MODULE: on
+    # This path does not exist. However, when we set the gopath to /go, the build fails. Not sure why.
+    # Leaving this here until we know how to resolve this properly.
+    GOPATH: /srv/app
   commands:
   - rm -rf /source
   - ln -s $CI_WORKSPACE /source
@@ -96,25 +93,6 @@ steps:
     event:
       exclude:
         - pull_request
-
-#- name: docs-check
-#  image: node:10
-#  commands:
-#  - make build-docs
-
-#- name: publish-documentation
-#  image: techknowlogick/drone-netlify
-#  settings:
-#    path: ./_docpress
-#    token:
-#      from_secret: netlify_token
-#    site_id:
-#      from_secret: netlify_site_id
-#  when:
-#    event:
-#    - push
-#    branch:
-#    - master
 
 - name: publish
   image: plugins/github-release
