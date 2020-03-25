@@ -28,12 +28,11 @@ require (
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.1 // indirect
 	github.com/muesli/go-app-paths v0.2.1
-	github.com/rogpeppe/go-internal v1.5.1 // indirect
 	github.com/sirupsen/logrus v1.5.0
 	github.com/urfave/cli v1.22.3
 	golang.org/x/crypto v0.0.0-20200320181102-891825fb96df
 	gopkg.in/go-playground/validator.v9 v9.31.0 // indirect
-	src.techknowlogick.com/xormigrate v1.1.0
+	src.techknowlogick.com/xormigrate v1.2.0
 )
 
 go 1.13
