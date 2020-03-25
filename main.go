@@ -5,7 +5,7 @@ import (
 	"runtime"
 	"strings"
 
-	apppaths "github.com/muesli/go-app-paths"
+	gap "github.com/muesli/go-app-paths"
 	"github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
 	"src.techknowlogick.com/shiori/cmd"
@@ -75,10 +75,10 @@ func main() {
 
 func getDataDir() string {
 	// Try to use platform specific app path
-	userScope := apppaths.NewScope(apppaths.User, "shiori", "shiori")
-	dataDir, err := userScope.DataDir()
-	if err == nil {
-		return dataDir
+	scope := gap.NewScope(gap.User, "shiori")
+	dataDirs, err := scope.DataDirs()
+	if err == nil && len(dataDirs) > 0 {
+		return dataDirs[0]
 	}
 
 	// When all else fails, use current working directory
