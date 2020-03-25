@@ -77,14 +77,14 @@ dep-node:
 	fi;
 	npm install
 	npx parcel build src/*.html --public-url /dist/
-	npx replace-x '(\.\./){1,3}(shiori|app)' '/dist' ./dist/ --include="*.css" -q -r
+	#npx replace-x '(\.\./){1,3}(shiori|app)' '/dist' ./dist/ --include="*.css" -q -r
 
 .PHONY: dep-go
 dep-go:
 	@hash packr2 > /dev/null 2>&1; if [ $$? -ne 0 ]; then \
-		$(GO) get -u github.com/gobuffalo/packr/v2/packr2; \
+		$(GO) get -u github.com/markbates/pkger/cmd/pkger; \
 	fi
-	packr2
+	pkger
 
 .PHONY: cross
 cross: release-dirs release-windows release-darwin release-linux release-copy
@@ -99,7 +99,7 @@ release-dirs:
 .PHONY: release-windows
 release-windows:
 	@hash xgo > /dev/null 2>&1; if [ $$? -ne 0 ]; then \
-		$(GO) get -u github.com/techknowlogick/xgo; \
+		$(GO) get -u src.techknowlogick.com/xgo; \
 	fi
 	xgo -dest $(DIST) -tags 'netgo $(TAGS)' -ldflags '-linkmode external -extldflags "-static" $(LDFLAGS)' -targets 'windows/*' -out shiori .
 ifeq ($(CI),drone)
@@ -109,7 +109,7 @@ endif
 .PHONY: release-darwin
 release-darwin:
 	@hash xgo > /dev/null 2>&1; if [ $$? -ne 0 ]; then \
-		$(GO) get -u github.com/techknowlogick/xgo; \
+		$(GO) get -u src.techknowlogick.com/xgo; \
 	fi
 	xgo -dest $(DIST) -tags 'netgo $(TAGS)' -ldflags '$(LDFLAGS)' -targets 'darwin/*' -out shiori .
 ifeq ($(CI),drone)
@@ -119,7 +119,7 @@ endif
 .PHONY: release-linux
 release-linux:
 	@hash xgo > /dev/null 2>&1; if [ $$? -ne 0 ]; then \
-		$(GO) get -u github.com/techknowlogick/xgo; \
+		$(GO) get -u src.techknowlogick.com/xgo; \
 	fi
 	xgo -dest $(DIST) -tags 'netgo $(TAGS)' -ldflags '-linkmode external -extldflags "-static" $(LDFLAGS)' -targets 'linux/*' -out shiori .
 ifeq ($(CI),drone)

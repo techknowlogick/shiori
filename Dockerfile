@@ -7,7 +7,7 @@ COPY . .
 
 RUN make dep-node
 
-FROM golang:1.12-alpine as gobuilder
+FROM golang:1.14-alpine as gobuilder
 
 RUN apk update \
   && apk --no-cache add git build-base make bash
@@ -17,10 +17,10 @@ COPY . .
 ENV GO111MODULE=on
 RUN go mod download && go mod vendor
 COPY --from=nodebuilder /app/dist /go/src/src.techknowlogick.com/shiori/dist/
-RUN GO111MODULE=auto go get -u github.com/gobuffalo/packr/v2/packr2
-RUN packr2 && make build
+RUN GO111MODULE=off go get -u github.com/markbates/pkger/cmd/pkger
+RUN pkger && make build
 
-FROM alpine:3.9
+FROM alpine:3.11
 
 ENV ENV_SHIORI_DIR /srv/shiori/
 

@@ -5,7 +5,7 @@ import (
 
 	"src.techknowlogick.com/xormigrate"
 
-	"github.com/go-xorm/xorm"
+	"xorm.io/xorm"
 )
 
 type M1Tag struct {
