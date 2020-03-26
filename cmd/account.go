@@ -66,6 +66,10 @@ func runAddAccount(c *cli.Context) error {
 		return errors.New(utils.CErrorSprint(err))
 	}
 
+	if len(args) < 1 {
+		return errors.New(utils.CErrorSprint("Username must not be empty"))
+	}
+
 	username := args[0]
 	if username == "" {
 		return errors.New(utils.CErrorSprint("Username must not be empty"))
