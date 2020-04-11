@@ -24,6 +24,7 @@ ENV ENV_SHIORI_DIR /srv/shiori/
 
 RUN apk --no-cache add dumb-init ca-certificates
 COPY --from=gobuilder /go/src/src.techknowlogick.com/shiori/shiori /usr/local/bin/shiori
+COPY --from=gobuilder /go/src/src.techknowlogick.com/shiori/dist /dist
 
 WORKDIR /srv/
 RUN mkdir shiori
