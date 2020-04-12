@@ -117,7 +117,10 @@ func (h *webHandler) serveBookmarkCache(c *gin.Context) {
 	tplCache, err := createTemplate("cache.html", funcMap)
 	utils.CheckError(err)
 
-	err = tplCache.Execute(c.Writer, &bookmarks[0])
+	bt, err := json.Marshal(bookmarks[0])
+	utils.CheckError(err)
+
+	err = tplCache.Execute(c.Writer, string(bt))
 	utils.CheckError(err)
 }
 
