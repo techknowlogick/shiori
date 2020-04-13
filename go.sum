@@ -84,6 +84,8 @@ github.com/go-shiori/go-readability v0.0.0-20200325133310-322cda251def h1:d1y6+P
 github.com/go-shiori/go-readability v0.0.0-20200325133310-322cda251def/go.mod h1:XR0EMve+dEK3gT+Q0bS+JjsVyFNEyYjOEOobNqpp79Q=
 github.com/go-shiori/go-readability v0.0.0-20200403030706-03b14e1967c5 h1:8nsJ3bZtDZ4BcYy1OWKSA4IQufGStYeZGlEz4wf6QN0=
 github.com/go-shiori/go-readability v0.0.0-20200403030706-03b14e1967c5/go.mod h1:XR0EMve+dEK3gT+Q0bS+JjsVyFNEyYjOEOobNqpp79Q=
+github.com/go-shiori/go-readability v0.0.0-20200413080041-05caea5f6592 h1:DtZu/tgjTP/8DJhGPbXeWsV6U5+C6DfuhzPHRybzmVs=
+github.com/go-shiori/go-readability v0.0.0-20200413080041-05caea5f6592/go.mod h1:XR0EMve+dEK3gT+Q0bS+JjsVyFNEyYjOEOobNqpp79Q=
 github.com/go-sql-driver/mysql v1.4.1 h1:g24URVg0OFbNUTx9qqY1IRZ9D9z3iPyi5zKhQZpNwpA=
 github.com/go-sql-driver/mysql v1.4.1/go.mod h1:zAC/RDZ24gD3HViQzih4MyKcchzm+sOG5ZlKdlhCg5w=
 github.com/go-sql-driver/mysql v1.5.0 h1:ozyZYNQW3x3HtqT1jira07DN2PArx2v7/mN66gGcHOs=
