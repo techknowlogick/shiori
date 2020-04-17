@@ -80,7 +80,7 @@ var (
 			port := c.Int("port")
 
 			// Create router
-			if !c.Bool("debug") {
+			if !c.Bool("server-debug") {
 				gin.SetMode(gin.ReleaseMode)
 			}
 
