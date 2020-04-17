@@ -20,7 +20,7 @@ require (
 	github.com/modern-go/reflect2 v1.0.1 // indirect
 	github.com/muesli/go-app-paths v0.2.1
 	github.com/sirupsen/logrus v1.5.0
-	github.com/urfave/cli v1.22.3
+	github.com/urfave/cli v1.22.4
 	golang.org/x/crypto v0.0.0-20200414173820-0848c9571904
 	src.techknowlogick.com/xormigrate v1.2.0
 	xorm.io/builder v0.3.7
