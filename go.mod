@@ -11,7 +11,7 @@ require (
 	github.com/go-shiori/go-readability v0.0.0-20200413080041-05caea5f6592
 	github.com/go-sql-driver/mysql v1.5.0
 	github.com/gobuffalo/packr/v2 v2.8.0
-	github.com/gofrs/uuid v3.2.0+incompatible
+	github.com/gofrs/uuid v3.3.0+incompatible
 	github.com/gosuri/uilive v0.0.4 // indirect
 	github.com/gosuri/uiprogress v0.0.1
 	github.com/lib/pq v1.3.0
