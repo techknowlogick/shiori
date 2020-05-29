@@ -18,7 +18,7 @@ COPY --from=nodebuilder /app/dist /go/src/src.techknowlogick.com/shiori/dist/
 RUN go get -u github.com/markbates/pkger/cmd/pkger
 RUN pkger && make build
 
-FROM alpine:3.11
+FROM alpine:3.12
 
 ENV ENV_SHIORI_DIR /srv/shiori/
 
