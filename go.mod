@@ -19,7 +19,7 @@ require (
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.1 // indirect
 	github.com/muesli/go-app-paths v0.2.1
-	github.com/sirupsen/logrus v1.5.0
+	github.com/sirupsen/logrus v1.6.0
 	github.com/urfave/cli v1.22.4
 	golang.org/x/crypto v0.0.0-20200414173820-0848c9571904
 	src.techknowlogick.com/xormigrate v1.2.1
