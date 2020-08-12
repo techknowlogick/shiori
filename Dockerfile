@@ -7,7 +7,7 @@ COPY . .
 
 RUN make dep-node
 
-FROM golang:1.14-alpine as gobuilder
+FROM golang:1.15-alpine as gobuilder
 
 RUN apk update \
   && apk --no-cache add git build-base make bash
